@@ -102,12 +102,12 @@ A single signal is never enough to punish a mail. Points only come when **two di
 ## 🚀 Installation
 
 ```bash
-curl -L https://github.com/develust/phywall/archive/refs/tags/v1.0.0.tar.gz | tar xz
-cd phywall-1.0.0
+curl -L https://github.com/develust/phywall/releases/latest/download/phywall.tar.gz | tar xz
+cd phywall
 sudo ./install.sh
 ```
 
-This installs phywall to `/opt/phywall` and creates the `phywall` command. No git needed on the server.
+This always downloads the **latest release**, installs phywall to `/opt/phywall` and creates the `phywall` command. No git needed on the server.
 
 ```bash
 phywall version
@@ -363,8 +363,8 @@ Bug reports and ideas are welcome in [Issues](../../issues).
 
 **Quraşdırma:**
 ```bash
-curl -L https://github.com/develust/phywall/archive/refs/tags/v1.0.0.tar.gz | tar xz
-cd phywall-1.0.0 && sudo ./install.sh
+curl -L https://github.com/develust/phywall/releases/latest/download/phywall.tar.gz | tar xz
+cd phywall && sudo ./install.sh
 ```
 
 **Əsas əmrlər:**
