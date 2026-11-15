@@ -1,8 +1,14 @@
 #!/bin/bash
-# Usage: /root/detector.sh <user@domain>          -> dry run, only shows
-#        /root/detector.sh <user@domain> --move   -> really moves
-LIB=$(dirname "$(readlink -f "$0")")     
-ROOT=$(dirname "$LIB")                   
+# =====================================================================
+#  lib/scan.sh - finds phishing in a mailbox
+#  Part of: phywall by Develust Technology
+#
+#  Usage: phywall scan <user@domain>          -> dry run: Inbox + Sent report
+#         phywall scan <user@domain> --move   -> moves Inbox phishing to Junk
+#                                                (Sent is only reported, never moved)
+# =====================================================================
+LIB=$(dirname "$(readlink -f "$0")")     # .../phywall/lib
+ROOT=$(dirname "$LIB")                   # .../phywall
 source "$LIB/common.sh"
 banner
 
@@ -11,7 +17,14 @@ DOM=${U#*@}; USR=${U%@*}
 BASE=${MAILBASE:-/var/mail/vhosts}/$DOM/$USR
 SRC=$BASE/cur
 DST=$BASE/.Junk/cur
-# moves the mail: rules that give points
+# STRONG rules: the mail is moved
+STRONG='^Symbol: (PHISH_LINK_AND_TEXT|PHISH_DEFAULT_PLUS_CUSTOM|PHISHED_OPENPHISH|PHISHED_PHISHTANK|DBL_PHISH|DBL_ABUSE_PHISH|HACKED_WP_PHISHING) \('
+# WEAK rule: Rspamd's link check alone (link text != real link). Newsletters with
+# click-tracking links trigger it too, so alone it only moves a mail when the
+# total score is at least PHISHING_MIN_SCORE; otherwise it is shown as SUSPICIOUS.
+WEAK='^Symbol: PHISHING \('
+PHISHING_MIN_SCORE=${PHISHING_MIN_SCORE:-3.0}
+# any phishing rule (used for the Sent report)
 TRIGGER='^Symbol: (PHISH_LINK_AND_TEXT|PHISH_DEFAULT_PLUS_CUSTOM|PHISHING|PHISHED_OPENPHISH|PHISHED_PHISHTANK|DBL_PHISH|DBL_ABUSE_PHISH|HACKED_WP_PHISHING) \('
 # shown in the Rules output: triggers + 0-point signals (what matched)
 SHOW='^Symbol: (PHISH_URL|PHISH_TEXT|PHISH_SUBJECT|PHISH_LINK_AND_TEXT|PHISH_DEFAULT_PLUS_CUSTOM|PHISHING|PHISHED_OPENPHISH|PHISHED_PHISHTANK|DBL_PHISH|DBL_ABUSE_PHISH|HACKED_WP_PHISHING) \('
@@ -74,6 +87,18 @@ scan_mail() {
   rspamc "${args[@]}" "$f"
 }
 
+# classify a scan result: prints move / suspicious / none
+classify() {
+  local out=$1 sc
+  if echo "$out" | grep -qE "$STRONG"; then echo move; return; fi
+  if echo "$out" | grep -qE "$WEAK"; then
+    sc=$(echo "$out" | awk '/^Score:/{print $2; exit}')
+    awk -v s="$sc" -v m="$PHISHING_MIN_SCORE" 'BEGIN{exit !(s+0>=m+0)}' && echo move || echo suspicious
+    return
+  fi
+  echo none
+}
+
 SENT=$BASE/.Sent/cur
 T=$(find "$SRC" -maxdepth 1 -type f | wc -l)
 TS=$( [ -d "$SENT" ] && find "$SENT" -maxdepth 1 -type f | wc -l || echo 0)
@@ -85,7 +110,7 @@ say ""
 # =====================================================================
 say "===== Inbox ====="
 say ""
-i=0; n=0; ok=0; err=0
+i=0; n=0; ok=0; err=0; sus=0
 for f in "$SRC"/*; do
   [ -f "$f" ] || continue
   i=$((i+1))
@@ -94,7 +119,8 @@ for f in "$SRC"/*; do
   out=$(scan_mail "$f")
   s=$(echo "$out" | awk '/^Score:/{print $2; exit}')
   awk -v s="$s" 'BEGIN{exit !(s<0)}' && continue          # trusted (whitelist etc.) -> skip
-  echo "$out" | grep -qE "$TRIGGER" || continue          # no scoring phishing rule -> skip
+  verdict=$(classify "$out")
+  [ "$verdict" = none ] && continue                         # no phishing rule -> skip
   rules=$(echo "$out" | grep -E "$SHOW" | sed 's/^Symbol: //')
   n=$((n+1))
   score=$(echo "$out" | grep -m1 '^Score:' | cut -d' ' -f2-)
@@ -102,7 +128,9 @@ for f in "$SRC"/*; do
   subj=$(decode "$(get_hdr "$f" Subject)")
   date=$(get_hdr "$f" Date)
 
-  if [ "$MODE" = "--move" ]; then
+  if [ "$verdict" = suspicious ]; then
+    status="SUSPICIOUS - not moved (link check only)"; sus=$((sus+1))
+  elif [ "$MODE" = "--move" ]; then
     if e=$(mv "$f" "$DST/" 2>&1); then status="MOVED OK"; ok=$((ok+1))
     else status="MOVE ERROR: $e"; err=$((err+1)); fi
   else
@@ -136,7 +164,7 @@ if [ -d "$SENT" ]; then
     [ $((j % 10)) -eq 0 ] && printf '\r\033[K... Sent progress: %d/%d (%d%%), suspicious: %d' "$j" "$TS" $((j*100/TS)) "$x" >&2
 
     out=$(scan_mail "$f")
-    echo "$out" | grep -qE "$TRIGGER" || continue          # no whitelist skip here: own domain may be whitelisted
+    [ "$(classify "$out")" = move ] || continue           # no whitelist skip here: own domain may be whitelisted
     x=$((x+1))
     rules=$(echo "$out" | grep -E "$TRIGGER" | sed 's/^Symbol: //; s/\[.*//' | paste -sd, - | sed 's/,/, /g')
     to=$(decode "$(get_hdr "$f" To)")
@@ -166,9 +194,9 @@ fi
 # =====================================================================
 say "-----"
 if [ "$MODE" = "--move" ]; then
-  say "Inbox: scanned $i, found $n, moved $ok, errors $err"
+  say "Inbox: scanned $i, moved $ok, suspicious $sus (not moved), errors $err"
 else
-  say "Inbox: scanned $i, found $n (dry run - nothing moved)"
+  say "Inbox: scanned $i, would move $((n-sus)), suspicious $sus (not moved)"
 fi
 say "Sent:  scanned $j, suspicious $x"
 if [ "$x" -gt 0 ]; then
