@@ -385,7 +385,7 @@ Sual və təkliflər üçün: **support@develust.com**
 
 Released under the **[MIT License](LICENSE)**.
 
-Built and maintained by **[Develust Technology](https://develust.com)**, Baku 🇦🇿
+Built and maintained by **[Develust Technology](https://develust.com)**, 
 Support: **support@develust.com**
 
 <p align="center"><sub>If phywall caught a phishing mail for you, consider giving the repo a ⭐</sub></p>
