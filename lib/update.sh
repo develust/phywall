@@ -38,8 +38,25 @@ for c in curl tar; do command -v $c >/dev/null || die "Command not found: $c"; d
 AUTH=(); [ -n "$GITHUB_TOKEN" ] && AUTH=(-H "Authorization: Bearer $GITHUB_TOKEN")
 
 # ---------- latest release ----------
-JSON=$(curl -fsSL --max-time 20 "${AUTH[@]}" -H "Accept: application/vnd.github+json" "$API" 2>/dev/null) \
-  || die "Cannot reach GitHub ($REPO). Check internet access, or set GITHUB_TOKEN if the repo is private."
+github_get() {   # $1 = URL ; prints the HTTP status code, body goes to $TMPJ
+  curl -s --max-time 20 "${AUTH[@]}" -H "Accept: application/vnd.github+json" -o "$TMPJ" -w '%{http_code}' "$1" 2>/dev/null
+}
+TMPJ=$(mktemp)
+CODE=$(github_get "$API")
+if [ "$CODE" != 200 ]; then
+  REPOCODE=$(github_get "${API%/releases/latest}")
+  case "$CODE/$REPOCODE" in
+    000/*)   rm -f "$TMPJ"; die "No connection to GitHub (api.github.com). Check internet / DNS / firewall." ;;
+    401/*)   rm -f "$TMPJ"; die "GitHub rejected the token (401): invalid, expired or deleted. Create a new one." ;;
+    404/200) rm -f "$TMPJ"; die "No published release yet on github.com/$REPO. Publish one (Releases -> Draft a new release)." ;;
+    404/404) rm -f "$TMPJ"
+             if [ -n "$GITHUB_TOKEN" ]; then die "Repo $REPO not found, or the token has no access to it."
+             else die "Repo $REPO not found. If it is private: export GITHUB_TOKEN=<token> first."; fi ;;
+    403/*)   rm -f "$TMPJ"; die "GitHub refused access (403): token without permission, or API rate limit reached. Try again later." ;;
+    *)       rm -f "$TMPJ"; die "GitHub answered HTTP $CODE - try again later." ;;
+  esac
+fi
+JSON=$(cat "$TMPJ"); rm -f "$TMPJ"
 TAG=$(echo "$JSON" | grep -m1 '"tag_name"' | sed -E 's/.*"tag_name"[[:space:]]*:[[:space:]]*"([^"]+)".*/\1/')
 TARBALL=$(echo "$JSON" | grep -m1 '"tarball_url"' | sed -E 's/.*"tarball_url"[[:space:]]*:[[:space:]]*"([^"]+)".*/\1/')
 [ -n "$TAG" ] && [ -n "$TARBALL" ] || die "No release found on GitHub for $REPO"
