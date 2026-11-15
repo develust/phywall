@@ -1,7 +1,7 @@
 #!/bin/bash
 # =====================================================================
-#  configuration.sh - prepares Rspamd for the phishing-detector
-#  Part of: phishing-detector by Develust Technology
+#  lib/configure.sh - prepares Rspamd for phywall
+#  Part of: phywall by Develust Technology
 #
 #  Usage: phywall configure --sector hotel,finance           -> dry run (shows changes)
 #         phywall configure --sector hotel,finance --apply   -> installs
@@ -13,25 +13,29 @@
 #    /etc/rspamd/maps/phishing/text/common.map + chosen sectors
 #    a marked block at the END of local.d/multimap.conf
 #    a marked block at the END of local.d/composites.conf
-#  It also saves the installed sectors in <project>/.sectors
+#    a marked block at the END of local.d/phishing.conf (only for feeds that are off:
+#      OpenPhish / PhishTank)
+#  It also saves the installed sectors in <phywall>/.sectors
 # =====================================================================
-LIB=$(dirname "$(readlink -f "$0")")     
-ROOT=$(dirname "$LIB")                   
+LIB=$(dirname "$(readlink -f "$0")")     # .../phywall/lib
+ROOT=$(dirname "$LIB")                   # .../phywall
 source "$LIB/common.sh"
 banner
 
 # ---------- paths ----------
-DIR=$(dirname "$(readlink -f "$0")")
 MAPSRC=$ROOT/maps
 RSPAMD=${RSPAMD_DIR:-/etc/rspamd}
 LD=$RSPAMD/local.d
 MM=$LD/multimap.conf
 CP=$LD/composites.conf
+PH=$LD/phishing.conf
 DEST=$RSPAMD/maps/phishing
 BKROOT=$ROOT/backups
 STATE=$ROOT/.sectors          # installed sectors on this server (used by update.sh)
-BEGIN='# BEGIN phishing-detector (managed by configuration.sh - do not edit)'
-END='# END phishing-detector'
+BEGIN='# BEGIN phywall (managed by phywall configure - do not edit)'
+END='# END phywall'
+OLD_BEGIN='# BEGIN phishing-detector (managed by configuration.sh - do not edit)'   # legacy name
+OLD_END='# END phishing-detector'
 OUR_RULES='PHISH_URL|PHISH_TEXT|PHISH_SUBJECT'
 OUR_COMPS='PHISH_LINK_AND_TEXT|PHISH_DEFAULT_PLUS_CUSTOM'
 
@@ -52,7 +56,7 @@ sectors_available() {
 # print file without our block
 strip_block() {
   [ -f "$1" ] || return 0
-  awk -v b="$BEGIN" -v e="$END" '$0==b{s=1;next} $0==e{s=0;next} !s' "$1"
+  awk -v b="$BEGIN" -v e="$END" -v ob="$OLD_BEGIN" -v oe="$OLD_END" '$0==b||$0==ob{s=1;next} $0==e||$0==oe{s=0;next} !s' "$1"
 }
 
 # remove our block in place (keeps owner/permissions), trims trailing empty lines
@@ -64,10 +68,21 @@ remove_block() {
   return 0
 }
 
-has_block() { [ -f "$1" ] && grep -qxF "$BEGIN" "$1"; }
+has_block() { [ -f "$1" ] && grep -qxF -e "$BEGIN" -e "$OLD_BEGIN" "$1"; }
 
 # symbols registered in running Rspamd
 symbols() { rspamc counters 2>/dev/null | awk -F'|' 'NF>3{gsub(/ /,"",$3); if($3!="" && $3!="Symbol") print $3}' | sort -u; }
+
+# phishing feeds: effective value from the running config, and explicit user settings
+feed_state() {   # prints true / false / unknown
+  local v
+  v=$(rspamadm configdump phishing 2>/dev/null | awk -v k="$1" '$1==k {gsub(/[";]/,"",$3); print $3; exit}')
+  case "$v" in true|false) echo "$v" ;; *) echo unknown ;; esac
+}
+feed_user_set() {   # is the key set by the admin (outside our block) in local.d / override.d?
+  { strip_block "$PH"; [ -f "$RSPAMD/override.d/phishing.conf" ] && cat "$RSPAMD/override.d/phishing.conf"; } \
+    | grep -qE "^[[:space:]]*$1[[:space:]]*="
+}
 
 wait_rspamd() {
   local t=0
@@ -108,22 +123,24 @@ ok "Rspamd is running"
 if [ "$MODE" = rollback ]; then
   echo
   echo "Rollback"
-  if ! has_block "$MM" && ! has_block "$CP" && [ ! -d "$DEST" ]; then
+  if ! has_block "$MM" && ! has_block "$CP" && ! has_block "$PH" && [ ! -d "$DEST" ]; then
     same "Nothing installed - nothing to remove"; exit 0
   fi
   TS=$(date +%F_%H%M%S); BK=$BKROOT/$TS; mkdir -p "$BK"
-  for f in "$MM" "$CP"; do [ -f "$f" ] && cp -p "$f" "$BK/"; done
+  for f in "$MM" "$CP" "$PH"; do [ -f "$f" ] && cp -p "$f" "$BK/"; done
   [ -d "$DEST" ] && cp -rp "$DEST" "$BK/maps"
   ok "Safety backup: $BK"
 
   has_block "$MM" && remove_block "$MM" && rem "Removed block from $MM"
   has_block "$CP" && remove_block "$CP" && rem "Removed block from $CP"
+  has_block "$PH" && remove_block "$PH" && rem "Removed block from $PH (feeds back to your own settings)"
+  [ -f "$PH" ] && [ ! -s "$PH" ] && rm -f "$PH"
   [ -d "$DEST" ] && rm -rf "$DEST" && rem "Removed $DEST"
   [ -f "$STATE" ] && rm -f "$STATE" && rem "Removed $STATE"
 
   if ! rspamadm configtest >/dev/null 2>&1; then
     warn "configtest failed after rollback - restoring safety backup"
-    for f in multimap.conf composites.conf; do [ -f "$BK/$f" ] && cp -p "$BK/$f" "$LD/$f"; done
+    for f in multimap.conf composites.conf phishing.conf; do [ -f "$BK/$f" ] && cp -p "$BK/$f" "$LD/$f"; done
     [ -d "$BK/maps" ] && cp -rp "$BK/maps" "$DEST"
     die "Rollback aborted, nothing changed. Check: rspamadm configtest"
   fi
@@ -224,9 +241,25 @@ if [ -d "$DEST/text" ]; then
 fi
 has_block "$MM" && same "Replace managed block in $MM" || add "Append managed block to $MM  (3 rules)"
 has_block "$CP" && same "Replace managed block in $CP" || add "Append managed block to $CP  (2 rules)"
-grep -qsE '^[[:space:]]*openphish_enabled[[:space:]]*=[[:space:]]*true' "$LD/phishing.conf" \
-  && same "OpenPhish feed is enabled (local.d/phishing.conf)" \
-  || warn "OpenPhish feed is not enabled in local.d/phishing.conf (optional, not changed)"
+# phishing feeds
+FEEDS_ON=""
+for fk in "openphish_enabled|OpenPhish" "phishtank_enabled|PhishTank"; do
+  k=${fk%%|*}; name=${fk#*|}
+  st=$(feed_state "$k")
+  inblock=0
+  awk -v b="$BEGIN" -v e="$END" '$0==b{s=1;next} $0==e{s=0;next} s' "$PH" 2>/dev/null | grep -q "^$k" && inblock=1
+  if [ "$inblock" -eq 1 ]; then
+    same "$name feed: enabled by phywall (kept)"
+    FEEDS_ON+="$k = true;"$'\n'
+  elif [ "$st" = true ]; then
+    same "$name feed: enabled"
+  elif feed_user_set "$k"; then
+    warn "$name feed: turned off in your own config - not changed (set $k = true; there to use it)"
+  else
+    add "$name feed: will be enabled (block in $PH)"
+    FEEDS_ON+="$k = true;"$'\n'
+  fi
+done
 
 if [ "$MODE" = dry ]; then
   echo
@@ -240,13 +273,13 @@ fi
 echo
 echo "Applying"
 TS=$(date +%F_%H%M%S); BK=$BKROOT/$TS; mkdir -p "$BK"
-for f in "$MM" "$CP"; do [ -f "$f" ] && cp -p "$f" "$BK/"; done
+for f in "$MM" "$CP" "$PH"; do [ -f "$f" ] && cp -p "$f" "$BK/"; done
 [ -d "$DEST" ] && cp -rp "$DEST" "$BK/maps"
 BEFORE=$(symbols)
 ok "Backup: $BK"
 
 restore() {
-  for f in multimap.conf composites.conf; do
+  for f in multimap.conf composites.conf phishing.conf; do
     if [ -f "$BK/$f" ]; then cp -p "$BK/$f" "$LD/$f"; else rm -f "$LD/$f"; fi
   done
   rm -rf "$DEST"; [ -d "$BK/maps" ] && cp -rp "$BK/maps" "$DEST"
@@ -267,6 +300,12 @@ for pair in "$MM|MM_BLOCK" "$CP|CP_BLOCK"; do
   [ -f "$f" ] && remove_block "$f" || : > "$f"
   { [ -s "$f" ] && echo; printf '%s\n' "${!v}"; } >> "$f"
 done
+# feeds block in phishing.conf (only feeds that were off)
+[ -f "$PH" ] && remove_block "$PH"
+if [ -n "$FEEDS_ON" ]; then
+  { [ -s "$PH" ] && echo; printf '%s\n%s%s\n' "$BEGIN" "$FEEDS_ON" "$END"; } >> "$PH"
+fi
+[ -f "$PH" ] && [ ! -s "$PH" ] && rm -f "$PH"
 ok "Managed blocks written"
 
 # validate
@@ -295,6 +334,11 @@ if [ -n "$LOST" ]; then
   die "Existing symbols disappeared ($LOST) - restored backup"
 fi
 [ -n "$MISSING" ] && warn "Not registered yet:$MISSING" || ok "All 5 rules registered, existing rules intact"
+
+for fk in "openphish_enabled|OpenPhish" "phishtank_enabled|PhishTank"; do
+  k=${fk%%|*}; name=${fk#*|}
+  [ "$(feed_state "$k")" = true ] && ok "$name feed is active" || warn "$name feed is not active (check local.d/phishing.conf)"
+done
 
 # remember installed sectors (for update.sh)
 echo $ALL | tr ' ' ',' > "$STATE"

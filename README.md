@@ -255,7 +255,7 @@ Bayes after:  ham 5633  spam 1207
 > **Every command is a dry run by default.** Nothing changes until you add `--apply`, `--move` or `--learn`.
 
 > [!IMPORTANT]
-> `configure --apply` **backs up** your Rspamd files first, writes its rules as a **marked block** at the end of `local.d/multimap.conf` and `local.d/composites.conf`, and runs `rspamadm configtest`. If the test fails, or if any existing Rspamd rule disappears, **everything is restored automatically**.
+> `configure --apply` **backs up** your Rspamd files first, writes its rules as a **marked block** at the end of `local.d/multimap.conf` and `local.d/composites.conf`, enables the **OpenPhish** and **PhishTank** feeds if they are off, and runs `rspamadm configtest`. If the test fails, or if any existing Rspamd rule disappears, **everything is restored automatically**.
 
 > [!WARNING]
 > **Sent mail is never moved**, only reported. Moving staff mail to Junk would teach Bayes that your own domain is spam.
@@ -271,6 +271,7 @@ Bayes after:  ham 5633  spam 1207
 /etc/rspamd/maps/phishing/               urls.map + text/<sector>.map
 /etc/rspamd/local.d/multimap.conf        marked block at the end
 /etc/rspamd/local.d/composites.conf      marked block at the end
+/etc/rspamd/local.d/phishing.conf        marked block at the end (only if OpenPhish / PhishTank were off)
 ```
 
 `phywall configure --rollback` removes exactly the Rspamd parts. `phywall uninstall` removes everything.
