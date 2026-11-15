@@ -1,0 +1,125 @@
+# =====================================================================
+#  manufacturing.map - phishing phrases for industry and production
+#  Part of: phishing-detector by Develust Technology
+#
+#  Format : one regex per line, /pattern/flags (i = case-insensitive,
+#           u = UTF-8). No trailing spaces.
+#  Note   : PHISH_TEXT scores 0 alone; it only adds points together
+#           with a phishing link (PHISH_URL / PHISHING).
+#
+#  Themes : fake purchase orders / RFQs behind a link, "ready to place
+#           orders" + video meeting lures (Zoom / Teams), password-
+#           protected catalogs and drawings, fake proforma invoices,
+#           supplier bank-detail changes (BEC), fake certificates
+#
+#  Avoided: "please quote", "request for quotation", "purchase order
+#           attached", "proforma invoice attached", "send samples",
+#           because factories receive real ones every day.
+# =====================================================================
+
+# ===== English =====
+# Fake PO / RFQ behind a link
+/(view|download|open|access)\s+(the\s+)?(purchase\s+order|p\.?o\.?|rfq|request\s+for\s+quotation|order\s+specifications?|tender\s+documents?)\s+(here|below|online|via\s+(the\s+)?link|on\s+our\s+portal)/i
+/(purchase\s+order|rfq|order\s+details)\s+(is\s+|are\s+)?(available|uploaded|shared)\s+(on|via|through)\s+(our\s+)?(portal|link|secure\s+server|cloud)/i
+/(new\s+)?(purchase\s+)?order\s+#?\S+\s+(requires|awaiting)\s+(your\s+)?(confirmation|signature|approval)\s+(online|via|here)/i
+# "Ready to order" + meeting lures
+/we\s+are\s+ready\s+to\s+place\s+(an\s+|our\s+)?(orders?|bulk\s+orders?)\s+with\s+your\s+company/i
+/(our\s+)?(manager|director|ceo|purchasing\s+manager)\s+(is\s+asking|would\s+like|requests?)\s+(for\s+)?(a\s+)?(video\s+)?(teams|zoom|skype|google\s+meet|video)\s+(meeting|call|conference)/i
+/(can\s+we\s+have|let['’]s\s+schedule)\s+a\s+(zoom|teams|video)\s+(meeting|call)\s+(today|tomorrow)[^.]{0,40}(order|introduction|presentation)/i
+/(introduction\s+and\s+)?order\s+presentation/i
+# Catalogs / drawings
+/(product\s+)?catalog(ue)?\s+(is\s+)?(password[\s-]protected|available\s+(only\s+)?online|via\s+(the\s+)?link)/i
+/(technical\s+)?drawings?\s+(and|&)\s+specifications?\s+(are\s+)?(available|uploaded)\s+(via|on|through)/i
+/(enable\s+(editing|content|macros)|password\s+is)\s+(to\s+view|for\s+the)\s+(order|catalog|drawings?|specification)/i
+# Proforma / invoices
+/(download|view)\s+(the\s+)?(proforma|pro-forma|commercial)\s+invoice\s+(here|online|via\s+(the\s+)?link)/i
+# Supplier bank change (BEC)
+/(we\s+have\s+)?(changed|updated)\s+(our\s+)?(bank(ing)?|beneficiary)\s+(details|account|information)/i
+/(all\s+)?(future\s+)?payments\s+(should|must)\s+(now\s+)?be\s+(made|sent)\s+to\s+(our\s+)?new\s+(bank\s+)?account/i
+# Certificates
+/(iso|ce|quality)\s+certificate\s+(has\s+)?(expired|will\s+expire|requires\s+renewal)\s+(click|update|renew)/i
+
+# ===== Spanish =====
+/(vea|descargue|acceda\s+a)\s+(la\s+)?(orden\s+de\s+compra|solicitud\s+de\s+cotizaci[óo]n|especificaciones)\s+(aqu[íi]|en\s+l[íi]nea|en\s+el\s+enlace)/iu
+/estamos\s+listos\s+para\s+realizar\s+(un\s+)?pedidos?\s+con\s+su\s+empresa/iu
+/nuestro\s+(gerente|director)\s+(solicita|desea)\s+una\s+(reuni[óo]n|videollamada)\s+(por\s+)?(zoom|teams)/iu
+/(hemos\s+)?cambiado\s+(nuestros\s+)?datos\s+bancarios/iu
+
+# ===== German =====
+/(sehen\s+sie|laden\s+sie)\s+(die\s+)?(bestellung|anfrage|spezifikation)\s+(hier|online|[üu]ber\s+den\s+link)/iu
+/wir\s+sind\s+bereit,?\s+(eine\s+)?bestellungen?\s+(bei\s+ihrem\s+unternehmen\s+)?aufzugeben/iu
+/unser\s+(manager|gesch[äa]ftsf[üu]hrer|einkaufsleiter)\s+(bittet\s+um|m[öo]chte)\s+(ein\s+)?(zoom|teams|video)[- ]?(meeting|anruf|gespr[äa]ch)/iu
+/(neue|ge[äa]nderte)\s+bankverbindung/iu
+
+# ===== French =====
+/(consultez|t[ée]l[ée]chargez)\s+(le\s+|la\s+)?(bon\s+de\s+commande|demande\s+de\s+prix|cahier\s+des\s+charges)\s+(ici|en\s+ligne|via\s+le\s+lien)/iu
+/nous\s+sommes\s+pr[êe]ts\s+[àa]\s+passer\s+(des\s+)?commandes?\s+(avec|aupr[èe]s\s+de)\s+votre\s+(soci[ée]t[ée]|entreprise)/iu
+/notre\s+(directeur|responsable)\s+(souhaite|demande)\s+une\s+(r[ée]union|visioconf[ée]rence)\s+(zoom|teams)/iu
+/(changement|modification)\s+de\s+(nos\s+)?coordonn[ée]es\s+bancaires/iu
+
+# ===== Italian =====
+/(visualizza|scarica)\s+(l['’])?(ordine\s+di\s+acquisto|richiesta\s+di\s+offerta|specifiche)\s+(qui|online|tramite\s+il\s+link)/iu
+/siamo\s+pronti\s+a\s+(effettuare|fare)\s+(degli\s+)?ordini\s+con\s+la\s+(vostra|tua)\s+azienda/iu
+/il\s+nostro\s+(direttore|responsabile)\s+(chiede|vorrebbe)\s+una\s+(riunione|videochiamata)\s+(su\s+)?(zoom|teams)/iu
+/(nuove|nuovi)\s+coordinate\s+bancarie/iu
+
+# ===== Portuguese =====
+/(visualize|baixe|acesse)\s+(o\s+|a\s+)?(pedido\s+de\s+compra|solicita[çc][ãa]o\s+de\s+cota[çc][ãa]o|especifica[çc][õo]es)\s+(aqui|online|no\s+link)/iu
+/estamos\s+prontos\s+para\s+(fazer|realizar)\s+pedidos\s+com\s+(a\s+)?sua\s+empresa/iu
+/nosso\s+(gerente|diretor)\s+(solicita|gostaria\s+de)\s+uma\s+(reuni[ãa]o|videochamada)\s+(no\s+)?(zoom|teams)/iu
+/(novos|alteramos\s+os\s+nossos)\s+dados\s+banc[áa]rios/iu
+
+# ===== Dutch =====
+/(bekijk|download)\s+(de\s+)?(inkooporder|offerteaanvraag|specificaties)\s+(hier|online|via\s+de\s+link)/iu
+/wij\s+zijn\s+klaar\s+om\s+bestellingen\s+(bij\s+uw\s+bedrijf\s+)?te\s+plaatsen/iu
+/(nieuwe|gewijzigde)\s+bankgegevens/iu
+
+# ===== Polish =====
+/(zobacz|pobierz)\s+(zam[óo]wienie|zapytanie\s+ofertowe|specyfikacj[ęe])\s+(tutaj|online|przez\s+link)/iu
+/jeste[śs]my\s+gotowi\s+z[łl]o[żz]y[ćc]\s+zam[óo]wienie\s+w\s+(pa[ńn]stwa|twojej)\s+firmie/iu
+/zmiana\s+(naszego\s+)?numeru\s+(konta|rachunku)/iu
+
+# ===== Turkish =====
+/(sat[ıi]n\s+alma\s+sipari(ş|s)ini|teklif\s+talebini|teknik\s+(ş|s)artnameyi)\s+(g[öo]r[üu]nt[üu]leyin|indirin)/iu
+/(ş|s)irketinizle\s+sipari(ş|s)\s+vermeye\s+haz[ıi]r[ıi]z/iu
+/(m[üu]d[üu]r[üu]m[üu]z|y[öo]neticimiz)\s+(zoom|teams|g[öo]r[üu]nt[üu]l[üu])\s+(toplant[ıi]|g[öo]r[üu](ş|s)me)\s+(talep\s+ediyor|istiyor)/iu
+/banka\s+hesap\s+bilgilerimiz\s+de[ğg]i(ş|s)ti/iu
+
+# ===== Azerbaijani =====
+/(sat[ıi]n\s+alma\s+sifari(ş|s)ini|qiym[əe]t\s+sor[ğg]usunu|texniki\s+(ş|s)[əe]rtl[əe]ri)\s+(y[üu]kl[əe]yin|bax[ıi]n)/iu
+/(ş|s)irk[əe]tiniz\s+il[əe]\s+sifari(ş|s)\s+verm[əe]y[əe]\s+haz[ıi]r[ıi]q/iu
+/(m[üu]dirimiz|r[əe]hb[əe]rimiz)\s+(zoom|teams|video)\s+(g[öo]r[üu](ş|s)|z[əe]ng)\s+(ist[əe]yir|t[əe]l[əe]b\s+edir)/iu
+/bank\s+(hesab\s+)?rekvizitl[əe]rimiz\s+d[əe]yi(ş|s)ib/iu
+
+# ===== Russian =====
+/(посмотрите|скачайте)\s+(заказ|запрос\s+(цен|коммерческого\s+предложения)|техническое\s+задание|спецификацию)\s+(по\s+ссылке|здесь|онлайн)/iu
+/мы\s+готовы\s+(разместить|сделать)\s+заказ\s+(в\s+вашей\s+компании|у\s+вас)/iu
+/наш\s+(директор|руководитель|менеджер)\s+(просит|хочет)\s+(провести\s+)?(видеоконференцию|видеозвонок|встречу\s+в\s+(zoom|teams))/iu
+/(изменились|новые)\s+(наши\s+)?банковские\s+реквизиты/iu
+
+# ===== Ukrainian =====
+/(перегляньте|завантажте)\s+(замовлення|запит\s+(цін|комерційної\s+пропозиції)|специфікацію)\s+(за\s+посиланням|тут)/iu
+/ми\s+готові\s+(розмістити|зробити)\s+замовлення\s+у\s+вашій\s+компанії/iu
+/(змінилися|нові)\s+(наші\s+)?банківські\s+реквізити/iu
+
+# ===== Arabic =====
+/(عرض|تحميل)\s+(أمر\s+الشراء|طلب\s+عرض\s+السعر|المواصفات)\s+(هنا|عبر\s+الرابط)/u
+/نحن\s+مستعدون\s+(لتقديم|لوضع)\s+طلبات?\s+(مع|لدى)\s+شركتكم/u
+/(مديرنا|المدير)\s+(يطلب|يرغب\s+في)\s+(اجتماع|مكالمة)\s+(فيديو|زووم|تيمز)/u
+/تم\s+تغيير\s+(بياناتنا|تفاصيلنا)\s+المصرفية/u
+
+# ===== Hindi =====
+/(परचेज\s+ऑर्डर|खरीद\s+आदेश|आरएफक्यू)\s+(यहाँ|लिंक\s+पर)\s+(देखें|डाउनलोड)/u
+/हम\s+आपकी\s+कंपनी\s+(को|के\s+साथ)\s+ऑर्डर\s+देने\s+के\s+लिए\s+तैयार/u
+/(हमारे\s+)?बैंक\s+(खाते\s+का\s+)?विवरण\s+(बदल|अपडेट)/u
+
+# ===== Chinese =====
+/(查看|下载|下載)(采购订单|採購訂單|询价单|詢價單|技术规格|技術規格)(请|請)?(点击|點擊)?(链接|鏈接|連結)/u
+/我们准备(向|与)贵公司下(订单|單)|我們準備(向|與)貴公司下(訂單|單)/u
+/(我们|我們)(经理|經理|总经理|總經理)(希望|要求)(进行|進行)?(视频|視訊|zoom|teams)(会议|會議)/u
+/(我司|我们的|我們的)(银行|銀行)(账户|帳戶|账号|帳號)(已)?(变更|變更|更改)/u
+
+# ===== Thai =====
+/(ดู|ดาวน์โหลด)(ใบสั่งซื้อ|ใบขอใบเสนอราคา|ข้อกำหนด)(ที่ลิงก์|ได้ที่นี่)/u
+/เราพร้อมสั่งซื้อสินค้ากับบริษัทของคุณ/u
+/(เปลี่ยน|อัปเดต)ข้อมูลบัญชีธนาคาร/u

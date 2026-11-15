@@ -1,0 +1,255 @@
+# =====================================================================
+#  common.map - general phishing phrases (installed for every sector)
+#  Part of: phishing-detector by Develust Technology
+#
+#  Format : one regex per line, /pattern/flags
+#  Flags  : i = case-insensitive, u = UTF-8 (needed for non-Latin text)
+#  Note   : PHISH_TEXT scores 0 alone; it only adds points together
+#           with a phishing link (PHISH_URL / PHISHING), so phrases
+#           can be a bit broader than a standalone rule.
+#  Rules  : no trailing spaces (Rspamd 4.x ignores such lines silently)
+#
+#  Themes : mailbox full / quota, password expiry, account verification,
+#           account suspension, unusual sign-in, shared documents,
+#           pending messages, voicemail, payment problems, parcel
+#           delivery, tax refund / overdue payment
+#
+#  Languages: English, Spanish, German, French, Italian, Portuguese,
+#             Dutch, Polish, Turkish, Azerbaijani, Russian, Ukrainian,
+#             Arabic, Hindi, Chinese, Thai
+# =====================================================================
+
+# ===== English =====
+/your\s+mailbox\s+(is|has)\s+(almost\s+|nearly\s+)?(full|reached\s+its\s+limit)/i
+/(mailbox|email|e-mail)\s+(storage\s+)?(quota|limit)\s+(exceeded|reached)/i
+/your\s+(cloud\s+|icloud\s+)?storage\s+is\s+(almost\s+)?full/i
+/your\s+(email\s+|account\s+)?password\s+(will\s+)?expires?\s+(today|soon|in\s+\d+)/i
+/password\s+expiration\s+notice/i
+/keep\s+(using\s+)?(the\s+)?same\s+password/i
+/verify\s+your\s+(email\s+)?account\s+(now|within|to\s+avoid|immediately)/i
+/confirm\s+your\s+(email\s+address|identity|account)\s+(within|to\s+avoid|to\s+continue|immediately)/i
+/action\s+required:?\s+(verify|confirm|update|validate)/i
+/your\s+(email\s+)?account\s+(will\s+be|has\s+been)\s+(suspended|deactivated|disabled|closed|terminated|deleted)/i
+/your\s+(email\s+|account\s+)?will\s+be\s+(deleted|closed|deactivated)\s+(within|in)\s+\d+/i
+/update\s+your\s+(billing|payment)\s+(information|details|method)/i
+/(detected|noticed)\s+(an\s+)?unusual\s+(sign-?in|login)\s+activity/i
+/sign-?in\s+attempt\s+(was\s+)?blocked/i
+/someone\s+(tried|attempted)\s+to\s+(sign|log)\s+in\s+to\s+your\s+account/i
+/we\s+noticed\s+a\s+new\s+(sign-?in|login)/i
+/(if|when)\s+this\s+was\s+not\s+you,?\s+(please\s+)?(click|tap|secure|end|close)/i
+/has\s+shared\s+a\s+(secure\s+|protected\s+)?(document|file|folder)\s+with\s+you/i
+/you\s+have\s+received\s+a\s+(new\s+)?(secure|encrypted|protected)\s+(document|message|file)/i
+/review\s+and\s+sign\s+(the\s+)?(document|agreement|contract)/i
+/you\s+have\s+(a\s+)?new\s+voice\s?mail/i
+/(incoming|new)\s+fax\s+(message\s+)?received/i
+/you\s+have\s+\d+\s+(pending|undelivered|held|blocked)\s+(incoming\s+)?(messages|emails)/i
+/release\s+(your\s+)?(pending|held|quarantined)\s+(messages|emails)/i
+/(email|e-mail|webmail|mail\s+server)\s+(upgrade|maintenance|deactivation)\s+(notice|required|in\s+progress)/i
+/(email|e-mail|webmail)\s+(administrator|admin|support)\s+team/i
+/your\s+(payment|transfer|transaction)\s+(has\s+been|was)\s+(declined|failed|cancelled|suspended)/i
+/(your\s+)?(package|parcel|shipment)\s+(could\s+not|cannot|can't)\s+be\s+delivered/i
+/(we|our\s+courier)\s+(could\s+not|was\s+unable\s+to)\s+deliver\s+your\s+(package|parcel)/i
+/you\s+(are\s+eligible\s+for|have)\s+a\s+(pending\s+)?tax\s+refund/i
+/click\s+(here|below)\s+to\s+(verify|confirm|unlock|restore|retain|reactivate)/i
+
+# ===== Spanish =====
+/su\s+buz[óo]n\s+(de\s+correo\s+)?est[áa]\s+(casi\s+)?lleno/iu
+/ha\s+(superado|excedido)\s+(el\s+)?(l[íi]mite|la\s+cuota)\s+de\s+almacenamiento/iu
+/su\s+contrase[ñn]a\s+(caduca|expira|vence|caducar[áa])/iu
+/verifi(que|ca)\s+su\s+cuenta/iu
+/su\s+cuenta\s+(ser[áa]|ha\s+sido)\s+(suspendida|bloqueada|desactivada|cerrada|eliminada)/iu
+/actividad\s+(de\s+inicio\s+de\s+sesi[óo]n\s+)?(inusual|sospechosa)/iu
+/ha\s+compartido\s+(un|el)\s+(documento|archivo)\s+con\s+usted/iu
+/tiene\s+\d+\s+mensajes\s+(pendientes|retenidos|no\s+entregados)/iu
+/nuevo\s+mensaje\s+de\s+voz/iu
+/su\s+pago\s+(ha\s+sido|fue)\s+(rechazado|cancelado)/iu
+/(paquete|env[íi]o)\s+no\s+(pudo|ha\s+podido)\s+ser\s+entregado/iu
+/factura\s+(pendiente|vencida)\s+de\s+pago/iu
+
+# ===== German =====
+/ihr\s+postfach\s+ist\s+(fast\s+)?(voll|[üu]berf[üu]llt|ueberfuellt)/iu
+/speicherplatz\s+(ist\s+)?(fast\s+)?(voll|ersch[öo]pft|aufgebraucht)/iu
+/ihr\s+passwort\s+(l[äa]uft|laeuft)\s+(heute\s+|bald\s+)?ab/iu
+/(best[äa]tigen|bestaetigen|verifizieren)\s+sie\s+ihr(e)?\s+(konto|e-mail|identit[äa]t)/iu
+/ihr\s+konto\s+(wird|wurde)\s+(gesperrt|deaktiviert|eingeschr[äa]nkt|geschlossen)/iu
+/ungew(ö|oe)hnliche\s+anmelde(aktivit[äa]t|versuch)/iu
+/hat\s+(ein|eine)\s+(dokument|datei)\s+mit\s+ihnen\s+geteilt/iu
+/sie\s+haben\s+\d+\s+(ausstehende|zur[üu]ckgehaltene|nicht\s+zugestellte)\s+(nachrichten|e-mails)/iu
+/neue\s+sprachnachricht/iu
+/ihre\s+zahlung\s+(wurde\s+)?(abgelehnt|fehlgeschlagen)/iu
+/ihr\s+paket\s+konnte\s+nicht\s+zugestellt\s+werden/iu
+/letzte\s+mahnung/iu
+
+# ===== French =====
+/votre\s+bo[îi]te\s+(aux\s+lettres|mail|de\s+r[ée]ception)\s+est\s+(presque\s+)?pleine/iu
+/quota\s+de\s+(stockage|messagerie)\s+(d[ée]pass[ée]|atteint)/iu
+/votre\s+mot\s+de\s+passe\s+(expire|va\s+expirer|a\s+expir[ée])/iu
+/v[ée]rifiez\s+votre\s+(compte|adresse|identit[ée])/iu
+/votre\s+compte\s+(sera|a\s+[ée]t[ée])\s+(suspendu|bloqu[ée]|d[ée]sactiv[ée]|ferm[ée]|supprim[ée])/iu
+/connexion\s+inhabituelle/iu
+/a\s+partag[ée]\s+un\s+(document|fichier)\s+avec\s+vous/iu
+/vous\s+avez\s+\d+\s+messages\s+(en\s+attente|bloqu[ée]s|non\s+distribu[ée]s)/iu
+/nouveau\s+message\s+vocal/iu
+/votre\s+paiement\s+a\s+[ée]t[ée]\s+(refus[ée]|rejet[ée])/iu
+/votre\s+colis\s+(n['’]a\s+pas\s+pu|ne\s+peut\s+pas)\s+[êe]tre\s+livr[ée]/iu
+/remboursement\s+d['’]imp[ôo]t/iu
+
+# ===== Italian =====
+/la\s+(tua|sua)\s+casella\s+(di\s+posta|email|e-mail)\s+[èe]\s+(quasi\s+)?piena/iu
+/(spazio|quota)\s+di\s+archiviazione\s+(esaurit[oa]|superat[oa])/iu
+/la\s+(tua|sua)\s+password\s+(scadr[àa]|[èe]\s+scaduta|scade)/iu
+/verifica\s+(il\s+)?(tuo|suo)\s+account/iu
+/il\s+(tuo|suo)\s+account\s+(sar[àa]|[èe]\s+stato)\s+(sospeso|bloccato|disattivato|chiuso)/iu
+/(attivit[àa]\s+di\s+)?accesso\s+(insolito|sospetto|insolita|sospetta)/iu
+/ha\s+condiviso\s+un\s+(documento|file)\s+con\s+te/iu
+/hai\s+\d+\s+messaggi\s+(in\s+sospeso|in\s+attesa|non\s+consegnati)/iu
+/nuovo\s+messaggio\s+vocale/iu
+/il\s+(tuo|suo)\s+pagamento\s+([èe]\s+stato\s+)?(rifiutato|non\s+riuscito)/iu
+/pacco\s+non\s+([èe]\s+stato\s+consegnato|pu[òo]\s+essere\s+consegnato|consegnato)/iu
+
+# ===== Portuguese =====
+/(sua|a\s+sua)\s+caixa\s+de\s+(correio|e-?mail|entrada)\s+est[áa]\s+(quase\s+)?cheia/iu
+/(cota|limite)\s+de\s+armazenamento\s+(excedid[ao]|atingid[ao])/iu
+/(sua|a\s+sua)\s+(senha|palavra-passe)\s+(expira|vai\s+expirar|expirar[áa]|expirou)/iu
+/verifique\s+(a\s+)?sua\s+conta/iu
+/(sua|a\s+sua)\s+conta\s+(ser[áa]|foi)\s+(suspensa|bloqueada|desativada|encerrada)/iu
+/atividade\s+(de\s+login\s+|de\s+in[íi]cio\s+de\s+sess[ãa]o\s+)?(incomum|suspeita)/iu
+/(compartilhou|partilhou)\s+um\s+(documento|arquivo|ficheiro)\s+(com\s+voc[êe]|consigo)/iu
+/voc[êe]\s+tem\s+\d+\s+mensagens\s+(pendentes|retidas|n[ãa]o\s+entregues)/iu
+/nova\s+mensagem\s+de\s+voz/iu
+/(seu|o\s+seu)\s+pagamento\s+(foi\s+)?(recusado|rejeitado)/iu
+/encomenda\s+n[ãa]o\s+(p[ôo]de|foi\s+poss[íi]vel)\s+(ser\s+)?entreg(ue|ar)/iu
+/nota\s+fiscal\s+(eletr[ôo]nica\s+)?(dispon[íi]vel|em\s+anexo)/iu
+
+# ===== Dutch =====
+/uw\s+(mailbox|postvak)\s+is\s+(bijna\s+)?vol/iu
+/(opslaglimiet|opslagruimte)\s+(is\s+)?(bijna\s+)?(bereikt|vol|overschreden)/iu
+/uw\s+wachtwoord\s+(verloopt|is\s+verlopen)/iu
+/(verifieer|bevestig)\s+uw\s+(account|e-?mailadres|identiteit)/iu
+/uw\s+account\s+(wordt|is)\s+(geblokkeerd|opgeschort|gedeactiveerd|verwijderd)/iu
+/ongebruikelijke\s+(aanmeldactiviteit|inlogpoging|aanmelding)/iu
+/heeft\s+een\s+(document|bestand)\s+met\s+u\s+gedeeld/iu
+/u\s+heeft\s+\d+\s+(wachtende|vastgehouden|niet\s+afgeleverde)\s+berichten/iu
+/nieuw\s+voicemailbericht/iu
+/uw\s+betaling\s+is\s+(geweigerd|mislukt)/iu
+/uw\s+pakket\s+kon\s+niet\s+(worden\s+)?bezorgd/iu
+
+# ===== Polish =====
+/twoja\s+skrzynka\s+(pocztowa\s+)?jest\s+(prawie\s+)?pe[łl]na/iu
+/przekroczono\s+limit\s+(miejsca|skrzynki|przestrzeni)/iu
+/twoje\s+has[łl]o\s+(wygasa|wyga[śs]nie|wygas[łl]o)/iu
+/zweryfikuj\s+(swoje\s+)?konto/iu
+/twoje\s+konto\s+(zostanie|zosta[łl]o)\s+(zablokowane|zawieszone|usuni[ęe]te|dezaktywowane)/iu
+/nietypow[ae]\s+(logowanie|aktywno[śs][ćc]\s+logowania)/iu
+/udost[ęe]pni[łl]\s+(ci|tobie|pa[ńn]stwu)\s+(dokument|plik)/iu
+/masz\s+\d+\s+(oczekuj[ąa]cych|wstrzymanych|niedostarczonych)\s+wiadomo[śs]ci/iu
+/nowa\s+wiadomo[śs][ćc]\s+g[łl]osowa/iu
+/twoja\s+p[łl]atno[śs][ćc]\s+(zosta[łl]a\s+)?odrzucona/iu
+/przesy[łl]ka\s+(nie\s+mog[łl]a\s+zosta[ćc]\s+dostarczona|zosta[łl]a\s+wstrzymana)/iu
+/dop[łl]at[aęy]\s+do\s+przesy[łl]ki/iu
+
+# ===== Turkish =====
+/posta\s+kutunuz\s+(dolu|dolmak\s+[üu]zere)/iu
+/depolama\s+alan[ıi]n[ıi]z\s+(dolu|dolmak\s+[üu]zere)/iu
+/(ş|s)ifrenizin\s+s[üu]resi\s+(doluyor|dolacak|doldu)/iu
+/hesab[ıi]n[ıi]z\s+(ask[ıi]ya\s+al[ıi]nacak|kapat[ıi]lacak|devre\s+d[ıi](ş|s)[ıi])/iu
+/hesab[ıi]n[ıi]z[ıi]\s+do[ğg]rulay[ıi]n/iu
+/ola[ğg]and[ıi](ş|s)[ıi]\s+(giri(ş|s)|oturum\s+a[çc]ma)\s+etkinli[ğg]i/iu
+/sizinle\s+bir\s+(belge|dosya)\s+payla(ş|s)t[ıi]/iu
+/\d+\s+(bekleyen|teslim\s+edilmemi(ş|s))\s+(mesaj|ileti)/iu
+/yeni\s+sesli\s+mesaj/iu
+/gecikmi(ş|s)\s+[öo]deme/iu
+/[öo]demeniz\s+(reddedildi|ba(ş|s)ar[ıi]s[ıi]z)/iu
+/kargonuz\s+teslim\s+edilemedi/iu
+
+# ===== Azerbaijani =====
+/po[çc]t\s+qutunuz\s+dol(ub|maq\s+[üu]zr[əe]dir)/iu
+/yadda(ş|s)\s+(sah[əe]si|yeri)\s+dolub/iu
+/(ş|s)ifr[əe]nizin\s+(m[üu]dd[əe]ti|vaxt[ıi])\s+(bitir|bit[əe]c[əe]k|bitib)/iu
+/hesab[ıi]n[ıi]z\s+(bloklanacaq|dayand[ıi]r[ıi]lacaq|silin[əe]c[əe]k)/iu
+/hesab[ıi]n[ıi]z[ıi]\s+t[əe]sdiql[əe]yin/iu
+/(ş|s)[üu]bh[əe]li\s+giri(ş|s)\s+(c[əe]hdi|a(ş|s)karland[ıi])/iu
+/sizinl[əe]\s+s[əe]n[əe]d\s+payla(ş|s)[ıi]ld[ıi]/iu
+/\d+\s+(ç|c)atd[ıi]r[ıi]lmam[ıi](ş|s)\s+(mesaj|m[əe]ktub)/iu
+/yeni\s+s[əe]sli\s+mesaj/iu
+/[öo]d[əe]ni(ş|s)iniz\s+(r[əe]dd\s+edildi|al[ıi]nmad[ıi]|u[ğg]ursuz)/iu
+/ba[ğg]laman[ıi]z\s+(ç|c)atd[ıi]r[ıi]la\s+bilm[əe]di/iu
+/gecikmi(ş|s)\s+[öo]d[əe]ni(ş|s)/iu
+
+# ===== Russian =====
+/ваш\s+почтовый\s+ящик\s+(переполнен|почти\s+заполнен|заполнен)/iu
+/превышен\s+(лимит|объ[её]м)\s+(вашего\s+)?почтового\s+ящика/iu
+/место\s+в\s+(хранилище|облаке)\s+(закончилось|заканчивается)/iu
+/срок\s+действия\s+(вашего\s+)?пароля\s+(истекает|истеч[её]т|ист[её]к)/iu
+/подтвердите\s+(вашу\s+|свою\s+)?(учетную|учётную)\s+запись/iu
+/ваша\s+(учетная|учётная)\s+запись\s+будет\s+(заблокирована|отключена|удалена)/iu
+/(ваш\s+)?аккаунт\s+будет\s+(заблокирован|удал[её]н|отключ[её]н)/iu
+/обнаружен\s+(подозрительный|необычный)\s+вход/iu
+/вам\s+(отправлен|предоставлен)\s+(защищенный\s+|защищённый\s+)?документ/iu
+/у\s+вас\s+(есть\s+)?\d+\s+(недоставленных|задержанных|непрочитанных)\s+(писем|сообщений)/iu
+/новое\s+голосовое\s+сообщение/iu
+/ваш\s+плат[её]ж\s+(отклон[её]н|не\s+прош[её]л)/iu
+/ваша\s+посылка\s+не\s+(может\s+быть|была)\s+доставлена/iu
+/просроченн(ый|ая)\s+(плат[её]ж|задолженность|сч[её]т)/iu
+
+# ===== Ukrainian =====
+/ваша\s+поштова\s+скринька\s+(переповнена|майже\s+заповнена)/iu
+/термін\s+дії\s+(вашого\s+)?пароля\s+(закінчується|спливає|сплив)/iu
+/підтвердіть\s+(свій|ваш)\s+(обліковий\s+запис|акаунт)/iu
+/ваш\s+(обліковий\s+запис|акаунт)\s+буде\s+(заблоковано|видалено|відключено)/iu
+/виявлено\s+(підозрілий|незвичний)\s+вхід/iu
+/вам\s+надіслано\s+(захищений\s+)?документ/iu
+/у\s+вас\s+\d+\s+(недоставлених|затриманих)\s+(листів|повідомлень)/iu
+/ваш\s+платіж\s+(відхилено|не\s+пройшов)/iu
+/ваша\s+посилка\s+не\s+(може\s+бути|була)\s+доставлена/iu
+
+# ===== Arabic =====
+/صندوق\s+(بريدك|البريد\s+الخاص\s+بك)\s+(ممتلئ|شبه\s+ممتلئ)/u
+/تجاوز\s+(سعة|حد)\s+(التخزين|صندوق\s+البريد)/u
+/(ستنتهي|انتهت)\s+صلاحية\s+كلمة\s+(المرور|السر)/u
+/(تأكيد|التحقق\s+من)\s+حسابك/u
+/سيتم\s+(إيقاف|تعليق|حظر|إغلاق)\s+حسابك/u
+/تسجيل\s+دخول\s+(غير\s+عادي|غير\s+معتاد|مشبوه)/u
+/شارك\s+(معك\s+)?(مستند|ملف)/u
+/لديك\s+[0-9٠-٩]+\s+رسائل\s+(معلقة|غير\s+مستلمة)/u
+/رسالة\s+صوتية\s+جديدة/u
+/تم\s+رفض\s+(عملية\s+)?الدفع/u
+/تعذر\s+(توصيل|تسليم)\s+(شحنتك|طردك)/u
+
+# ===== Hindi (and Hinglish) =====
+/आपका\s+मेलबॉक्स\s+(भर\s+गया|लगभग\s+भर)/u
+/आपका\s+पासवर्ड\s+(समाप्त|एक्सपायर)\s+हो/u
+/अपना\s+खाता\s+(सत्यापित|वेरिफाई)\s+करें/u
+/आपका\s+खाता\s+(बंद|निलंबित|ब्लॉक)\s+(कर\s+दिया\s+जाएगा|हो\s+जाएगा)/u
+/असामान्य\s+(लॉगिन|साइन[\s-]?इन)\s+गतिविधि/u
+/आपके\s+साथ\s+(एक\s+)?(दस्तावेज़|दस्तावेज|फ़ाइल|फाइल)\s+साझा/u
+/आपका\s+भुगतान\s+(अस्वीकार|विफल)/u
+/आपका\s+(पार्सल|पैकेज)\s+(डिलीवर\s+नहीं|वितरित\s+नहीं)/u
+/kyc\s+(update|verification)\s+(pending|required|karein|kare|now)/i
+/(pan|aadhaar)\s+(card\s+)?(link|update|verify)\s+(karein|kare|now|immediately)/i
+
+# ===== Chinese (Simplified / Traditional) =====
+/您的(邮箱|郵箱|信箱)(空间|空間)?(已满|已滿|即将满|即將滿|容量不足)/u
+/(邮箱|郵箱|信箱)(容量|空间|空間)(已|即将|即將)?(超出|超過|不足)/u
+/密(码|碼)(即将|即將|已)?(过期|過期|到期)/u
+/(请|請)(立即)?(验证|驗證)(您的)?(账户|帳戶|账号|帳號|邮箱|郵箱)/u
+/(账户|帳戶|账号|帳號)(将|將)(被)?(冻结|凍結|停用|注销|註銷|关闭|關閉)/u
+/(异常|異常)登(录|錄|入)/u
+/(与|與)您共(享|用)了(文件|文档|檔案)/u
+/[0-9]+封(未送达|未送達|待处理|待處理)(的)?(邮件|郵件)/u
+/(新的)?(语音|語音)留言/u
+/(付款|支付)(失败|失敗|被拒绝|被拒絕)/u
+/包裹(无法|無法)(投递|投遞|派送|送达|送達)/u
+/(退税|退稅)(通知|申请|申請)/u
+/(电子|電子)?(发票|發票)(下载|下載|已开具|已開具)/u
+
+# ===== Thai =====
+/กล่องจดหมาย(ของคุณ)?(เต็ม|ใกล้เต็ม)/u
+/รหัสผ่าน(ของคุณ)?(จะ)?หมดอายุ/u
+/(ยืนยัน|ตรวจสอบ)บัญชีของคุณ/u
+/บัญชี(ของคุณ)?จะถูก(ระงับ|ปิด|ล็อก)/u
+/(การเข้าสู่ระบบ|การลงชื่อเข้าใช้)ที่ผิดปกติ/u
+/แชร์เอกสารกับคุณ/u
+/การชำระเงิน(ของคุณ)?(ถูกปฏิเสธ|ล้มเหลว)/u
+/พัสดุ(ของคุณ)?ไม่สามารถจัดส่ง/u
+/คืนภาษี/u

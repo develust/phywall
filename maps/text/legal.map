@@ -1,0 +1,126 @@
+# =====================================================================
+#  legal.map - phishing phrases for law firms and legal departments
+#  Part of: phishing-detector by Develust Technology
+#
+#  Format : one regex per line, /pattern/flags (i = case-insensitive,
+#           u = UTF-8). No trailing spaces.
+#  Note   : PHISH_TEXT scores 0 alone; it only adds points together
+#           with a phishing link (PHISH_URL / PHISHING).
+#
+#  Themes : case files and court documents behind a link, contracts /
+#           settlements to e-sign, escrow and client-fund account
+#           changes (BEC), cease-and-desist and infringement claims,
+#           debt collection notices, inheritance / beneficiary /
+#           next-of-kin advance-fee scams, fake retainer invoices
+#
+#  Avoided: "contract draft attached", "court hearing scheduled",
+#           "meeting with the client", because law firms exchange real
+#           ones every day.
+# =====================================================================
+
+# ===== English =====
+# Case files / documents
+/(view|download|review|access)\s+(the\s+)?(case\s+files?|court\s+documents?|legal\s+documents?|case\s+materials?)\s+(here|online|via\s+(the\s+)?(secure\s+)?link|on\s+our\s+portal)/i
+/(legal|case)\s+documents?\s+(have\s+been|has\s+been)\s+(shared|uploaded|sent)\s+(with\s+you\s+)?(via|through|on)\s+(a\s+)?(secure\s+)?(portal|link|server)/i
+# E-signing
+/(please\s+)?(review\s+and\s+)?(sign|e-?sign)\s+(the\s+)?(settlement|agreement|contract|power\s+of\s+attorney|nda)\s+(electronically\s+)?(via|using|through|at)\s+(the\s+)?(link|portal)/i
+/(settlement|agreement|contract)\s+(is\s+)?(awaiting|pending)\s+your\s+(e-?)?signature/i
+# Escrow / client funds (BEC)
+/(escrow|trust|client)\s+account\s+(details\s+)?(have\s+|has\s+)?(changed|been\s+updated)/i
+/(wire|transfer)\s+(the\s+)?(settlement|closing|escrow)\s+(funds|amount|payment)\s+to\s+(the\s+)?(new|following|updated)\s+account/i
+/(updated|new)\s+(wiring|wire)\s+instructions\s+for\s+(the\s+)?(closing|settlement|escrow|transaction)/i
+# Claims / notices
+/(cease\s+and\s+desist|dmca\s+takedown)\s+(notice|letter|order)/i
+/(final\s+)?(notice\s+of\s+)?(legal\s+action|litigation)\s+(will\s+be\s+taken|before\s+court)\s+(unless|if)/i
+/(debt\s+collection|collection\s+agency)\s+(notice|final\s+demand)/i
+# Inheritance / advance-fee
+/(you\s+(are|have\s+been\s+named)\s+(as\s+)?)(the\s+)?(sole\s+)?(beneficiary|next\s+of\s+kin|heir)\s+(of|to)/i
+/(unclaimed|dormant)\s+(inheritance|estate|funds|fortune)\s+(of|worth|valued)/i
+/(late|deceased)\s+(client|customer|mr\.?|mrs\.?)\s+[^.]{0,40}(left|deposited)\s+(a\s+)?(sum|fund|amount)/i
+# Retainer / fees
+/(retainer|legal)\s+(fee|invoice)\s+(is\s+)?(overdue|outstanding|unpaid)[,.:]?\s+(view|pay|via|online)/i
+
+# ===== Spanish =====
+/(vea|descargue|acceda\s+a)\s+(el\s+)?(expediente|documentos?\s+(del\s+caso|judiciales|legales))\s+(aqu[íi]|en\s+l[íi]nea|en\s+el\s+enlace)/iu
+/firme\s+(el\s+)?(acuerdo|contrato|poder)\s+(electr[óo]nicamente\s+)?(en|mediante)\s+el\s+enlace/iu
+/(nuevas|actualizadas)\s+instrucciones\s+de\s+(pago|transferencia)\s+para\s+(el\s+)?(cierre|acuerdo)/iu
+/(usted\s+es|ha\s+sido\s+nombrado)\s+(el\s+)?([úu]nico\s+)?(beneficiario|heredero)/iu
+
+# ===== German =====
+/(sehen\s+sie|laden\s+sie)\s+(die\s+)?(fallakte|gerichtsakte|prozessunterlagen|rechtsdokumente)\s+(hier|online|[üu]ber\s+den\s+link)/iu
+/(unterzeichnen|signieren)\s+sie\s+(den\s+|die\s+)?(vergleich|vertrag|vollmacht)\s+([üu]ber\s+den\s+link|online)/iu
+/(ge[äa]nderte|neue)\s+(treuhand|anderkonto)(konto)?\s*-?\s*(daten|verbindung)/iu
+/sie\s+sind\s+(der\s+)?(alleinige[r]?\s+)?(beg[üu]nstigte[r]?|erbe)/iu
+
+# ===== French =====
+/(consultez|t[ée]l[ée]chargez)\s+(le\s+)?(dossier|documents?\s+(juridiques|judiciaires))\s+(ici|en\s+ligne|via\s+le\s+lien)/iu
+/signez\s+(l['’]accord|le\s+contrat|la\s+procuration)\s+(en\s+ligne|via\s+le\s+lien)/iu
+/(nouvelles\s+)?coordonn[ée]es\s+du\s+compte\s+(s[ée]questre|client|de\s+tiers)/iu
+/vous\s+[êe]tes\s+(le\s+)?(seul\s+)?(b[ée]n[ée]ficiaire|h[ée]ritier)/iu
+
+# ===== Italian =====
+/(visualizza|scarica)\s+(il\s+)?(fascicolo|documenti\s+(legali|giudiziari))\s+(qui|online|tramite\s+il\s+link)/iu
+/firma\s+(l['’]accordo|il\s+contratto|la\s+procura)\s+(online|tramite\s+il\s+link)/iu
+/(nuove|aggiornate)\s+coordinate\s+del\s+conto\s+(deposito|fiduciario)/iu
+/(sei|lei\s+[èe])\s+(l['’]unico\s+)?(beneficiario|erede)/iu
+
+# ===== Portuguese =====
+/(visualize|baixe|acesse)\s+(o\s+)?(processo|documentos\s+(jur[íi]dicos|judiciais))\s+(aqui|online|no\s+link)/iu
+/assine\s+(o\s+acordo|o\s+contrato|a\s+procura[çc][ãa]o)\s+(online|pelo\s+link)/iu
+/(novos\s+)?dados\s+da\s+conta\s+(de\s+cust[óo]dia|fiduci[áa]ria|escrow)/iu
+/voc[êe]\s+[ée]\s+(o\s+)?([úu]nico\s+)?(benefici[áa]rio|herdeiro)/iu
+
+# ===== Dutch =====
+/(bekijk|download)\s+(het\s+)?(dossier|juridische\s+documenten|processtukken)\s+(hier|online|via\s+de\s+link)/iu
+/onderteken\s+(de\s+overeenkomst|het\s+contract|de\s+volmacht)\s+(online|via\s+de\s+link)/iu
+/(nieuwe|gewijzigde)\s+(derdengelden|escrow)rekening/iu
+
+# ===== Polish =====
+/(zobacz|pobierz)\s+(akta\s+sprawy|dokumenty\s+(prawne|s[ąa]dowe))\s+(tutaj|online|przez\s+link)/iu
+/podpisz\s+(ugod[ęe]|umow[ęe]|pe[łl]nomocnictwo)\s+(online|przez\s+link)/iu
+/jeste[śs]\s+(jedynym\s+)?(spadkobierc[ąa]|beneficjentem)/iu
+
+# ===== Turkish =====
+/(dava\s+dosyas[ıi]n[ıi]|hukuki\s+belgeleri|mahkeme\s+evrak[ıi]n[ıi])\s+(g[öo]r[üu]nt[üu]leyin|indirin)/iu
+/(uzla(ş|s)ma|s[öo]zle(ş|s)me|vekaletname)\s+(belgesini\s+)?(ba[ğg]lant[ıi]dan|linkten)\s+imzalay[ıi]n/iu
+/(emanet|yediemin)\s+hesap\s+bilgileri\s+de[ğg]i(ş|s)ti/iu
+/(tek\s+)?(miras[çc][ıi]|lehtar)\s+(olarak\s+)?(belirlendiniz|siz\s+seçildiniz)/iu
+
+# ===== Azerbaijani =====
+/(i(ş|s)\s+materiallar[ıi]n[ıi]|h[üu]quqi\s+s[əe]n[əe]dl[əe]ri|m[əe]hk[əe]m[əe]\s+s[əe]n[əe]dl[əe]rini)\s+(y[üu]kl[əe]yin|bax[ıi]n)/iu
+/(m[üu]qavil[əe]ni|etibarnam[əe]ni|saz[ıi](ş|s)[ıi])\s+(link|ke[çc]id)\s+(il[əe]|vasit[əe]sil[əe])\s+imzalay[ıi]n/iu
+/(depozit|emanet)\s+hesab[ıi]n[ıi]n\s+rekvizitl[əe]ri\s+d[əe]yi(ş|s)ib/iu
+/(yegan[əe]\s+)?(varis|benefisiar)\s+(kimi\s+)?(t[əe]yin\s+olunmusunuz|siz\s+se[çc]ilmisiniz)/iu
+
+# ===== Russian =====
+/(посмотрите|скачайте)\s+(материалы\s+дела|судебные\s+документы|документы\s+по\s+делу)\s+(по\s+ссылке|здесь|онлайн)/iu
+/подпишите\s+(мировое\s+соглашение|договор|доверенность)\s+(по\s+ссылке|онлайн|электронно)/iu
+/(изменились|новые)\s+реквизиты\s+(эскроу|депозитного|доверительного)\s+сч[её]та/iu
+/вы\s+(являетесь|стали)\s+(единственным\s+)?(наследником|бенефициаром)/iu
+/(досудебная\s+претензия|уведомление\s+о\s+взыскании)\s+(по\s+ссылке|во\s+вложении)/iu
+
+# ===== Ukrainian =====
+/(перегляньте|завантажте)\s+(матеріали\s+справи|судові\s+документи)\s+(за\s+посиланням|тут)/iu
+/підпишіть\s+(мирову\s+угоду|договір|довіреність)\s+(за\s+посиланням|онлайн)/iu
+/ви\s+(є|стали)\s+(єдиним\s+)?(спадкоємцем|бенефіціаром)/iu
+
+# ===== Arabic =====
+/(عرض|تحميل)\s+(ملف\s+القضية|المستندات\s+القانونية|وثائق\s+المحكمة)/u
+/(وقّع|وقع)\s+(الاتفاقية|العقد|التوكيل)\s+(عبر|من\s+خلال)\s+الرابط/u
+/(أنت|تم\s+تعيينك)\s+(ك)?(المستفيد|الوريث)\s+(الوحيد)?/u
+
+# ===== Hindi =====
+/(केस\s+फाइल|कानूनी\s+दस्तावेज़?|अदालती\s+दस्तावेज़?)\s+(डाउनलोड|देखें)/u
+/(समझौते|अनुबंध|पावर\s+ऑफ\s+अटॉर्नी)\s+पर\s+(लिंक\s+से\s+)?(हस्ताक्षर|साइन)\s+करें/u
+/(आप|आपको)\s+(एकमात्र\s+)?(लाभार्थी|उत्तराधिकारी)/u
+
+# ===== Chinese =====
+/(查看|下载|下載)(案件材料|案卷|法律文件|法院文件)/u
+/(请|請)(通过|通過)(链接|鏈接|連結)(签署|簽署)(和解协议|和解協議|合同|合約|授权书|授權書)/u
+/(托管|託管|监管|監管)(账户|帳戶)(信息|資訊)?(已)?(变更|變更)/u
+/您是(唯一的?)?(受益人|继承人|繼承人)/u
+
+# ===== Thai =====
+/(ดู|ดาวน์โหลด)(สำนวนคดี|เอกสารทางกฎหมาย|เอกสารศาล)/u
+/ลงนาม(สัญญา|ข้อตกลง|หนังสือมอบอำนาจ)ผ่านลิงก์/u
+/คุณเป็น(ผู้รับผลประโยชน์|ทายาท)/u

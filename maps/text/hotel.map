@@ -1,0 +1,200 @@
+# =====================================================================
+#  hotel.map - phishing phrases for hotels and hospitality
+#  Part of: phishing-detector by Develust Technology
+#
+#  Format : one regex per line, /pattern/flags (i = case-insensitive,
+#           u = UTF-8). No trailing spaces.
+#  Note   : PHISH_TEXT scores 0 alone; it only adds points together
+#           with a phishing link (PHISH_URL / PHISHING).
+#
+#  Themes : fake guest complaints (bed bugs, hygiene, sanitary),
+#           complaint "evidence" (photo/video), guest left belongings,
+#           fake cancellation requests, fake guest messages,
+#           OTA account suspension / extranet login (Booking.com,
+#           Expedia, Agoda, Airbnb), card / payment problems,
+#           channel manager sync errors, complaint-frequency warnings
+#
+#  Avoided: generic guest questions ("information about my booking"),
+#           because real guests write them every day.
+# =====================================================================
+
+# ===== English =====
+# Fake complaints
+/official\s+complaint\s+has\s+been\s+filed\s+by\s+a\s+guest/i
+/guest\s+has\s+submitted\s+a\s+complaint\s+regarding\s+(a|their|the)\s+stay/i
+/a\s+complaint\s+has\s+been\s+received\s+about\s+your\s+property/i
+/formal\s+complaint\s+(received|filed|submitted)/i
+/guest\s+complaint\s+#?\d+/i
+/reservation\s+complaint\s+notice/i
+/bed\s?bugs?\s+(infestation|presence|in\s+(my|the)\s+room|incident)/i
+/(guest|visitor)\s+(report|reported|reports)\s*:?\s+(possible\s+)?bed\s?bugs?/i
+/review\s+of\s+sanitary\s+conditions/i
+/(excessive|high)\s+complaint\s+frequency/i
+/more\s+issue\s+reports/i
+# Complaint "evidence"
+/view\s+(the\s+)?photo\s+(and|&)\s+video\s+evidence/i
+/review\s+(the\s+)?(attached\s+)?(photo|video|photo\/video|evidence)\s+within\s+\d+\s+hours/i
+/have\s+been\s+compiled\s+for\s+you\s+in\s+an\s+archive/i
+/this\s+link\s+is\s+valid\s+for\s+\d+\s+hours/i
+/temporary\s+suspension\s+from\s+the\s+platform/i
+# Fake complaints / "lost money" lures (2025-08 templates)
+/(critical\s+)?guest\s+comments?\s+(was|were|has\s+been|have\s+been)\s+submitted/i
+/guest\s+complaint\s+regarding\s+(a\s+|your\s+)?recent\s+stay/i
+/view\s+(the\s+)?(guest\s+)?complaint(\s+(&|and)\s+contact\s+(the\s+)?guest)?/i
+/guests?\s+(have\s+)?lost\s+money\s+due\s+to\s+technical\s+(failures?|issues?|errors?)/i
+/charged\s+(fully|the\s+full\s+amount|in\s+full)\s+(but\s+never\s+received|without\s+(ever\s+)?receiving)\s+(a\s+|any\s+)?confirmation/i
+/(that\s+|the\s+)?guest\s+(now\s+)?(plans|intends|is\s+planning)\s+(to\s+take\s+)?legal\s+action/i
+/(suspend|disable|pause|hide)\s+(the\s+)?(visibility\s+of\s+your\s+property|your\s+property['’]?s?\s+visibility|showing\s+your\s+property)/i
+/(property|listing)\s+(may|will)\s+be\s+(temporarily\s+)?(disabled|suspended|paused|hidden|removed)\s+from\s+the\s+platform/i
+/(affected\s+)?guest['’]?s?\s+(booking\s+and\s+)?charge\s+details/i
+# Fake sign-in alerts (2025-08 templates)
+/sign-?in\s+activity\s+from\s+(an\s+)?(alternate|unknown|new|unrecognized)\s+(setup|device|location)/i
+/click\s+the\s+button\s+below\s+to\s+(close|end|terminate)\s+the\s+session/i
+/check\s+that\s+your\s+url\s+reads/i
+
+# Lost items
+/guest\s+left\s+(personal\s+)?(belongings|items?)\s+(on|at|in)\s+the\s+property/i
+/(message|note)\s+from\s+guest\s+about\s+(an\s+)?item\s+left/i
+# Fake cancellations
+/(your\s+)?guest\s+(has\s+)?requested\s+a\s+cancellation/i
+/guest\s+is\s+asking\s+to\s+cancel\s+(their|the)\s+(stay|reservation|booking)/i
+/a\s+guest\s+would\s+like\s+to\s+cancel\s+(their|the)\s+(stay|reservation|booking)/i
+/review\s+cancellation\s+request\s+from\s+(the\s+)?guest/i
+/cancellation\s+transmission\s+error/i
+# Fake guest messages / OTA inbox
+/you\s+have\s+an\s+unread\s+guest\s+message/i
+/new\s+message\s+in\s+your\s+(booking\.com|expedia|agoda|airbnb)\s+inbox/i
+/action\s+(needed|required):?\s+(guest\s+sent\s+a\s+note|new\s+guest\s+message|confirm\s+booking)/i
+/reminder:?\s+reply\s+to\s+guest/i
+/respond\s+within\s+\d+\s*h(ours)?:?\s+guest\s+feedback/i
+# OTA account / extranet
+/(booking\.com|expedia|agoda|airbnb)\s+(extranet|partner\s+hub|partner\s+central)\s+(account|access)\s+(suspended|restricted|locked|limited)/i
+/(unusual|new)\s+(login|session|sign-?in)\s+detected\s+(through|via|within)\s+your\s+(secure\s+session|account|access\s+panel)/i
+/sign-?in\s+from\s+unknown\s+device\s+within\s+your/i
+/your\s+(property|listing)\s+(will\s+be|has\s+been)\s+(suspended|deactivated|closed|removed|hidden)/i
+/channel\s+synchronization\s+failure\s+detected/i
+/(rate|availability)\s+sync(hronization)?\s+(error|failed|failure)/i
+# Card / payment
+/(guest('s)?\s+)?credit\s+card\s+(is\s+)?(invalid|declined|could\s+not\s+be\s+charged)/i
+/(update|verify)\s+(your\s+)?(bank|payout|payment)\s+details\s+(to\s+receive|for)\s+(payouts?|payments?)/i
+/received\s+a\s+voucher\s+from\s+your\s+guest\s+indicating/i
+/we\s+refer\s+to\s+our\s+booking\s+on\s+agoda/i
+/see\s+screenshot\s+of\s+the\s+agoda\s+booking\s+information/i
+
+# ===== Spanish =====
+/se\s+ha\s+recibido\s+una\s+reclamaci[óo]n\s+sobre\s+su/iu
+/(notificaci[óo]n\s+de\s+)?reclamaci[óo]n\s+de\s+terceros/iu
+/queja\s+sobre\s+una\s+reserva\s+reciente/iu
+/queja\s+del\s+hu[ée]sped\s+sobre\s+su\s+estancia/iu
+/ha\s+olvidado\s+pertenencias\s+personales/iu
+/chinches\s+(en\s+la\s+habitaci[óo]n|de\s+cama)/iu
+/el\s+hu[ée]sped\s+(ha\s+)?solicitado\s+(la\s+)?cancelaci[óo]n/iu
+/revise\s+las\s+(fotos|pruebas)\s+(en\s+un\s+plazo\s+de|dentro\s+de)\s+\d+\s+horas/iu
+/suspensi[óo]n\s+temporal\s+de\s+la\s+plataforma/iu
+
+# ===== German =====
+/beschwerde\s+wegen\s+bettwanzen/iu
+/gast\s+meldet\s+bettwanzen/iu
+/vorfall\s+mit\s+bettwanzen/iu
+/unzumutbare\s+zust[äa]nde/iu
+/beschwerde\s+(eines|von\s+einem)\s+gast(es)?/iu
+/gast\s+hat\s+(pers[öo]nliche\s+)?gegenst[äa]nde\s+(vergessen|zur[üu]ckgelassen)/iu
+/stornierungsanfrage\s+(eines|des)\s+gast(es)?/iu
+/vor[üu]bergehende\s+sperrung\s+(ihrer\s+unterkunft|auf\s+der\s+plattform)/iu
+
+# ===== French =====
+/(une\s+)?r[ée]clamation\s+(a\s+[ée]t[ée]\s+d[ée]pos[ée]e|d['’]un\s+client)\s+(concernant|sur)\s+(votre\s+)?([ée]tablissement|s[ée]jour)/iu
+/punaises\s+de\s+lit/iu
+/le\s+client\s+a\s+oubli[ée]\s+(des\s+)?(effets\s+personnels|objets)/iu
+/demande\s+d['’]annulation\s+(du|d['’]un)\s+client/iu
+/suspension\s+temporaire\s+de\s+(la\s+plateforme|votre\s+[ée]tablissement)/iu
+/consultez\s+les\s+(photos|preuves)\s+(dans\s+les|sous)\s+\d+\s+heures/iu
+
+# ===== Italian =====
+/[èe]\s+stato\s+presentato\s+un\s+reclamo\s+(da\s+un\s+ospite|sulla\s+(sua|tua)\s+struttura)/iu
+/reclamo\s+(di\s+un|dell['’])\s*ospite/iu
+/cimici\s+(dei\s+letti|da\s+letto)/iu
+/l['’]ospite\s+ha\s+dimenticato\s+(degli\s+)?oggetti/iu
+/richiesta\s+di\s+cancellazione\s+(da\s+parte\s+)?dell['’]ospite/iu
+/sospensione\s+temporanea\s+dalla\s+piattaforma/iu
+
+# ===== Portuguese =====
+/(uma\s+)?reclama[çc][ãa]o\s+(foi\s+)?(registrada|recebida|apresentada)\s+sobre\s+(a\s+sua|sua)\s+(propriedade|acomoda[çc][ãa]o)/iu
+/percevejos\s+(na\s+cama|no\s+quarto)/iu
+/o\s+h[óo]spede\s+(esqueceu|deixou)\s+(pertences|objetos)/iu
+/(o\s+)?h[óo]spede\s+solicitou\s+(o\s+)?cancelamento/iu
+/suspens[ãa]o\s+tempor[áa]ria\s+da\s+plataforma/iu
+
+# ===== Dutch =====
+/klacht\s+(van\s+een\s+gast|ingediend\s+over\s+uw\s+accommodatie)/iu
+/bedwantsen/iu
+/gast\s+heeft\s+(persoonlijke\s+)?spullen\s+achtergelaten/iu
+/annuleringsverzoek\s+van\s+(de\s+)?gast/iu
+/tijdelijke\s+opschorting\s+van\s+het\s+platform/iu
+
+# ===== Polish =====
+/(z[łl]o[żz]ono|otrzymano)\s+skarg[ęe]\s+(go[śs]cia|dotycz[ąa]c[ąa]\s+(obiektu|pobytu))/iu
+/pluskwy\s+(w\s+pokoju|w\s+[łl][óo][żz]ku)/iu
+/go[śs][ćc]\s+zostawi[łl]\s+(rzeczy|przedmioty)/iu
+/pro[śs]ba\s+go[śs]cia\s+o\s+anulowanie/iu
+/tymczasowe\s+zawieszenie\s+na\s+platformie/iu
+
+# ===== Turkish =====
+/misafir(iniz)?\s+(bir\s+)?(ş|s)ikayet(te\s+bulundu|\s+olu(ş|s)turdu)/iu
+/tesisiniz\s+hakk[ıi]nda\s+(bir\s+)?(ş|s)ikayet/iu
+/tahtakurusu/iu
+/misafir\s+e(ş|s)yalar[ıi]n[ıi]\s+unuttu/iu
+/misafir\s+(rezervasyonu\s+)?iptal\s+talebinde\s+bulundu/iu
+/platformdan\s+ge[çc]ici\s+(olarak\s+)?(ask[ıi]ya\s+alma|uzakla(ş|s)t[ıi]rma)/iu
+
+# ===== Azerbaijani =====
+/qonaq\s+(ş|s)ikay[əe]t\s+(etdi|g[öo]nd[əe]rdi|bildirdi)/iu
+/obyektiniz\s+bar[əe]d[əe]\s+(ş|s)ikay[əe]t/iu
+/yataq\s+b[öo]c[əe]kl[əe]ri/iu
+/qonaq\s+(ş|s)[əe]xsi\s+[əe](ş|s)yalar[ıi]n[ıi]\s+unudub/iu
+/qonaq\s+(rezervasiyan[ıi]\s+)?l[əe][ğg]v\s+etm[əe]k\s+ist[əe]yir/iu
+/platformadan\s+m[üu]v[əe]qq[əe]ti\s+(dayand[ıi]r[ıi]lma|uzaqla(ş|s)d[ıi]r[ıi]lma)/iu
+
+# ===== Russian =====
+/(гость|посетитель)\s+(подал|оставил|отправил)\s+жалобу/iu
+/жалоба\s+(от\s+гостя|на\s+ваш\s+(объект|отель))/iu
+/постельные\s+клопы|клопы\s+в\s+номере/iu
+/гость\s+(забыл|оставил)\s+(личные\s+)?вещи/iu
+/гость\s+(запросил|просит)\s+(отмену|отменить)\s+(бронирования|бронь)/iu
+/временная\s+(блокировка|приостановка)\s+(на\s+платформе|вашего\s+объекта)/iu
+/просмотрите\s+(фото|доказательства)\s+в\s+течение\s+\d+\s+час/iu
+
+# ===== Ukrainian =====
+/(гість|відвідувач)\s+(подав|залишив|надіслав)\s+скаргу/iu
+/скарга\s+(від\s+гостя|на\s+ваш\s+(об['’]єкт|готель))/iu
+/постільні\s+клопи|клопи\s+в\s+номері/iu
+/гість\s+(забув|залишив)\s+(особисті\s+)?речі/iu
+/гість\s+(запросив|просить)\s+скасування/iu
+
+# ===== Arabic =====
+/(قدم|تقدم)\s+(أحد\s+)?(النزلاء|الضيف|ضيف)\s+بشكوى/u
+/شكوى\s+(من\s+(أحد\s+)?النزلاء|بخصوص\s+(منشأتك|فندقك))/u
+/بق\s+الفراش/u
+/(النزيل|الضيف)\s+(نسي|ترك)\s+(أغراضه|متعلقاته)/u
+/طلب\s+(النزيل|الضيف)\s+إلغاء\s+الحجز/u
+
+# ===== Hindi =====
+/(अतिथि|मेहमान)\s+ने\s+शिकायत\s+(दर्ज\s+)?की/u
+/आपकी\s+(प्रॉपर्टी|संपत्ति|होटल)\s+के\s+(बारे\s+में|खिलाफ)\s+शिकायत/u
+/खटमल/u
+/(अतिथि|मेहमान)\s+ने\s+(बुकिंग\s+)?रद्द\s+करने\s+का\s+अनुरोध/u
+/(अतिथि|मेहमान)\s+(अपना\s+)?सामान\s+भूल\s+गए/u
+
+# ===== Chinese =====
+/(客人|房客|住客)(提交|提出)了?(投诉|投訴)/u
+/(关于|關於)(您的)?(酒店|物业|物業|住宿)的(投诉|投訴)/u
+/床虱|臭虫|臭蟲/u
+/(客人|房客)(遗留|遺留|遗忘|遺忘)了?(物品|个人物品|個人物品)/u
+/(客人|房客)(申请|申請|要求)取消(预订|預訂)/u
+
+# ===== Thai =====
+/(แขก|ผู้เข้าพัก)(ได้)?ร้องเรียน/u
+/ข้อร้องเรียนเกี่ยวกับ(ที่พัก|โรงแรม)ของคุณ/u
+/ตัวเรือด/u
+/(แขก|ผู้เข้าพัก)ลืมสิ่งของ/u
+/(แขก|ผู้เข้าพัก)ขอยกเลิกการจอง/u

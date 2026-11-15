@@ -1,0 +1,134 @@
+# =====================================================================
+#  government.map - phishing phrases for the public sector
+#  Part of: phishing-detector by Develust Technology
+#
+#  Format : one regex per line, /pattern/flags (i = case-insensitive,
+#           u = UTF-8). No trailing spaces.
+#  Note   : PHISH_TEXT scores 0 alone; it only adds points together
+#           with a phishing link (PHISH_URL / PHISHING).
+#
+#  Themes : fake ministry / agency letters behind a link, court
+#           summons and hearings, fines and penalties (traffic, admin),
+#           e-government portal accounts (gov.uk, myGov, e-Devlet,
+#           Gosuslugi, Diia, e-gov.az / ASAN), police and prosecutor
+#           notices, official document requests, public procurement
+#           and tender lures
+#
+#  Avoided: official newsletters, meeting invitations, circulars and
+#           press releases, because public bodies send real ones daily.
+# =====================================================================
+
+# ===== English =====
+# Official letters
+/(view|download|open|read)\s+(the\s+)?(official\s+)?(letter|notice|document|decree|order)\s+(from\s+the\s+)?(ministry|government|agency|authority|department)\s+(here|online|via\s+(the\s+)?link)/i
+/(official|urgent)\s+(government|ministry)\s+(notice|notification|letter)\s+(requires|awaiting)\s+(your\s+)?(response|action|signature)/i
+# Courts
+/(summoned|subpoenaed|required)\s+(to\s+appear\s+)?(to|before|in|at)\s+(the\s+)?court/i
+/court\s+(summons|hearing|order|notice)\s+(#?\S+\s+)?(attached|issued|scheduled|available\s+online|view)/i
+/(lawsuit|legal\s+action|case)\s+(has\s+been\s+)?(filed|initiated|opened)\s+against\s+(you|your\s+(company|organization))/i
+# Fines
+/(traffic|speeding|parking|administrative)\s+(fine|violation|penalty|ticket)\s+(is\s+)?(unpaid|overdue|pending|outstanding|must\s+be\s+paid)/i
+/pay\s+(your\s+|the\s+)?(fine|penalty)\s+(online\s+)?(within|before|to\s+avoid)/i
+/(penalty|fine)\s+(notice|notification)\s+#?\S+\s+(view|pay|details)/i
+# E-government accounts
+/(gov\.uk|mygov|login\.gov|e-?devlet|gosuslugi|госуслуги|diia|e-?gov|asan\s+(imza|login))\s+(account\s+)?(suspended|verification|update\s+required|locked|blocked)/i
+/(verify|update|confirm)\s+your\s+(identity|details)\s+on\s+the\s+(government|e-?government|national)\s+portal/i
+# Police / prosecutor
+/(police|prosecutor|investigation)\s+(notice|summons|report)\s+(regarding|against|concerning)\s+(you|your)/i
+/(cybercrime|financial\s+crimes?)\s+(unit|department)\s+(notice|investigation|summons)/i
+# Official requests
+/(submit|upload|provide)\s+(the\s+)?(required|requested)\s+(official\s+)?documents?\s+(via|through|on)\s+(the\s+)?(portal|link)\s+(within|before|by)/i
+# Procurement / tenders
+/(public\s+)?(tender|procurement)\s+(invitation|documents?|notice)\s+(available|download|via\s+(the\s+)?link|access\s+here)/i
+/(supplier|vendor)\s+(registration|accreditation)\s+(for\s+)?(government|public)\s+(tenders?|procurement)\s+(expires|required|pending)/i
+
+# ===== Spanish =====
+/(citaci[óo]n|notificaci[óo]n)\s+judicial/iu
+/(multa|sanci[óo]n)\s+(de\s+tr[áa]fico\s+)?(pendiente\s+de\s+pago|impagada|vencida)/iu
+/(ministerio|agencia|organismo)\s+(le\s+)?(notifica|requiere)[^.]{0,40}(enlace|en\s+l[íi]nea|aqu[íi])/iu
+/(sede\s+electr[óo]nica|cl@ve|dgt)\s+(notificaci[óo]n|aviso|multa)/iu
+
+# ===== German =====
+/(gerichtliche\s+)?(vorladung|ladung)\s+(zum|vor)\s+(gericht|verhandlung)/iu
+/(bu[ßs]geld|strafzettel|verwarnungsgeld)\s+(ist\s+)?(offen|unbezahlt|f[äa]llig)/iu
+/(beh[öo]rde|ministerium)\s+(fordert|bittet)[^.]{0,40}(link|online)/iu
+/(bundesamt|polizei|staatsanwaltschaft)\s+(mitteilung|vorladung|ermittlung)/iu
+
+# ===== French =====
+/(convocation|citation)\s+(au|devant\s+le)\s+tribunal/iu
+/(amende|contravention|pv)\s+(impay[ée]e?|en\s+attente|[àa]\s+r[ée]gler)/iu
+/(antai|ants|france\s+connect)\s+(avis|notification|v[ée]rification)/iu
+/(gendarmerie|police\s+nationale|procureur)\s+(convocation|avis|notification)/iu
+
+# ===== Italian =====
+/(citazione|convocazione)\s+in\s+tribunale/iu
+/(multa|contravvenzione|sanzione)\s+(non\s+pagata|da\s+pagare|scaduta)/iu
+/(spid|cie|inps|agenzia\s+delle\s+entrate)\s+(verifica|notifica|sospensione)/iu
+/(polizia|procura|guardia\s+di\s+finanza)\s+(convocazione|notifica|avviso)/iu
+
+# ===== Portuguese =====
+/(intima[çc][ãa]o|cita[çc][ãa]o)\s+judicial/iu
+/(multa|infra[çc][ãa]o)\s+(de\s+tr[âa]nsito\s+)?(pendente|vencida|em\s+aberto)/iu
+/(gov\.br|portal\s+das\s+finan[çc]as|detran)\s+(notifica[çc][ãa]o|verifica[çc][ãa]o|bloqueio)/iu
+/(pol[íi]cia\s+federal|minist[ée]rio\s+p[úu]blico)\s+(intima[çc][ãa]o|notifica[çc][ãa]o)/iu
+
+# ===== Dutch =====
+/(dagvaarding|oproep)\s+(voor\s+de\s+)?rechtbank/iu
+/(boete|verkeersboete|aanmaning)\s+(is\s+)?(openstaand|onbetaald|verlopen)/iu
+/(digid|mijnoverheid|cjib)\s+(melding|verificatie|blokkade)/iu
+
+# ===== Polish =====
+/(wezwanie|zawiadomienie)\s+(do\s+s[ąa]du|s[ąa]dowe)/iu
+/(mandat|grzywna)\s+(nieop[łl]acon[ay]|do\s+zap[łl]aty|zaleg[łl]y)/iu
+/(epuap|profil\s+zaufany|mobywatel)\s+(weryfikacja|blokada|powiadomienie)/iu
+/(policja|prokuratura|cba)\s+(wezwanie|zawiadomienie)/iu
+
+# ===== Turkish =====
+/mahkeme\s+(celbi|ça[ğg]r[ıi]s[ıi]|tebligat[ıi])/iu
+/(trafik\s+)?(cezan[ıi]z|ceza\s+bildirimi)\s+([öo]denmedi|gecikti|bekliyor)/iu
+/e-?devlet\s+(hesab[ıi]n[ıi]z|(ş|s)ifreniz|bildirimi)/iu
+/(uyap|savc[ıi]l[ıi]k|emniyet)\s+(tebligat[ıi]|bildirimi|ça[ğg]r[ıi]s[ıi])/iu
+
+# ===== Azerbaijani =====
+/m[əe]hk[əe]m[əe]y[əe]\s+(ça[ğg][ıi]r[ıi](ş|s)|[çc]a[ğg]r[ıi]l[ıi]rs[ıi]n[ıi]z)/iu
+/(c[əe]rim[əe]niz|yol\s+h[əe]r[əe]k[əe]ti\s+c[əe]rim[əe]si)\s+([öo]d[əe]nilm[əe]yib|gecikib|g[öo]zl[əe]yir)/iu
+/(e-?gov|asan\s+imza|mygov|e-?h[öo]kum[əe]t)\s+(hesab[ıi]n[ıi]z|bildiri(ş|s)i|yoxlama)/iu
+/(polis|prokurorluq|da(ş|s)xili\s+i(ş|s)l[əe]r)\s+(bildiri(ş|s)i|[çc]a[ğg][ıi]r[ıi](ş|s)[ıi])/iu
+/r[əe]smi\s+(m[əe]ktub|s[əe]n[əe]d)\s+(link|ke[çc]id)/iu
+
+# ===== Russian =====
+/(повестка|вызов)\s+в\s+суд/iu
+/(судебн(ое|ая)\s+)?(извещение|уведомление|иск)\s+(о|по)\s+(делу|рассмотрении)/iu
+/(штраф|штрафы)\s+(не\s+оплачен|не\s+оплачены|к\s+оплате|просрочен)/iu
+/госуслуги\s+(уведомление|блокировка|подтверждение|требуется)/iu
+/(полиция|прокуратура|следственный\s+комитет|мвд)\s+(повестка|уведомление|вызов)/iu
+
+# ===== Ukrainian =====
+/(повістка|виклик)\s+до\s+суду/iu
+/(штраф|штрафи)\s+(не\s+сплачено|до\s+сплати|прострочено)/iu
+/(дія|diia)\s+(повідомлення|блокування|підтвердження)/iu
+/(поліція|прокуратура|сбу)\s+(повістка|повідомлення|виклик)/iu
+
+# ===== Arabic =====
+/(استدعاء|تبليغ)\s+(للمحكمة|قضائي)/u
+/(مخالفة|غرامة)\s+(مرورية\s+)?(غير\s+مدفوعة|مستحقة|متأخرة)/u
+/(أبشر|نفاذ|توكلنا|الهيئة\s+العامة)\s+(تحديث|تنبيه|إيقاف)/u
+/(النيابة\s+العامة|الشرطة)\s+(استدعاء|إشعار)/u
+
+# ===== Hindi =====
+/(कोर्ट|न्यायालय)\s+(समन|नोटिस)/u
+/(चालान|जुर्माना)\s+(बकाया|लंबित|भुगतान\s+करें)/u
+/(digilocker|umang|parivahan|e-?challan)\s+(kyc|update|verify|blocked|pending)/i
+/(पुलिस|साइबर\s+क्राइम)\s+(नोटिस|शिकायत)/u
+
+# ===== Chinese =====
+/(法院)(传票|傳票|传唤|傳喚)/u
+/(交通)?(罚款|罰款|违章|違章)(未缴|未繳|待缴|待繳|逾期)/u
+/(政务服务|政務服務|国家政务|國家政務)(平台)?(通知|核验|核驗|冻结|凍結)/u
+/(公安局|检察院|檢察院)(通知|传唤|傳喚)/u
+
+# ===== Thai =====
+/หมายเรียก(ศาล|ตัว)/u
+/ใบสั่ง(จราจร)?(ค้างชำระ|ยังไม่ชำระ)/u
+/(ทางรัฐ|ไทยดี)(ยืนยันตัวตน|แจ้งเตือน)/u
+/(สำนักงานตำรวจ|ตำรวจไซเบอร์)(แจ้ง|เรียก)/u

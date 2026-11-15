@@ -1,0 +1,133 @@
+# =====================================================================
+#  logistics.map - phishing phrases for shipping, freight and customs
+#  Part of: phishing-detector by Develust Technology
+#
+#  Format : one regex per line, /pattern/flags (i = case-insensitive,
+#           u = UTF-8). No trailing spaces.
+#  Note   : PHISH_TEXT scores 0 alone; it only adds points together
+#           with a phishing link (PHISH_URL / PHISHING).
+#
+#  Themes : fake bill of lading / airway bill downloads, shipment held
+#           at customs, customs duty and release fees, courier
+#           impersonation (DHL, FedEx, UPS, TNT, Maersk, MSC, CMA CGM),
+#           address confirmation, demurrage / port charges, failed
+#           delivery and redelivery fees
+#
+#  Avoided: "packing list attached", "commercial invoice", "arrival
+#           notice", "ETA", "telex release", because freight companies
+#           exchange real ones every day.
+# =====================================================================
+
+# ===== English =====
+# Fake shipping documents
+/(view|download|open|access)\s+(the\s+)?(original\s+)?(bill\s+of\s+lading|b\/l\s+(copy|draft)|airway\s+bill|awb\s+copy|shipping\s+documents?)\s+(here|below|online|now)/i
+/(shipping|shipment)\s+documents?\s+(are\s+|is\s+)?(ready|available)\s+(for\s+download|online|via\s+the\s+link)/i
+/(draft|original)\s+b\/l\s+(for\s+your\s+)?(confirmation|approval)\s+(via|through|at)\s+(the\s+)?link/i
+# Customs
+/(your\s+)?(shipment|parcel|package|consignment)\s+(is\s+)?(held|on\s+hold|detained|stopped)\s+(at|by)\s+customs/i
+/customs\s+(duty|fee|clearance\s+fee|charges?)\s+(must\s+be\s+paid|is\s+required|outstanding|unpaid|pending)/i
+/pay\s+(the\s+)?(customs|import)\s+(duty|fee|tax)\s+to\s+(release|receive|clear)/i
+# Courier impersonation
+/(dhl|fedex|ups|tnt|usps|aramex|dpd|gls)\s+(express\s+)?(shipment|delivery|parcel)\s+(notification|alert|on\s+hold|suspended|failed)/i
+/(maersk|msc|cma\s+cgm|hapag-?lloyd|cosco|evergreen|one\s+line)\s+(shipment|booking|container|document)\s+(notification|update|alert|on\s+hold)/i
+/(we\s+)?(attempted|tried)\s+to\s+deliver\s+your\s+(shipment|parcel|package)/i
+/(confirm|update|verify)\s+your\s+(delivery|shipping)\s+address\s+(to|within|for)/i
+/(incomplete|incorrect|invalid)\s+(delivery\s+)?address/i
+/(re-?delivery|redelivery|storage)\s+fee\s+(of\s+\S+\s+)?(is\s+)?(required|due|pending)/i
+# Port / container charges
+/(demurrage|detention|port|terminal)\s+(charges?|fees?)\s+(are\s+|is\s+)?(due|overdue|outstanding|unpaid)/i
+/container\s+(is\s+)?(held|on\s+hold|blocked)\s+(pending|until)\s+(payment|release)/i
+/(freight|shipment)\s+(payment|invoice)\s+(is\s+)?(overdue|outstanding)\s+(to|before)\s+release/i
+
+# ===== Spanish =====
+/(descargue|vea|acceda\s+a)\s+(el\s+)?(conocimiento\s+de\s+embarque|bl|documentos\s+de\s+env[íi]o)/iu
+/(su\s+)?(env[íi]o|paquete|mercanc[íi]a)\s+(est[áa]\s+)?retenid[oa]\s+en\s+(la\s+)?aduana/iu
+/(pague|abone)\s+(los\s+)?(aranceles|derechos\s+de\s+aduana|tasas\s+aduaneras)/iu
+/confirme\s+su\s+direcci[óo]n\s+de\s+entrega/iu
+/intentamos\s+entregar\s+su\s+(paquete|env[íi]o)/iu
+
+# ===== German =====
+/(laden\s+sie|sehen\s+sie)\s+(den\s+)?(frachtbrief|konnossement|versanddokumente)/iu
+/(ihre\s+)?(sendung|paket|ware)\s+(wird|wurde)\s+(vom|beim)\s+zoll\s+(festgehalten|zur[üu]ckgehalten)/iu
+/zollgeb[üu]hren?\s+(m[üu]ssen\s+bezahlt\s+werden|ausstehend|f[äa]llig)/iu
+/best[äa]tigen\s+sie\s+ihre\s+(liefer|zustell)adresse/iu
+/zustellversuch\s+(fehlgeschlagen|nicht\s+erfolgreich)/iu
+
+# ===== French =====
+/(t[ée]l[ée]chargez|consultez)\s+(le\s+)?(connaissement|bon\s+de\s+livraison|documents\s+d['’]exp[ée]dition)/iu
+/(votre\s+)?(colis|envoi|marchandise)\s+(est\s+)?(bloqu[ée]e?|retenu[e]?)\s+(en|à|a)\s+(la\s+)?douane/iu
+/(frais|droits)\s+de\s+douane\s+(à|a)\s+(payer|r[ée]gler)/iu
+/confirmez\s+votre\s+adresse\s+de\s+livraison/iu
+
+# ===== Italian =====
+/(scarica|visualizza)\s+(la\s+)?(polizza\s+di\s+carico|lettera\s+di\s+vettura|documenti\s+di\s+spedizione)/iu
+/(la\s+)?(tua|sua)\s+spedizione\s+[èe]\s+(bloccata|trattenuta)\s+in\s+dogana/iu
+/(dazi|diritti)\s+doganali\s+da\s+pagare/iu
+/conferma\s+il\s+(tuo\s+)?indirizzo\s+di\s+consegna/iu
+
+# ===== Portuguese =====
+/(baixe|visualize|acesse)\s+(o\s+)?(conhecimento\s+de\s+embarque|documentos\s+de\s+envio)/iu
+/(sua\s+)?(encomenda|remessa|mercadoria)\s+(est[áa]\s+)?retid[ao]\s+na\s+alf[âa]ndega/iu
+/(taxa|imposto)\s+(de\s+importa[çc][ãa]o|alfandeg[áa]ri[ao])\s+(pendente|a\s+pagar)/iu
+/confirme\s+(o\s+)?seu\s+endere[çc]o\s+de\s+entrega/iu
+
+# ===== Dutch =====
+/(download|bekijk)\s+(de\s+)?(vrachtbrief|cognossement|verzenddocumenten)/iu
+/(uw\s+)?(zending|pakket)\s+(wordt\s+)?(vastgehouden|tegengehouden)\s+door\s+de\s+douane/iu
+/(douanekosten|invoerrechten)\s+(moeten\s+worden\s+betaald|openstaand)/iu
+/bevestig\s+uw\s+(bezorg|aflever)adres/iu
+
+# ===== Polish =====
+/(pobierz|zobacz)\s+(list\s+przewozowy|konosament|dokumenty\s+wysy[łl]kowe)/iu
+/(twoja\s+)?(przesy[łl]ka|paczka)\s+(zosta[łl]a\s+)?zatrzymana\s+(przez\s+|w\s+)?(urz[ąa]d\s+celny|urz[ęe]dzie\s+celnym|c[łl]o)/iu
+/op[łl]ata\s+celna\s+(do\s+zap[łl]aty|oczekuje)/iu
+/potwierd[źz]\s+adres\s+dostawy/iu
+
+# ===== Turkish =====
+/(kon(ş|s)imentoyu|y[üu]k\s+belgelerini|sevkiyat\s+belgelerini)\s+(indirin|g[öo]r[üu]nt[üu]leyin)/iu
+/(g[öo]nderiniz|kargonuz|paketiniz)\s+g[üu]mr[üu]kte\s+(bekletiliyor|tutuluyor|durduruldu)/iu
+/g[üu]mr[üu]k\s+(vergisi|[üu]creti)\s+([öo]denmelidir|bekliyor|[öo]denmedi)/iu
+/teslimat\s+adresinizi\s+(onaylay[ıi]n|g[üu]ncelleyin)/iu
+
+# ===== Azerbaijani =====
+/(konosamenti|y[üu]k\s+s[əe]n[əe]dl[əe]rini|da(ş|s)[ıi]ma\s+s[əe]n[əe]dl[əe]rini)\s+(y[üu]kl[əe]yin|bax[ıi]n)/iu
+/(g[öo]nd[əe]ri(ş|s)iniz|ba[ğg]laman[ıi]z)\s+g[öo]mr[üu]kd[əe]\s+(saxlan[ıi]l[ıi]r|saxlan[ıi]l[ıi]b)/iu
+/g[öo]mr[üu]k\s+(r[üu]sumu|haqq[ıi])\s+([öo]d[əe]nilm[əe]lidir|[öo]d[əe]nilm[əe]yib)/iu
+/[çc]atd[ıi]r[ıi]lma\s+[üu]nvan[ıi]n[ıi]z[ıi]\s+t[əe]sdiql[əe]yin/iu
+
+# ===== Russian =====
+/(скачайте|посмотрите|откройте)\s+(коносамент|накладную|товаросопроводительные\s+документы)/iu
+/(ваш[ае]?\s+)?(груз|посылка|отправление)\s+(задержан[ао]?|арестован[ао]?)\s+(на\s+)?тамож/iu
+/(оплатите|оплата)\s+(таможенн(ую|ой)\s+(пошлин[уы]|сбор[а]?))/iu
+/подтвердите\s+(ваш\s+)?адрес\s+доставки/iu
+/(плата|сбор)\s+за\s+(хранение|повторную\s+доставку)/iu
+
+# ===== Ukrainian =====
+/(завантажте|перегляньте)\s+(коносамент|накладну)/iu
+/(ваш[ае]?\s+)?(вантаж|посилка|відправлення)\s+затриман[ео]?\s+на\s+митниці/iu
+/(сплатіть|оплата)\s+мит[оа]/iu
+/підтвердіть\s+(вашу\s+)?адресу\s+доставки/iu
+
+# ===== Arabic =====
+/(تحميل|عرض)\s+(بوليصة\s+الشحن|مستندات\s+الشحن)/u
+/(شحنتك|طردك)\s+(محتجزة?|موقوفة?)\s+(في|لدى)\s+الجمارك/u
+/(دفع|سداد)\s+(الرسوم|الضرائب)\s+الجمركية/u
+/تأكيد\s+عنوان\s+التسليم/u
+
+# ===== Hindi =====
+/(बिल\s+ऑफ\s+लैडिंग|शिपिंग\s+दस्तावेज़?)\s+(डाउनलोड|देखें)/u
+/आपका\s+(शिपमेंट|पार्सल)\s+कस्टम्स?\s+में\s+(रोका|रुका)/u
+/(कस्टम|सीमा)\s+शुल्क\s+(का\s+)?भुगतान\s+(करें|बाकी)/u
+/अपना\s+डिलीवरी\s+पता\s+(पुष्टि|अपडेट)\s+करें/u
+
+# ===== Chinese =====
+/(下载|下載|查看)(提单|提單|运单|運單|货运单据|貨運單據)/u
+/(您的)?(货物|貨物|包裹)(被)?(海关|海關)(扣留|扣押)/u
+/(缴纳|繳納|支付)(关税|關稅|清关费|清關費)/u
+/(确认|確認)(您的)?(收货|收貨|送货|送貨)地址/u
+
+# ===== Thai =====
+/(ดาวน์โหลด|ดู)(ใบตราส่ง|เอกสารการขนส่ง)/u
+/พัสดุ(ของคุณ)?ถูกกักที่ศุลกากร/u
+/ชำระ(ภาษี|ค่าธรรมเนียม)ศุลกากร/u
+/ยืนยันที่อยู่จัดส่ง/u

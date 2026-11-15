@@ -1,0 +1,133 @@
+# =====================================================================
+#  it.map - phishing phrases for IT companies, SaaS and hosting
+#  Part of: phishing-detector by Develust Technology
+#
+#  Format : one regex per line, /pattern/flags (i = case-insensitive,
+#           u = UTF-8). No trailing spaces.
+#  Note   : PHISH_TEXT scores 0 alone; it only adds points together
+#           with a phishing link (PHISH_URL / PHISHING).
+#
+#  Themes : fake domain expiry / "domain listing" scams, SSL certificate
+#           expiry, hosting / cPanel / Plesk suspension and failed
+#           payments, Microsoft 365 / Google Workspace admin alerts,
+#           cloud billing (AWS, Azure, GCP, Cloudflare), GitHub / GitLab
+#           security alerts, MFA / VPN re-enrollment, software license
+#           renewals, fake helpdesk tickets
+#
+#  Avoided: real monitoring alerts, deployment notices, "ticket updated",
+#           plain renewal reminders, because IT teams get real ones daily.
+# =====================================================================
+
+# ===== English =====
+# Domains
+/(your\s+)?domain\s+(name\s+)?(will\s+expire|has\s+expired|expiration\s+notice|is\s+about\s+to\s+expire)[^.]{0,40}(renew|click|immediately|today|within)/i
+/(final|urgent|last)\s+(notice|reminder)\s*:?\s+(domain|dns)\s+(expir|renew|suspen)/i
+/domain\s+(listing|registration)\s+(service|submission)\s+(notice|expiration|invoice)/i
+/(seo|search\s+engine)\s+(submission|registration)\s+(for|of)\s+(your\s+)?domain/i
+/(dns|nameserver)\s+(records?\s+)?(will\s+be\s+|has\s+been\s+)?(suspended|deleted|disabled)\s+(unless|due\s+to|within)/i
+# SSL
+/(your\s+)?ssl\s+(\/\s*tls\s+)?certificate\s+(has\s+expired|will\s+expire|expires\s+today)[^.]{0,40}(renew|click|install|verify)/i
+# Hosting
+/(your\s+)?(hosting|cpanel|plesk|server|vps|website)\s+(account\s+)?(has\s+been|will\s+be|is)\s+(suspended|deactivated|terminated|disabled)\s+(due\s+to|unless|for|within)/i
+/(hosting|server|domain)\s+(payment|renewal|invoice)\s+(has\s+)?(failed|declined|is\s+overdue|unpaid)/i
+/(storage|disk|bandwidth)\s+(quota|limit)\s+(exceeded|reached)\s+(on\s+)?(your\s+)?(server|hosting|account)[^.]{0,30}(upgrade|click)/i
+# Microsoft 365 / Google Workspace
+/(microsoft\s+365|office\s+365|o365|outlook|exchange\s+online|google\s+workspace|g\s+suite)\s+(license|subscription|account|mailbox)\s+(has\s+)?(expired|will\s+expire|suspended|deactivated|payment\s+failed)/i
+/(admin|administrator)\s+(action|attention)\s+required[^.]{0,40}(tenant|license|subscription|workspace|domain)/i
+/(sharepoint|onedrive|teams)\s+(document|file|message)\s+(shared|received|pending)[^.]{0,30}(view|open|access)/i
+# Cloud billing
+/(aws|amazon\s+web\s+services|azure|google\s+cloud|gcp|cloudflare|digitalocean|hetzner|ovh)\s+(account|billing|subscription|services?)\s+(suspended|suspension|payment\s+failed|past\s+due|will\s+be\s+(terminated|suspended))/i
+/(update|verify)\s+your\s+(billing|payment)\s+(method|information|details)\s+to\s+avoid\s+(service\s+)?(interruption|suspension|termination)/i
+# Dev platforms
+/(github|gitlab|bitbucket|npm|docker\s+hub)\s+(security\s+alert|account\s+(suspended|flagged|locked)|unusual\s+activity|repository\s+(flagged|suspended))/i
+/(oauth|third-?party)\s+app(lication)?\s+(authorization|access)\s+(request|required)\s+(for|to)\s+your\s+(account|repository|organization)/i
+# MFA / VPN
+/(re-?register|re-?enroll|reset|update)\s+your\s+(mfa|2fa|two-?factor|authenticator|vpn)\s+(device|app|settings|access|token)/i
+/(mfa|2fa|two-?factor)\s+(will\s+be|has\s+been)\s+(disabled|reset|turned\s+off)\s+(unless|within|today)/i
+/(vpn|remote\s+access)\s+(certificate|profile|account)\s+(has\s+)?(expired|will\s+expire|must\s+be\s+updated)/i
+# Licenses / helpdesk
+/(adobe|autodesk|jetbrains|vmware|veeam|kaspersky|eset|norton|mcafee)\s+(license|subscription)\s+(has\s+)?(expired|will\s+expire|renewal\s+failed|payment\s+failed)/i
+/(it\s+)?(help\s?desk|service\s?desk|support)\s+ticket\s+#?\S+\s+(requires|awaiting)\s+(your\s+)?(verification|login|confirmation|action)/i
+
+# ===== Spanish =====
+/su\s+dominio\s+(caduca|expira|ha\s+caducado|ha\s+expirado)[^.]{0,40}(renueve|haga\s+clic|inmediatamente)/iu
+/su\s+certificado\s+ssl\s+(ha\s+caducado|caduca|expira)/iu
+/su\s+(cuenta\s+de\s+)?(hosting|alojamiento|servidor)\s+(ha\s+sido|ser[áa])\s+(suspendid[oa]|desactivad[oa])/iu
+/(licencia|suscripci[óo]n)\s+de\s+(microsoft\s+365|office\s+365|google\s+workspace)\s+(ha\s+caducado|caducar[áa]|suspendida)/iu
+
+# ===== German =====
+/ihre\s+domain\s+(l[äa]uft\s+ab|ist\s+abgelaufen)[^.]{0,40}(verl[äa]ngern|klicken|sofort)/iu
+/ihr\s+ssl-?zertifikat\s+(l[äa]uft\s+ab|ist\s+abgelaufen)/iu
+/ihr\s+(hosting|server|webspace)(-?konto)?\s+(wird|wurde)\s+(gesperrt|deaktiviert|gek[üu]ndigt)/iu
+/(microsoft\s+365|office\s+365|google\s+workspace)[- ](lizenz|abonnement)\s+(abgelaufen|l[äa]uft\s+ab|gesperrt)/iu
+
+# ===== French =====
+/votre\s+(nom\s+de\s+)?domaine\s+(expire|a\s+expir[ée])[^.]{0,40}(renouvel|cliquez|imm[ée]diatement)/iu
+/votre\s+certificat\s+ssl\s+(expire|a\s+expir[ée])/iu
+/votre\s+(h[ée]bergement|serveur|compte\s+d['’]h[ée]bergement)\s+(sera|a\s+[ée]t[ée])\s+(suspendu|d[ée]sactiv[ée])/iu
+/(licence|abonnement)\s+(microsoft\s+365|office\s+365|google\s+workspace)\s+(expir[ée]|suspendu)/iu
+
+# ===== Italian =====
+/il\s+(tuo|suo)\s+dominio\s+(scadr[àa]|[èe]\s+scaduto)[^.]{0,40}(rinnova|clicca|subito)/iu
+/il\s+(tuo|suo)\s+certificato\s+ssl\s+([èe]\s+scaduto|scadr[àa])/iu
+/il\s+(tuo|suo)\s+(hosting|server)\s+(sar[àa]|[èe]\s+stato)\s+(sospeso|disattivato)/iu
+
+# ===== Portuguese =====
+/(seu|o\s+seu)\s+dom[íi]nio\s+(expira|expirou|vai\s+expirar)[^.]{0,40}(renove|clique|imediatamente)/iu
+/(seu|o\s+seu)\s+certificado\s+ssl\s+(expirou|expira)/iu
+/(sua|a\s+sua)\s+(hospedagem|conta\s+de\s+hospedagem)\s+(foi|ser[áa])\s+(suspensa|desativada)/iu
+
+# ===== Dutch =====
+/uw\s+domein(naam)?\s+(verloopt|is\s+verlopen)[^.]{0,40}(verleng|klik|direct)/iu
+/uw\s+ssl-?certificaat\s+(verloopt|is\s+verlopen)/iu
+/uw\s+(hosting|server)(account)?\s+(wordt|is)\s+(opgeschort|gedeactiveerd)/iu
+
+# ===== Polish =====
+/twoja\s+domena\s+(wygasa|wygas[łl]a|wyga[śs]nie)[^.]{0,40}(odn[óo]w|kliknij|natychmiast)/iu
+/tw[óo]j\s+certyfikat\s+ssl\s+(wygasa|wygas[łl])/iu
+/tw[óo]j\s+(hosting|serwer)\s+(zostanie|zosta[łl])\s+(zawieszony|zablokowany)/iu
+
+# ===== Turkish =====
+/alan\s+ad[ıi]n[ıi]z[ıi]n\s+s[üu]resi\s+(doluyor|doldu)/iu
+/ssl\s+sertifikan[ıi]z[ıi]n\s+s[üu]resi\s+(doluyor|doldu)/iu
+/(hosting|sunucu)\s+hesab[ıi]n[ıi]z\s+(ask[ıi]ya\s+al[ıi]nd[ıi]|ask[ıi]ya\s+al[ıi]nacak|kapat[ıi]lacak)/iu
+/(microsoft\s+365|office\s+365|google\s+workspace)\s+lisans[ıi]n[ıi]z[ıi]n\s+s[üu]resi\s+(doldu|doluyor)/iu
+
+# ===== Azerbaijani =====
+/domen(iniz)?in\s+(m[üu]dd[əe]ti|vaxt[ıi])\s+(bitir|bitib|bit[əe]c[əe]k)/iu
+/ssl\s+sertifikat[ıi]n[ıi]z[ıi]n\s+(m[üu]dd[əe]ti|vaxt[ıi])\s+(bitir|bitib)/iu
+/(hostinq|server)\s+hesab[ıi]n[ıi]z\s+(dayand[ıi]r[ıi]l[ıi]b|dayand[ıi]r[ıi]lacaq|bloklan[ıi]b)/iu
+/(microsoft\s+365|office\s+365|google\s+workspace)\s+lisenziyan[ıi]z[ıi]n\s+(m[üu]dd[əe]ti|vaxt[ıi])\s+(bitib|bitir)/iu
+
+# ===== Russian =====
+/срок\s+(регистрации|действия)\s+(вашего\s+)?домена\s+(истекает|ист[её]к)/iu
+/(ваш\s+)?ssl[- ]сертификат\s+(истекает|ист[её]к)/iu
+/ваш\s+(хостинг|сервер|vps)\s+(будет\s+|был\s+)?(заблокирован|приостановлен|отключ[её]н)/iu
+/(лицензия|подписка)\s+(microsoft\s+365|office\s+365|google\s+workspace)\s+(истекла|истекает|приостановлена)/iu
+/(переподключите|перерегистрируйте|обновите)\s+(ваше\s+)?(устройство\s+)?(mfa|2fa|двухфакторн)/iu
+
+# ===== Ukrainian =====
+/термін\s+(реєстрації|дії)\s+(вашого\s+)?домену\s+(спливає|сплив)/iu
+/(ваш\s+)?ssl[- ]сертифікат\s+(спливає|сплив)/iu
+/ваш\s+(хостинг|сервер)\s+(буде\s+)?(заблоковано|призупинено)/iu
+
+# ===== Arabic =====
+/(اسم\s+)?النطاق\s+(الخاص\s+بك\s+)?(سينتهي|انتهت\s+صلاحيته|انتهى)/u
+/شهادة\s+ssl\s+(الخاصة\s+بك\s+)?(ستنتهي|انتهت)/u
+/سيتم\s+(إيقاف|تعليق)\s+(حساب\s+الاستضافة|الخادم)/u
+
+# ===== Hindi =====
+/आपका\s+डोमेन\s+(समाप्त|एक्सपायर)\s+(हो\s+रहा|हो\s+गया)/u
+/आपका\s+ssl\s+(सर्टिफिकेट|प्रमाणपत्र)\s+(समाप्त|एक्सपायर)/u
+/आपका\s+(होस्टिंग|सर्वर)\s+(खाता\s+)?(निलंबित|बंद)/u
+
+# ===== Chinese =====
+/(您的)?(域名)(即将|即將|已经|已經)?(到期|过期|過期)/u
+/(您的)?ssl(证书|證書)(即将|即將|已)(到期|过期|過期)/u
+/(您的)?(主机|主機|服务器|伺服器|虚拟主机|虛擬主機)(已被|将被|將被)(暂停|暫停|停用|关闭|關閉)/u
+/(微软|微軟|microsoft)\s?365(许可证|授權|订阅|訂閱)(已)?(过期|過期|到期)/u
+
+# ===== Thai =====
+/โดเมนของคุณ(ใกล้)?หมดอายุ/u
+/ใบรับรอง\s?ssl\s?(ของคุณ)?(ใกล้)?หมดอายุ/u
+/(โฮสติ้ง|เซิร์ฟเวอร์)ของคุณจะถูกระงับ/u

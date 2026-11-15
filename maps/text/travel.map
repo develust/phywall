@@ -1,0 +1,143 @@
+# =====================================================================
+#  travel.map - phishing phrases for travel agencies and tour operators
+#  Part of: phishing-detector by Develust Technology
+#
+#  Format : one regex per line, /pattern/flags (i = case-insensitive,
+#           u = UTF-8). No trailing spaces.
+#  Note   : PHISH_TEXT scores 0 alone; it only adds points together
+#           with a phishing link (PHISH_URL / PHISHING).
+#
+#  Themes : airline ticket cancellation / refund / compensation claims,
+#           visa application problems and fake e-visa fees,
+#           supplier bank-detail changes (BEC), GDS account alerts
+#           (Amadeus, Sabre, Galileo, Travelport), IATA / BSP payment
+#           and accreditation, chargebacks and disputes, fake itinerary
+#           and PNR changes
+#
+#  Avoided: group booking requests, rooming lists and schedule-change
+#           notices, because agencies receive real ones every day.
+# =====================================================================
+
+# ===== English =====
+# Tickets, refunds, compensation
+/your\s+(e-?)?ticket\s+(has\s+been|was)\s+(cancelled|canceled|voided|suspended)/i
+/claim\s+your\s+(flight\s+|ticket\s+)?refund\s+(now|within|before|today)/i
+/(compensation|refund)\s+for\s+your\s+(delayed|cancelled|canceled)\s+flight/i
+/your\s+refund\s+(is\s+)?(pending|on\s+hold|awaiting\s+confirmation)/i
+/booking\s+reference\s+[A-Z0-9]{6}\s+(has\s+been\s+|was\s+)?(cancelled|canceled|changed|suspended)/i
+/view\s+your\s+(updated\s+|revised\s+)?(itinerary|e-?ticket)\s+(here|online|below)/i
+# Visa
+/your\s+(e-?)?visa\s+application\s+(has\s+been\s+|was\s+)?(rejected|refused|on\s+hold|suspended|incomplete)/i
+/(e-?visa|visa)\s+(fee|payment)\s+(is\s+)?(pending|overdue|required|unpaid)/i
+/additional\s+documents?\s+(are\s+|is\s+)?required\s+for\s+your\s+visa/i
+# Supplier bank details (BEC)
+/(we\s+have\s+)?(changed|updated)\s+(our\s+)?bank(ing)?\s+(details|account|information)/i
+/(new|updated)\s+bank\s+(account\s+)?details\s+for\s+(all\s+)?(future\s+)?payments/i
+/do\s+not\s+(pay|send\s+payment)\s+to\s+(the\s+)?(old|previous)\s+(account|bank)/i
+# GDS / IATA / BSP
+/(amadeus|sabre|galileo|travelport|worldspan)\s+(account|password|access|login)\s+(will\s+)?(expire|expires|expired|suspended|locked|verification)/i
+/(bsp|iata)\s+(payment|settlement|remittance)\s+(failed|overdue|declined|on\s+hold)/i
+/(iata|agency)\s+accreditation\s+(suspended|under\s+review|will\s+be\s+revoked|expired)/i
+/(expedia\s+taap|booking\.com\s+affiliate|agoda\s+partner)\s+(account\s+)?(suspended|verification|locked)/i
+# Disputes
+/chargeback\s+(request|dispute|notice)\s+for\s+(booking|reservation|order)/i
+/(customer|passenger|traveler|traveller)\s+(has\s+)?(filed|opened|raised)\s+a\s+dispute/i
+
+# ===== Spanish =====
+/su\s+billete\s+(ha\s+sido|fue)\s+(cancelado|anulado)/iu
+/reclame\s+su\s+reembolso/iu
+/compensaci[óo]n\s+por\s+su\s+vuelo\s+(retrasado|cancelado)/iu
+/su\s+solicitud\s+de\s+visado\s+(ha\s+sido\s+)?(rechazada|denegada|suspendida)/iu
+/(hemos\s+)?cambiado\s+(nuestros\s+)?datos\s+bancarios/iu
+/nuevos\s+datos\s+bancarios\s+para\s+(los\s+)?(futuros\s+)?pagos/iu
+
+# ===== German =====
+/ihr\s+(flug)?ticket\s+wurde\s+(storniert|annulliert)/iu
+/fordern\s+sie\s+ihre\s+(r[üu]ckerstattung|entsch[äa]digung)\s+(an|jetzt)/iu
+/entsch[äa]digung\s+f[üu]r\s+ihren\s+(versp[äa]teten|annullierten)\s+flug/iu
+/ihr\s+visumantrag\s+wurde\s+(abgelehnt|zur[üu]ckgestellt)/iu
+/(neue|ge[äa]nderte)\s+bankverbindung/iu
+
+# ===== French =====
+/votre\s+billet\s+a\s+[ée]t[ée]\s+annul[ée]/iu
+/r[ée]clamez\s+votre\s+remboursement/iu
+/indemnisation\s+pour\s+votre\s+vol\s+(retard[ée]|annul[ée])/iu
+/votre\s+demande\s+de\s+visa\s+a\s+[ée]t[ée]\s+(refus[ée]e|rejet[ée]e|suspendue)/iu
+/(changement|modification)\s+de\s+(nos\s+)?coordonn[ée]es\s+bancaires/iu
+
+# ===== Italian =====
+/il\s+(tuo|suo)\s+biglietto\s+[èe]\s+stato\s+(cancellato|annullato)/iu
+/richiedi\s+il\s+(tuo\s+)?rimborso/iu
+/risarcimento\s+per\s+il\s+(tuo|suo)\s+volo\s+(in\s+ritardo|cancellato)/iu
+/la\s+(tua|sua)\s+richiesta\s+di\s+visto\s+[èe]\s+stata\s+(respinta|rifiutata)/iu
+/(nuove|nuovi)\s+coordinate\s+bancarie/iu
+
+# ===== Portuguese =====
+/(sua|a\s+sua)\s+passagem\s+foi\s+cancelada/iu
+/solicite\s+(o\s+)?seu\s+reembolso/iu
+/indeniza[çc][ãa]o\s+pelo\s+(seu\s+)?voo\s+(atrasado|cancelado)/iu
+/(seu|o\s+seu)\s+pedido\s+de\s+visto\s+foi\s+(recusado|negado|rejeitado)/iu
+/(novos|alteramos\s+os\s+nossos)\s+dados\s+banc[áa]rios/iu
+
+# ===== Dutch =====
+/uw\s+ticket\s+is\s+geannuleerd/iu
+/claim\s+uw\s+(terugbetaling|compensatie)/iu
+/uw\s+visumaanvraag\s+is\s+(afgewezen|geweigerd)/iu
+/(nieuwe|gewijzigde)\s+bankgegevens/iu
+
+# ===== Polish =====
+/tw[óo]j\s+bilet\s+zosta[łl]\s+anulowany/iu
+/odbierz\s+(sw[óo]j\s+)?zwrot/iu
+/odszkodowanie\s+za\s+(op[óo][źz]niony|odwo[łl]any)\s+lot/iu
+/tw[óo]j\s+wniosek\s+wizowy\s+zosta[łl]\s+odrzucony/iu
+/zmiana\s+(naszego\s+)?numeru\s+(konta|rachunku)/iu
+
+# ===== Turkish =====
+/biletiniz\s+iptal\s+edildi/iu
+/iade(nizi)?\s+talep\s+edin/iu
+/(gecikmeli|iptal\s+edilen)\s+u[çc]u(ş|s)unuz\s+i[çc]in\s+tazminat/iu
+/vize\s+ba(ş|s)vurunuz\s+(reddedildi|beklemeye\s+al[ıi]nd[ıi])/iu
+/banka\s+hesap\s+bilgilerimiz\s+de[ğg]i(ş|s)ti/iu
+
+# ===== Azerbaijani =====
+/biletiniz\s+l[əe][ğg]v\s+edildi/iu
+/geri\s+[öo]d[əe]ni(ş|s)inizi\s+t[əe]l[əe]b\s+edin/iu
+/viza\s+m[üu]raci[əe]tiniz\s+(r[əe]dd\s+edildi|dayand[ıi]r[ıi]ld[ıi])/iu
+/bank\s+(hesab\s+)?rekvizitl[əe]rimiz\s+d[əe]yi(ş|s)ib/iu
+
+# ===== Russian =====
+/ваш\s+(авиа)?билет\s+(был\s+)?(аннулирован|отмен[её]н)/iu
+/получите\s+(ваш\s+|свой\s+)?возврат/iu
+/компенсаци[яю]\s+за\s+(задержанный|отмен[её]нный)\s+рейс/iu
+/ваш[ае]?\s+(заявка|заявление)\s+на\s+визу\s+(отклонен[ао]?|приостановлен[ао]?)/iu
+/(изменились|новые)\s+(наши\s+)?банковские\s+реквизиты/iu
+
+# ===== Ukrainian =====
+/ваш\s+(авіа)?квиток\s+(було\s+)?(анульовано|скасовано)/iu
+/компенсаці[яю]\s+за\s+(затриманий|скасований)\s+рейс/iu
+/ваш[ау]?\s+(заявк[ау]|заяв[ау])\s+на\s+візу\s+відхилено/iu
+/(змінилися|нові)\s+(наші\s+)?банківські\s+реквізити/iu
+
+# ===== Arabic =====
+/تم\s+إلغاء\s+تذكرتك/u
+/(اطلب|استرد)\s+(المبلغ|أموالك)/u
+/تم\s+رفض\s+طلب\s+(التأشيرة|الفيزا)/u
+/تم\s+تغيير\s+(بياناتنا|تفاصيلنا)\s+المصرفية/u
+
+# ===== Hindi =====
+/आपका\s+टिकट\s+रद्द\s+(कर\s+दिया\s+गया|हो\s+गया)/u
+/अपना\s+रिफंड\s+(क्लेम|प्राप्त)\s+करें/u
+/आपका\s+वीज़ा\s+आवेदन\s+(अस्वीकार|रद्द)/u
+/(हमारे\s+)?बैंक\s+(खाते\s+का\s+)?विवरण\s+(बदल|अपडेट)/u
+
+# ===== Chinese =====
+/您的(机票|機票)已(被)?(取消|作废|作廢)/u
+/(申请|申請|领取|領取)(您的)?(退款|赔偿|賠償)/u
+/(签证|簽證)申(请|請)(被)?(拒绝|拒絕|驳回|駁回)/u
+/(我司|我们的|我們的)(银行|銀行)(账户|帳戶|账号|帳號)(已)?(变更|變更|更改)/u
+
+# ===== Thai =====
+/ตั๋ว(เครื่องบิน)?ของคุณถูกยกเลิก/u
+/ขอรับเงินคืน/u
+/คำขอวีซ่าของคุณถูกปฏิเสธ/u
+/(เปลี่ยน|อัปเดต)ข้อมูลบัญชีธนาคาร/u

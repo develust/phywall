@@ -1,0 +1,132 @@
+# =====================================================================
+#  education.map - phishing phrases for schools and universities
+#  Part of: phishing-detector by Develust Technology
+#
+#  Format : one regex per line, /pattern/flags (i = case-insensitive,
+#           u = UTF-8). No trailing spaces.
+#  Note   : PHISH_TEXT scores 0 alone; it only adds points together
+#           with a phishing link (PHISH_URL / PHISHING).
+#
+#  Themes : student / staff portal and LMS logins (Moodle, Canvas,
+#           Blackboard, Google Classroom), student account deactivation,
+#           scholarship and grant awards, tuition fees and refunds,
+#           exam results / transcripts / diplomas, staff payroll and
+#           salary updates, library accounts, fake student job offers
+#
+#  Avoided: class schedules, exam timetables, newsletters, event
+#           announcements, because schools send real ones every day.
+# =====================================================================
+
+# ===== English =====
+# Portals / LMS
+/(log\s+in|sign\s+in|login)\s+to\s+(your\s+|the\s+)?(student|staff|faculty|university|school)\s+(portal|account|email)\s+to\s+(avoid|verify|confirm|keep|continue)/i
+/(moodle|canvas|blackboard|google\s+classroom|office\s+365|student\s+portal)\s+(account\s+)?(will\s+be\s+|has\s+been\s+)?(deactivated|suspended|locked|expired|disabled)/i
+/your\s+(student|staff|faculty|edu)\s+(email\s+)?account\s+(will\s+be|has\s+been)\s+(deactivated|suspended|deleted|closed)/i
+/(re-?validate|revalidate|verify|upgrade)\s+your\s+(student|staff|faculty|edu|university)\s+(email|account)/i
+# Scholarships / grants
+/(you\s+have\s+been\s+)?(awarded|selected\s+for|approved\s+for)\s+a\s+(scholarship|grant|bursary|stipend|financial\s+aid)/i
+/(claim|accept|confirm)\s+your\s+(scholarship|grant|bursary|stipend|financial\s+aid)\s+(award|offer|now|within|before)/i
+# Tuition
+/(tuition|school|course)\s+fees?\s+(payment\s+)?(is\s+)?(overdue|outstanding|unpaid|failed)/i
+/(tuition|student)\s+refund\s+(is\s+)?(approved|pending|available)/i
+# Results / documents
+/(view|download|access)\s+(your\s+)?(exam\s+results?|grades?|transcripts?|diploma|certificate|report\s+card)\s+(here|online|via\s+(the\s+)?link)/i
+/your\s+(exam\s+results?|grades?|transcript|diploma)\s+(has\s+been|have\s+been|are|is)\s+(withheld|on\s+hold|blocked)/i
+# Staff payroll
+/(salary|payroll|pay)\s+(increase|adjustment|review|update)\s+(letter|document|notice)\s+(attached|available|for\s+(all\s+)?staff)/i
+/(update|confirm|verify)\s+your\s+(payroll|salary|direct\s+deposit|bank)\s+(details|information)\s+(before|to\s+receive|for\s+this\s+month)/i
+# Library
+/your\s+library\s+account\s+(will\s+be\s+|has\s+been\s+)?(suspended|blocked|expired)/i
+# Fake student jobs
+/(part-?time|remote)\s+(job|position|assistant|work)[^.]{0,40}(\$|usd|eur|€)\s*\d+\s*(per\s+week|weekly|\/\s?week|a\s+week)/i
+/(personal|administrative|research)\s+assistant\s+(position|job)\s+[^.]{0,30}(\$|usd|eur)\s*\d+\s*(weekly|per\s+week)/i
+
+# ===== Spanish =====
+/(inicie\s+sesi[óo]n|acceda)\s+(en|a)\s+(su\s+)?(portal|cuenta)\s+(del\s+)?(estudiante|alumno|universitari[oa])/iu
+/su\s+cuenta\s+(de\s+estudiante|universitaria|institucional)\s+(ser[áa]|ha\s+sido)\s+(desactivada|suspendida)/iu
+/(ha\s+sido\s+)?(seleccionad[oa]|beneficiad[oa])\s+(para|con)\s+una\s+beca/iu
+/(matr[íi]cula|colegiatura)\s+(pendiente|vencida|impaga)/iu
+
+# ===== German =====
+/(melden\s+sie\s+sich\s+)?(im|beim)\s+(studierenden|studenten|hochschul)portal\s+an/iu
+/ihr\s+(studierenden|studenten|hochschul|uni)[- ]?(konto|account)\s+(wird|wurde)\s+(deaktiviert|gesperrt)/iu
+/(sie\s+haben\s+)?(ein\s+)?stipendium\s+(erhalten|zugesprochen|gewonnen)/iu
+/(studiengeb[üu]hren|semesterbeitrag)\s+(ausstehend|[üu]berf[äa]llig|nicht\s+bezahlt)/iu
+
+# ===== French =====
+/(connectez-vous|acc[ée]dez)\s+(à|a)\s+(votre\s+)?(espace|portail|compte)\s+([ée]tudiant|ent|universitaire)/iu
+/votre\s+compte\s+([ée]tudiant|universitaire)\s+(sera|a\s+[ée]t[ée])\s+(d[ée]sactiv[ée]|suspendu)/iu
+/(vous\s+avez\s+obtenu|attribution\s+d['’])\s*une\s+bourse/iu
+/frais\s+de\s+scolarit[ée]\s+(impay[ée]s|en\s+retard)/iu
+
+# ===== Italian =====
+/(accedi|accedere)\s+al\s+portale\s+(dello\s+)?studente/iu
+/il\s+(tuo|suo)\s+account\s+(studente|universitario)\s+(sar[àa]|[èe]\s+stato)\s+(disattivato|sospeso)/iu
+/(ti\s+[èe]\s+stata\s+assegnata|hai\s+vinto)\s+una\s+borsa\s+di\s+studio/iu
+/tasse\s+universitarie\s+(non\s+pagate|scadute|in\s+ritardo)/iu
+
+# ===== Portuguese =====
+/(acesse|entre\s+no)\s+(o\s+)?portal\s+do\s+(aluno|estudante)/iu
+/(sua|a\s+sua)\s+conta\s+(de\s+estudante|acad[êe]mica|institucional)\s+(ser[áa]|foi)\s+(desativada|suspensa)/iu
+/(voc[êe]\s+foi\s+)?(selecionad[oa]|contemplad[oa])\s+(para|com)\s+uma\s+bolsa/iu
+/mensalidade\s+(em\s+atraso|vencida|pendente)/iu
+
+# ===== Dutch =====
+/log\s+in\s+op\s+(het\s+|uw\s+)?studentenportaal/iu
+/uw\s+studentenaccount\s+(wordt|is)\s+(gedeactiveerd|geblokkeerd)/iu
+/(u\s+heeft\s+)?een\s+beurs\s+(ontvangen|toegekend)/iu
+/collegegeld\s+(openstaand|achterstallig|niet\s+betaald)/iu
+
+# ===== Polish =====
+/zaloguj\s+si[ęe]\s+do\s+(usos|portalu\s+studenta|wirtualnego\s+dziekanatu)/iu
+/twoje\s+konto\s+(studenckie|uczelniane)\s+(zostanie|zosta[łl]o)\s+(dezaktywowane|zablokowane)/iu
+/(przyznano\s+(ci|pa[ńn]stwu)|otrzyma[łl](e[śs]|a[śs]))\s+stypendium/iu
+/(op[łl]ata|czesne)\s+za\s+studia\s+(zaleg[łl]a|nieop[łl]acon[ae])/iu
+
+# ===== Turkish =====
+/([öo][ğg]renci\s+bilgi\s+sistemi|obs|[öo][ğg]renci\s+portal[ıi])\s+(hesab[ıi]n[ıi]z|giri(ş|s))/iu
+/([öo][ğg]renci|kurumsal|edu)\s+(e-?posta\s+)?hesab[ıi]n[ıi]z\s+(kapat[ıi]lacak|ask[ıi]ya\s+al[ıi]nd[ıi]|devre\s+d[ıi](ş|s)[ıi])/iu
+/burs\s+(ba(ş|s)vurunuz\s+onayland[ıi]|kazand[ıi]n[ıi]z|almaya\s+hak\s+kazand[ıi]n[ıi]z)/iu
+/(har[çc]|[öo][ğg]renim\s+[üu]creti)\s+([öo]demeniz\s+)?(gecikti|[öo]denmedi|bekliyor)/iu
+
+# ===== Azerbaijani =====
+/(t[əe]l[əe]b[əe]|[şs]agird)\s+portal[ıi]na\s+daxil\s+olun/iu
+/(t[əe]l[əe]b[əe]|universitet|korporativ)\s+hesab[ıi]n[ıi]z\s+(deaktiv\s+edil[əe]c[əe]k|bloklan[ıi]b|dayand[ıi]r[ıi]l[ıi]b)/iu
+/t[əe]qa[üu]d(ü|u)n[üu]z\s+(t[əe]sdiql[əe]ndi|ayr[ıi]ld[ıi])|t[əe]qa[üu]d\s+qazand[ıi]n[ıi]z/iu
+/t[əe]hsil\s+haqq[ıi]\s+([öo]d[əe]nilm[əe]yib|gecikib|borcu)/iu
+
+# ===== Russian =====
+/войдите\s+в\s+(личный\s+кабинет\s+студента|студенческий\s+портал|электронную\s+зачетку)/iu
+/ваш\s+(студенческий|университетский|корпоративный)\s+(аккаунт|почтовый\s+ящик)\s+будет\s+(отключ[её]н|заблокирован|удал[её]н)/iu
+/вам\s+(назначена|присуждена|одобрена)\s+(стипендия|грант)/iu
+/задолженность\s+по\s+оплате\s+(обучения|за\s+обучение)/iu
+
+# ===== Ukrainian =====
+/увійдіть\s+до\s+(кабінету\s+студента|студентського\s+порталу)/iu
+/ваш\s+(студентський|університетський)\s+(акаунт|обліковий\s+запис)\s+буде\s+(вимкнено|заблоковано)/iu
+/вам\s+(призначено|присуджено)\s+(стипендію|грант)/iu
+
+# ===== Arabic =====
+/(سجل|قم\s+بتسجيل)\s+الدخول\s+إلى\s+(بوابة\s+الطالب|البوابة\s+الجامعية)/u
+/سيتم\s+(إيقاف|تعطيل)\s+حساب(ك)?\s+(الطالب|الجامعي)/u
+/(حصلت|تم\s+منحك)\s+(على\s+)?منحة\s+دراسية/u
+/الرسوم\s+الدراسية\s+(متأخرة|غير\s+مدفوعة|مستحقة)/u
+
+# ===== Hindi =====
+/(छात्र|स्टूडेंट)\s+पोर्टल\s+में\s+लॉगिन\s+करें/u
+/आपका\s+(छात्र|स्टूडेंट|विश्वविद्यालय)\s+(खाता|अकाउंट)\s+(बंद|निलंबित)/u
+/(आपको\s+)?छात्रवृत्ति\s+(स्वीकृत|मिली|प्रदान)/u
+/(फीस|शुल्क)\s+(बकाया|लंबित|जमा\s+नहीं)/u
+/(nsp|national\s+scholarship\s+portal)\s+(kyc|update|verify|approved)/i
+
+# ===== Chinese =====
+/(登录|登錄|登入)(学生|學生|教务|教務)(门户|門戶|系统|系統)/u
+/(您的)?(学生|學生|校园|校園)(邮箱|郵箱|账号|帳號)(将被|將被)(停用|注销|註銷|冻结|凍結)/u
+/(您已)?(获得|獲得)(奖学金|獎學金|助学金|助學金)/u
+/(学费|學費)(逾期|未缴|未繳|待缴|待繳)/u
+
+# ===== Thai =====
+/เข้าสู่ระบบ(พอร์ทัลนักศึกษา|ระบบนักศึกษา)/u
+/บัญชีนักศึกษาของคุณจะถูก(ระงับ|ปิด)/u
+/คุณได้รับทุนการศึกษา/u
+/ค่าเล่าเรียน(ค้างชำระ|เกินกำหนด)/u

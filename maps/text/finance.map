@@ -1,0 +1,166 @@
+# =====================================================================
+#  finance.map - phishing phrases for banks, insurance and accounting
+#  Part of: phishing-detector by Develust Technology
+#
+#  Format : one regex per line, /pattern/flags (i = case-insensitive,
+#           u = UTF-8). No trailing spaces.
+#  Note   : PHISH_TEXT scores 0 alone; it only adds points together
+#           with a phishing link (PHISH_URL / PHISHING).
+#
+#  Themes : fake SWIFT / MT103 payment copies, proof of payment and
+#           remittance lures, blocked cards and online banking,
+#           pending / held wire transfers, tax authority notices and
+#           refunds, audit and compliance (KYC) requests, insurance
+#           claims and policy notices, urgent CEO payment requests (BEC),
+#           accounting-software invoice lures
+#
+#  Avoided: "invoice attached", "payment received", "monthly statement
+#           is available", because companies get real ones every day.
+# =====================================================================
+
+# ===== English =====
+# Fake payment copies
+/(swift|mt\s?103)\s+(copy|confirmation|message|slip)\s+(attached|of\s+(the\s+)?payment|for\s+your\s+review)/i
+/(view|download|open)\s+(the\s+)?(proof\s+of\s+payment|payment\s+receipt|remittance\s+advice|payment\s+advice)/i
+/(payment|transfer)\s+(copy|confirmation)\s+(is\s+)?(available|ready)\s+(for\s+download|online|here)/i
+# Blocked cards / online banking
+/your\s+(credit\s+card|debit\s+card|card|bank\s+account)\s+(has\s+been|was|is)\s+(temporarily\s+)?(blocked|suspended|restricted|frozen|locked)/i
+/(online|internet|mobile)\s+banking\s+(access\s+)?(has\s+been\s+)?(suspended|locked|blocked|disabled)/i
+/(update|reactivate|verify)\s+your\s+(security\s+token|otp\s+device|3-?d\s+secure|banking\s+details)/i
+/unusual\s+(transaction|card\s+activity)\s+(detected|on\s+your\s+account)/i
+# Held transfers
+/(wire|incoming|international)\s+transfer\s+(is\s+)?(pending|on\s+hold|held|awaiting)\s+(your\s+)?(approval|confirmation|verification|release)/i
+/(funds|payment)\s+(are\s+|is\s+)?(on\s+hold|held)\s+(pending|until)\s+(verification|confirmation)/i
+# Tax authority
+/(tax|vat)\s+(refund|rebate)\s+(of\s+[\d.,]+\s+\S+\s+)?(is\s+)?(approved|pending|available|ready)/i
+/(outstanding|unpaid|overdue)\s+tax\s+(debt|liability|balance|payment)/i
+/(irs|hmrc|tax\s+authority|revenue\s+service|tax\s+office)\s+(notice|notification|penalty|audit)/i
+# Audit / compliance
+/(audit|compliance|aml)\s+(documents?|request|review)\s+(is\s+|are\s+)?(required|pending|overdue)/i
+/kyc\s+(verification|documents?|update|review)\s+(is\s+)?(required|pending|expired|overdue)/i
+# Insurance
+/insurance\s+claim\s+(#?\d+\s+)?(has\s+been\s+)?(approved|rejected|pending|requires\s+(your\s+)?action)/i
+/(your\s+)?policy\s+(will\s+be\s+|has\s+been\s+)?(cancelled|canceled|suspended|terminated)\s+(due\s+to|unless|today)/i
+# BEC / urgent payments
+/urgent\s+(wire|payment|transfer|remittance)\s+request/i
+/(process|make)\s+(an\s+)?urgent\s+(wire|payment|transfer)\s+(today|immediately|before)/i
+/(i\s+am|i'm)\s+(in\s+a\s+meeting|traveling|travelling|unavailable)[^.]{0,40}\s+(urgent|payment|transfer|wire)/i
+# Accounting software lures
+/(quickbooks|xero|sage|freshbooks|zoho\s+books)\s+(invoice|payment|statement)\s+(notification|is\s+ready|overdue|reminder)/i
+
+# ===== Spanish =====
+/(copia|comprobante)\s+(del?\s+)?(swift|pago|transferencia)\s+(adjunt[oa]|disponible)/iu
+/su\s+(tarjeta|cuenta\s+bancaria)\s+(ha\s+sido|fue|est[áa])\s+(bloqueada|suspendida|restringida)/iu
+/transferencia\s+(pendiente|retenida)\s+de\s+(aprobaci[óo]n|confirmaci[óo]n|verificaci[óo]n)/iu
+/devoluci[óo]n\s+de\s+(impuestos|iva)\s+(aprobada|pendiente|disponible)/iu
+/(agencia\s+tributaria|hacienda|sat)\s+(notificaci[óo]n|requerimiento|aviso)/iu
+/solicitud\s+urgente\s+de\s+(pago|transferencia)/iu
+
+# ===== German =====
+/(swift|zahlungs|[üu]berweisungs)(kopie|best[äa]tigung|beleg)\s+(im\s+anhang|anbei|verf[üu]gbar)/iu
+/ihre\s+(karte|kreditkarte|bankkarte|konto)\s+(wurde\s+)?(gesperrt|eingeschr[äa]nkt|blockiert)/iu
+/(online-?banking|onlinebanking)(-zugang)?\s+(wurde\s+)?(gesperrt|deaktiviert)/iu
+/steuer(r[üu]ck)?erstattung\s+(genehmigt|ausstehend|verf[üu]gbar)/iu
+/(finanzamt|bundeszentralamt\s+f[üu]r\s+steuern)\s+(mitteilung|benachrichtigung|bescheid)/iu
+/dringende\s+([üu]berweisung|zahlung)/iu
+
+# ===== French =====
+/(copie|preuve)\s+(du\s+)?(swift|paiement|virement)\s+(ci-jointe?|disponible)/iu
+/votre\s+(carte|compte\s+bancaire)\s+(a\s+[ée]t[ée]|est)\s+(bloqu[ée]e?|suspendu[e]?|restreint[e]?)/iu
+/virement\s+(en\s+attente|bloqu[ée])\s+de\s+(validation|confirmation)/iu
+/remboursement\s+(fiscal|de\s+tva)\s+(approuv[ée]|disponible|en\s+attente)/iu
+/(impots\.gouv|direction\s+g[ée]n[ée]rale\s+des\s+finances)\s+(avis|notification)/iu
+/demande\s+urgente\s+de\s+(paiement|virement)/iu
+
+# ===== Italian =====
+/(copia|ricevuta)\s+(del\s+)?(swift|bonifico|pagamento)\s+(in\s+allegato|disponibile)/iu
+/la\s+(tua|sua)\s+(carta|conto)\s+([èe]\s+stat[ao]\s+)?(bloccat[ao]|sospes[ao]|limitat[ao])/iu
+/bonifico\s+(in\s+attesa|bloccato)\s+di\s+(approvazione|conferma|verifica)/iu
+/rimborso\s+(fiscale|iva|irpef)\s+(approvato|disponibile|in\s+attesa)/iu
+/agenzia\s+delle\s+entrate\s+(avviso|comunicazione|notifica)/iu
+/richiesta\s+urgente\s+di\s+(pagamento|bonifico)/iu
+
+# ===== Portuguese =====
+/(c[óo]pia|comprovante)\s+(do\s+)?(swift|pagamento|transfer[êe]ncia)\s+(em\s+anexo|dispon[íi]vel)/iu
+/(seu|o\s+seu)\s+(cart[ãa]o|conta\s+banc[áa]ria)\s+(foi|est[áa])\s+(bloqueado|bloqueada|suspenso|suspensa)/iu
+/transfer[êe]ncia\s+(pendente|retida)\s+de\s+(aprova[çc][ãa]o|confirma[çc][ãa]o)/iu
+/restitui[çc][ãa]o\s+do\s+imposto\s+(aprovada|dispon[íi]vel|pendente)/iu
+/(receita\s+federal|autoridade\s+tribut[áa]ria)\s+(notifica[çc][ãa]o|intima[çc][ãa]o|aviso)/iu
+/pedido\s+urgente\s+de\s+(pagamento|transfer[êe]ncia)/iu
+
+# ===== Dutch =====
+/(swift|betalings)(kopie|bewijs|bevestiging)\s+(bijgevoegd|beschikbaar)/iu
+/uw\s+(pas|bankpas|creditcard|rekening)\s+is\s+(geblokkeerd|opgeschort)/iu
+/belastingteruggave\s+(goedgekeurd|beschikbaar)/iu
+/belastingdienst\s+(melding|aanslag|kennisgeving)/iu
+/dringend\s+(betalingsverzoek|overboekingsverzoek)/iu
+
+# ===== Polish =====
+/(potwierdzenie|kopia)\s+(przelewu|p[łl]atno[śs]ci|swift)\s+(w\s+za[łl][ąa]czniku|dost[ęe]pn[ae])/iu
+/twoja\s+(karta|konto)\s+(zosta[łl]a?|zosta[łl]o)\s+(zablokowan[ae]|zawieszon[ae])/iu
+/zwrot\s+podatku\s+(zatwierdzony|dost[ęe]pny|oczekuje)/iu
+/(urz[ąa]d\s+skarbowy|krajowa\s+administracja\s+skarbowa)\s+(wezwanie|zawiadomienie|powiadomienie)/iu
+/pilny\s+(przelew|wniosek\s+o\s+p[łl]atno[śs][ćc])/iu
+
+# ===== Turkish =====
+/(swift|dekont|[öo]deme)\s+(kopyas[ıi]|dekontu|makbuzu)\s+(ektedir|ekte|haz[ıi]r)/iu
+/(kart[ıi]n[ıi]z|hesab[ıi]n[ıi]z)\s+(bloke\s+edildi|ask[ıi]ya\s+al[ıi]nd[ıi]|k[ıi]s[ıi]tland[ıi])/iu
+/(havale|eft)\s+i(ş|s)leminiz\s+onay\s+bekliyor/iu
+/vergi\s+iadeniz\s+(onayland[ıi]|haz[ıi]r|beklemede)/iu
+/(gelir\s+idaresi|vergi\s+dairesi)\s+(bildirimi|tebligat[ıi]|uyar[ıi]s[ıi])/iu
+/acil\s+(havale|[öo]deme|transfer)\s+talebi/iu
+
+# ===== Azerbaijani =====
+/(swift|[öo]d[əe]ni(ş|s))\s+(sur[əe]ti|q[əe]bzi|t[əe]sdiqi)\s+([əe]lav[əe]\s+olunur|haz[ıi]rd[ıi]r)/iu
+/(kart[ıi]n[ıi]z|hesab[ıi]n[ıi]z)\s+(bloklan[ıi]b|dondurulub|m[əe]hdudla(ş|s)d[ıi]r[ıi]l[ıi]b)/iu
+/k[öo][çc][üu]rm[əe]niz\s+t[əe]sdiq\s+g[öo]zl[əe]yir/iu
+/vergi\s+qaytar[ıi]lmas[ıi]\s+(t[əe]sdiql[əe]ndi|haz[ıi]rd[ıi]r)/iu
+/(vergil[əe]r\s+nazirliyi|d[öo]vl[əe]t\s+vergi\s+xidm[əe]ti)\s+(bildiri(ş|s)i|x[əe]b[əe]rdarl[ıi][ğg][ıi])/iu
+/t[əe]cili\s+([öo]d[əe]ni(ş|s)|k[öo][çc][üu]rm[əe])\s+t[əe]l[əe]bi/iu
+
+# ===== Russian =====
+/(копия|подтверждение)\s+(swift|платежа|перевода|платёжки|платежки)\s+(во\s+вложении|прилагается|доступн[ао])/iu
+/ваша\s+(карта|банковская\s+карта)\s+(была\s+)?(заблокирована|приостановлена)/iu
+/(ваш\s+)?(сч[её]т|счет)\s+(был\s+)?(заблокирован|арестован|приостановлен)/iu
+/(перевод|платеж|платёж)\s+(ожидает|требует)\s+(вашего\s+)?(подтверждения|одобрения)/iu
+/возврат\s+(налога|ндс)\s+(одобрен|доступен|ожидает)/iu
+/(налоговая\s+служба|фнс|налоговая\s+инспекция)\s+(уведомление|требование|извещение)/iu
+/срочн(ый|ая|ое)\s+(перевод|оплата|платеж|платёж)/iu
+
+# ===== Ukrainian =====
+/(копія|підтвердження)\s+(swift|платежу|переказу)\s+(у\s+вкладенні|додається)/iu
+/ваша\s+(картка|банківська\s+картка)\s+(була\s+)?(заблокована|призупинена)/iu
+/(переказ|платіж)\s+(очікує|потребує)\s+(вашого\s+)?(підтвердження|схвалення)/iu
+/повернення\s+(податку|пдв)\s+(схвалено|доступне)/iu
+/(податкова\s+служба|дпс)\s+(повідомлення|вимога)/iu
+/терміновий\s+(переказ|платіж)/iu
+
+# ===== Arabic =====
+/(نسخة|إيصال)\s+(سويفت|الدفع|التحويل)\s+(مرفق|مرفقة)/u
+/تم\s+(إيقاف|حظر|تجميد)\s+(بطاقتك|حسابك\s+المصرفي)/u
+/(التحويل|الحوالة)\s+(معلقة?|بانتظار)\s+(الموافقة|التأكيد)/u
+/(استرداد|استرجاع)\s+(الضريبة|ضريبة\s+القيمة\s+المضافة)/u
+/طلب\s+(تحويل|دفع)\s+عاجل/u
+
+# ===== Hindi =====
+/(स्विफ्ट|भुगतान|ट्रांसफर)\s+(की\s+)?(कॉपी|रसीद)\s+(संलग्न|अटैच)/u
+/आपका\s+(कार्ड|बैंक\s+खाता)\s+(ब्लॉक|निलंबित|फ्रीज़)\s+(कर\s+दिया\s+गया|हो\s+गया)/u
+/(आयकर|टैक्स)\s+रिफंड\s+(स्वीकृत|उपलब्ध|लंबित)/u
+/आयकर\s+विभाग\s+(नोटिस|सूचना)/u
+/तत्काल\s+(भुगतान|ट्रांसफर)\s+(अनुरोध|करें)/u
+/(income\s+tax|it)\s+refund\s+(approved|pending)\s+(click|verify|update)/i
+
+# ===== Chinese =====
+/(水单|水單|汇款单|匯款單|付款凭证|付款憑證|swift)(已附上|见附件|見附件)/u
+/您的(银行卡|銀行卡|信用卡|账户|帳戶)已(被)?(冻结|凍結|锁定|鎖定|停用)/u
+/(汇款|匯款|转账|轉帳)(待|等待)(确认|確認|审核|審核)/u
+/(退税|退稅)(已批准|已核准|待领取|待領取)/u
+/(税务局|稅務局|国家税务总局|國家稅務總局)(通知|稽查)/u
+/(紧急|緊急)(付款|汇款|匯款|转账|轉帳)/u
+
+# ===== Thai =====
+/(สำเนา|หลักฐาน)(การโอน|การชำระเงิน|swift)(แนบมา|ตามไฟล์แนบ)/u
+/(บัตร|บัญชี)ของคุณถูก(ระงับ|อายัด|ล็อก)/u
+/การโอนเงินรอการ(ยืนยัน|อนุมัติ)/u
+/กรมสรรพากร(แจ้ง|ขอ)/u
+/(โอนเงิน|ชำระเงิน)ด่วน/u

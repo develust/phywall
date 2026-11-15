@@ -1,0 +1,143 @@
+# =====================================================================
+#  ecommerce.map - phishing phrases for online shops and retail
+#  Part of: phishing-detector by Develust Technology
+#
+#  Format : one regex per line, /pattern/flags (i = case-insensitive,
+#           u = UTF-8). No trailing spaces.
+#  Note   : PHISH_TEXT scores 0 alone; it only adds points together
+#           with a phishing link (PHISH_URL / PHISHING).
+#
+#  Themes : marketplace seller account suspension (Amazon, eBay, Etsy,
+#           Shopify, Trendyol, Hepsiburada, Wildberries, Ozon,
+#           AliExpress, Mercado Libre, Allegro, Flipkart), payment
+#           gateway limits (PayPal, Stripe), chargebacks and disputes,
+#           listing removal, intellectual-property / copyright
+#           complaints, fake customer complaints with "photos",
+#           store payment failures
+#
+#  Avoided: order confirmations, "your order has shipped", "new order
+#           received", "price list attached", because shops send and
+#           receive real ones every day.
+# =====================================================================
+
+# ===== English =====
+# Seller accounts
+/your\s+(seller|merchant|vendor|store|shop)\s+account\s+(has\s+been|will\s+be|is)\s+(suspended|deactivated|restricted|on\s+hold|under\s+review|closed)/i
+/(amazon|seller\s+central|ebay|etsy|shopify|trendyol|hepsiburada|wildberries|ozon|aliexpress|mercado\s+libre|allegro|flipkart)\s+(seller\s+|merchant\s+)?(account\s+)?(suspended|deactivated|verification\s+required|action\s+required|policy\s+violation)/i
+/(reactivate|reinstate|restore)\s+your\s+(seller|merchant|store|selling)\s+(account|privileges)/i
+/(your\s+)?(listings?|products?)\s+(has\s+been|have\s+been|will\s+be)\s+(removed|deactivated|suppressed|blocked)\s+(due\s+to|for)/i
+# Payment gateways
+/your\s+(paypal|stripe|payoneer|wise)\s+account\s+(has\s+been|is)\s+(limited|restricted|suspended|on\s+hold)/i
+/(payouts?|withdrawals?|disbursements?)\s+(are\s+|is\s+|have\s+been\s+)?(on\s+hold|paused|suspended|frozen)/i
+/(resolve|remove)\s+(the\s+)?(account\s+)?limitation/i
+# Chargebacks / disputes
+/(a\s+)?(chargeback|dispute|claim)\s+(has\s+been\s+)?(opened|filed|raised)\s+(against|on|for)\s+(your\s+)?(order|transaction|payment)/i
+/respond\s+to\s+(the\s+)?(chargeback|dispute|claim)\s+within\s+\d+/i
+# IP / copyright complaints
+/(intellectual\s+property|copyright|trademark)\s+(infringement|violation)\s+(complaint|notice|report)/i
+/(report|notice)\s+of\s+(alleged\s+)?(intellectual\s+property|copyright|trademark)\s+infringement/i
+# Fake customer complaints
+/(customer|buyer)\s+(complaint|claim)\s+(about|regarding)\s+(your\s+)?(product|order|item)/i
+/(see|view|check)\s+(the\s+)?(photos?|pictures?|images?|video)\s+of\s+the\s+(damaged|defective|wrong|broken)\s+(product|item|order)/i
+/(the\s+)?(product|item)\s+(i\s+)?(received|bought|ordered)\s+(is|was)\s+(damaged|defective|broken|fake|counterfeit)[^.]{0,40}(see|view|photos?|link)/i
+# Store / platform payments
+/(store|shop|subscription)\s+payment\s+(failed|declined|unsuccessful)/i
+/your\s+(store|shop)\s+will\s+be\s+(closed|paused|deactivated)\s+(unless|if|within)/i
+
+# ===== Spanish =====
+/su\s+cuenta\s+de\s+(vendedor|comerciante|tienda)\s+(ha\s+sido|ser[áa]|est[áa])\s+(suspendida|desactivada|restringida)/iu
+/sus\s+(anuncios|publicaciones|productos)\s+(han\s+sido|ser[áa]n)\s+(eliminad[oa]s|desactivad[oa]s)/iu
+/(se\s+ha\s+abierto\s+una\s+)?(disputa|reclamaci[óo]n|contracargo)\s+(sobre|contra)\s+su\s+(pedido|transacci[óo]n)/iu
+/infracci[óo]n\s+de\s+(propiedad\s+intelectual|derechos\s+de\s+autor|marca)/iu
+/su\s+cuenta\s+de\s+paypal\s+(ha\s+sido|est[áa])\s+(limitada|restringida)/iu
+
+# ===== German =====
+/ihr\s+(verk[äa]ufer|h[äa]ndler|shop)konto\s+(wurde|wird)\s+(gesperrt|deaktiviert|eingeschr[äa]nkt)/iu
+/ihre\s+(angebote|artikel|produkte)\s+(wurden|werden)\s+(entfernt|deaktiviert|gesperrt)/iu
+/(eine\s+)?(r[üu]ckbuchung|streitigkeit|reklamation)\s+(wurde\s+)?(er[öo]ffnet|eingereicht)/iu
+/(verletzung|verletzungen)\s+(des\s+|von\s+)?(geistigen\s+eigentums|urheberrechts|markenrechts)/iu
+/vorschl[äa]ge\s+f[üu]r\s+l[öo]sungen\s+bei\s+geistigen\s+eigentumsverletzungen/iu
+/ihr\s+paypal-?konto\s+(wurde\s+)?(eingeschr[äa]nkt|gesperrt)/iu
+
+# ===== French =====
+/votre\s+compte\s+(vendeur|marchand|boutique)\s+(a\s+[ée]t[ée]|sera|est)\s+(suspendu|d[ée]sactiv[ée]|restreint)/iu
+/vos\s+(annonces|produits)\s+(ont\s+[ée]t[ée]|seront)\s+(supprim[ée]s|d[ée]sactiv[ée]s)/iu
+/(un\s+)?(litige|r[ée]trofacturation|r[ée]clamation)\s+(a\s+[ée]t[ée]\s+)?ouvert[e]?\s+(sur|contre)\s+votre\s+(commande|transaction)/iu
+/(violation|atteinte)\s+(de\s+la\s+|aux\s+droits\s+de\s+)?(propri[ée]t[ée]\s+intellectuelle|droit\s+d['’]auteur|marque)/iu
+/votre\s+compte\s+paypal\s+(a\s+[ée]t[ée]|est)\s+(limit[ée]|restreint)/iu
+
+# ===== Italian =====
+/il\s+(tuo|suo)\s+account\s+(venditore|negozio)\s+([èe]\s+stato|sar[àa])\s+(sospeso|disattivato|limitato)/iu
+/le\s+(tue|sue)\s+inserzioni\s+(sono\s+state|saranno)\s+(rimosse|disattivate)/iu
+/(una\s+)?(contestazione|controversia|riaddebito)\s+([èe]\s+stat[ao]\s+)?apert[ao]\s+(sul|contro)\s+(tuo|suo)\s+ordine/iu
+/violazione\s+(della\s+propriet[àa]\s+intellettuale|del\s+copyright|del\s+marchio)/iu
+/il\s+(tuo|suo)\s+conto\s+paypal\s+([èe]\s+stato\s+)?(limitato|sospeso)/iu
+
+# ===== Portuguese =====
+/(sua|a\s+sua)\s+conta\s+de\s+(vendedor|lojista|loja)\s+(foi|ser[áa]|est[áa])\s+(suspensa|desativada|restrita)/iu
+/(seus|os\s+seus)\s+an[úu]ncios\s+(foram|ser[ãa]o)\s+(removidos|desativados)/iu
+/(uma\s+)?(disputa|reclama[çc][ãa]o|contesta[çc][ãa]o)\s+(foi\s+)?aberta\s+(sobre|contra)\s+(o\s+)?seu\s+pedido/iu
+/viola[çc][ãa]o\s+de\s+(propriedade\s+intelectual|direitos\s+autorais|marca)/iu
+/(sua|a\s+sua)\s+conta\s+paypal\s+(foi|est[áa])\s+(limitada|restrita)/iu
+
+# ===== Dutch =====
+/uw\s+(verkopers|winkel)account\s+(is|wordt)\s+(opgeschort|gedeactiveerd|beperkt)/iu
+/uw\s+(advertenties|producten)\s+(zijn|worden)\s+(verwijderd|gedeactiveerd)/iu
+/(een\s+)?(geschil|terugboeking|claim)\s+(is\s+)?geopend\s+voor\s+uw\s+(bestelling|transactie)/iu
+/inbreuk\s+op\s+(intellectueel\s+eigendom|auteursrecht|merkrecht)/iu
+
+# ===== Polish =====
+/twoje\s+konto\s+(sprzedawcy|sklepu)\s+(zosta[łl]o|zostanie)\s+(zawieszone|zablokowane|ograniczone)/iu
+/twoje\s+(oferty|aukcje)\s+(zosta[łl]y|zostan[ąa])\s+(usuni[ęe]te|zablokowane)/iu
+/(otwarto\s+)?(spór|reklamacj[ęe]|chargeback)\s+dotycz[ąa]c[ąay]\s+(twojego\s+)?zam[óo]wienia/iu
+/naruszenie\s+(praw\s+w[łl]asno[śs]ci\s+intelektualnej|praw\s+autorskich|znaku\s+towarowego)/iu
+
+# ===== Turkish =====
+/sat[ıi]c[ıi]\s+hesab[ıi]n[ıi]z\s+(ask[ıi]ya\s+al[ıi]nd[ıi]|kapat[ıi]ld[ıi]|k[ıi]s[ıi]tland[ıi]|ask[ıi]ya\s+al[ıi]nacak)/iu
+/(ilanlar[ıi]n[ıi]z|[üu]r[üu]nleriniz)\s+(kald[ıi]r[ıi]ld[ıi]|yay[ıi]ndan\s+kald[ıi]r[ıi]ld[ıi]|engellendi)/iu
+/sipari(ş|s)iniz\s+(i[çc]in|hakk[ıi]nda)\s+(itiraz|anla(ş|s)mazl[ıi]k|ters\s+ibraz)/iu
+/(fikri\s+m[üu]lkiyet|telif\s+hakk[ıi]|marka)\s+ihlali/iu
+/(trendyol|hepsiburada|n11)\s+(ma[ğg]aza|sat[ıi]c[ıi])\s+(hesab[ıi]n[ıi]z|panelinize)/iu
+
+# ===== Azerbaijani =====
+/sat[ıi]c[ıi]\s+hesab[ıi]n[ıi]z\s+(dayand[ıi]r[ıi]ld[ıi]|bloklan[ıi]b|m[əe]hdudla(ş|s)d[ıi]r[ıi]ld[ıi])/iu
+/(elanlar[ıi]n[ıi]z|m[əe]hsullar[ıi]n[ıi]z)\s+(silindi|deaktiv\s+edildi)/iu
+/sifari(ş|s)iniz\s+(il[əe]\s+ba[ğg]l[ıi]|bar[əe]d[əe])\s+(m[üu]bahis[əe]|e(ş|s)iraz)/iu
+/([əe]qli\s+m[üu]lkiyy[əe]t|m[üu][əe]llif\s+h[üu]ququ)\s+(pozuntusu|pozulmas[ıi])/iu
+
+# ===== Russian =====
+/ваш\s+(аккаунт|кабинет|магазин)\s+продавца\s+(был\s+)?(заблокирован|приостановлен|ограничен)/iu
+/ваши\s+(товары|объявления|карточки\s+товаров)\s+(были\s+)?(удалены|заблокированы|сняты\s+с\s+продажи)/iu
+/(открыт|открыт[ао])\s+(спор|претензия)\s+по\s+(вашему\s+)?заказу/iu
+/нарушение\s+(интеллектуальной\s+собственности|авторских\s+прав|прав\s+на\s+товарный\s+знак)/iu
+/(wildberries|ozon|яндекс\s+маркет)\s+(блокировка|приостановка|требуется\s+подтверждение)/iu
+
+# ===== Ukrainian =====
+/ваш\s+(акаунт|кабінет|магазин)\s+продавця\s+(було\s+)?(заблоковано|призупинено)/iu
+/ваші\s+(товари|оголошення)\s+(було\s+)?(видалено|заблоковано)/iu
+/(відкрито\s+)?(спір|претензію)\s+щодо\s+(вашого\s+)?замовлення/iu
+/порушення\s+(інтелектуальної\s+власності|авторських\s+прав)/iu
+
+# ===== Arabic =====
+/(تم\s+)?(تعليق|إيقاف|تقييد)\s+حساب\s+(البائع|المتجر)/u
+/(تمت\s+)?إزالة\s+(منتجاتك|إعلاناتك)/u
+/(تم\s+فتح\s+)?نزاع\s+(بخصوص|على)\s+طلبك/u
+/انتهاك\s+(الملكية\s+الفكرية|حقوق\s+النشر|العلامة\s+التجارية)/u
+
+# ===== Hindi =====
+/आपका\s+(सेलर|विक्रेता)\s+(खाता|अकाउंट)\s+(निलंबित|बंद|ब्लॉक)/u
+/आपके\s+(उत्पाद|प्रोडक्ट|लिस्टिंग)\s+(हटा\s+दिए\s+गए|ब्लॉक)/u
+/(बौद्धिक\s+संपदा|कॉपीराइट|ट्रेडमार्क)\s+(उल्लंघन|शिकायत)/u
+/(flipkart|meesho|amazon)\s+seller\s+(account\s+)?(suspended|blocked|kyc)/i
+
+# ===== Chinese =====
+/(您的)?(卖家|賣家|商家|店铺|店鋪)(账户|帳戶|账号|帳號)(已被|将被|將被)(冻结|凍結|暂停|暫停|关闭|關閉)/u
+/(您的)?(商品|产品|產品|listing)(已被)?(下架|删除|刪除)/u
+/(纠纷|糾紛|争议|爭議|拒付)(已)?(开启|開啟|提交)/u
+/(侵犯|侵权|侵權)(知识产权|知識產權|版权|版權|商标|商標)/u
+
+# ===== Thai =====
+/บัญชี(ผู้ขาย|ร้านค้า)ของคุณถูก(ระงับ|ปิด|จำกัด)/u
+/สินค้าของคุณถูก(ลบ|ระงับ)/u
+/(มีการเปิด)?ข้อพิพาทเกี่ยวกับคำสั่งซื้อ/u
+/ละเมิด(ทรัพย์สินทางปัญญา|ลิขสิทธิ์|เครื่องหมายการค้า)/u

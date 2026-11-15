@@ -1,0 +1,125 @@
+# =====================================================================
+#  healthcare.map - phishing phrases for clinics, hospitals, pharmacies
+#  Part of: phishing-detector by Develust Technology
+#
+#  Format : one regex per line, /pattern/flags (i = case-insensitive,
+#           u = UTF-8). No trailing spaces.
+#  Note   : PHISH_TEXT scores 0 alone; it only adds points together
+#           with a phishing link (PHISH_URL / PHISHING).
+#
+#  Themes : lab / test results behind a link, patient portal login,
+#           medical record and referral "documents", health insurance
+#           claims, medical supplier invoices, patient complaints,
+#           medical license / registration suspension, health-authority
+#           notices, equipment recall notices
+#
+#  Avoided: appointment reminders and confirmations, "prescription is
+#           ready for pickup", "your appointment is confirmed", because
+#           clinics send real ones every day.
+# =====================================================================
+
+# ===== English =====
+# Results / records
+/(your|the\s+patient['’]?s?)\s+(lab|laboratory|test|blood\s+test|medical)\s+results?\s+(are|is)\s+(ready|available)\s+(to\s+view|for\s+download|online|via|click|here)/i
+/(view|download|access)\s+(your\s+|the\s+)?(lab\s+results?|test\s+results?|medical\s+records?|scan\s+results?|diagnosis\s+report)\s+(here|below|online|via\s+(the\s+)?link)/i
+/(patient\s+)?(referral|medical\s+report|discharge\s+summary)\s+(has\s+been\s+)?shared\s+with\s+you/i
+/(sign\s+in|log\s+in|login)\s+to\s+(your\s+|the\s+)?(patient|health|medical)\s+portal\s+to\s+(view|access|download|verify)/i
+/(your\s+)?(patient|health)\s+portal\s+(account\s+)?(will\s+be|has\s+been)\s+(suspended|deactivated|locked)/i
+# Insurance
+/(health|medical)\s+insurance\s+claim\s+(#?\S+\s+)?(has\s+been\s+)?(denied|rejected|approved|on\s+hold|requires\s+(your\s+)?action)/i
+/(update|verify)\s+your\s+(health\s+)?insurance\s+(details|information|coverage)\s+(to\s+avoid|within|immediately)/i
+# Suppliers / complaints
+/(medical|pharmaceutical|lab)\s+suppl(y|ies|ier)\s+(invoice|payment)\s+(is\s+)?(overdue|outstanding|available\s+online|via\s+link)/i
+/patient\s+complaint\s+(regarding|about)\s+(your\s+)?(treatment|clinic|doctor|staff)[^.]{0,40}(see|view|attached|link)/i
+# License / authority
+/(medical|nursing|pharmacy|clinic)\s+licen[cs]e\s+(will\s+be\s+|has\s+been\s+)?(suspended|revoked|expired|under\s+review)/i
+/(ministry\s+of\s+health|health\s+authority|medical\s+council)\s+(notice|notification|inspection|penalty)/i
+/(hipaa|gdpr)\s+(compliance\s+)?(violation|breach)\s+(notice|report|detected)/i
+# Recalls
+/(urgent\s+)?(medical\s+device|equipment|product)\s+recall\s+(notice|notification)[^.]{0,40}(click|view|download|link)/i
+
+# ===== Spanish =====
+/sus\s+resultados\s+(de\s+laboratorio|del?\s+an[áa]lisis|m[ée]dicos)\s+(est[áa]n\s+)?disponibles\s+(en\s+l[íi]nea|aqu[íi]|en\s+el\s+enlace)/iu
+/(acceda\s+a|inicie\s+sesi[óo]n\s+en)\s+(su\s+)?portal\s+del\s+paciente/iu
+/(reclamaci[óo]n|solicitud)\s+(de\s+seguro\s+m[ée]dico|al\s+seguro)\s+(ha\s+sido\s+)?(rechazada|denegada|pendiente)/iu
+/su\s+licencia\s+(m[ée]dica|sanitaria)\s+(ha\s+sido|ser[áa])\s+(suspendida|revocada)/iu
+
+# ===== German =====
+/ihre\s+(labor|test|befund)ergebnisse\s+(sind\s+)?(verf[üu]gbar|bereit)\s+(online|hier|[üu]ber\s+den\s+link)/iu
+/(melden\s+sie\s+sich\s+)?im\s+patientenportal\s+an/iu
+/(ihr\s+)?versicherungsantrag\s+wurde\s+(abgelehnt|zur[üu]ckgestellt)/iu
+/ihre\s+(approbation|zulassung|praxislizenz)\s+(wird|wurde)\s+(ausgesetzt|entzogen)/iu
+
+# ===== French =====
+/vos\s+r[ée]sultats\s+(d['’]analyses?|de\s+laboratoire|m[ée]dicaux)\s+sont\s+disponibles\s+(en\s+ligne|ici|via\s+le\s+lien)/iu
+/(connectez-vous|acc[ée]dez)\s+(à|a)\s+(votre\s+)?(espace|portail)\s+patient/iu
+/(votre\s+)?(demande\s+de\s+)?remboursement\s+(mutuelle|sant[ée])\s+(a\s+[ée]t[ée]\s+)?(refus[ée]e?|rejet[ée]e?)/iu
+/votre\s+(autorisation|licence)\s+d['’]exercice\s+(sera|a\s+[ée]t[ée])\s+(suspendue|retir[ée]e)/iu
+
+# ===== Italian =====
+/i\s+(tuoi|suoi)\s+(risultati|referti)\s+(degli\s+esami|di\s+laboratorio)?\s*sono\s+disponibili\s+(online|qui|tramite\s+il\s+link)/iu
+/(accedi\s+al|accedere\s+al)\s+portale\s+(del\s+)?paziente/iu
+/(la\s+)?(tua|sua)\s+richiesta\s+di\s+rimborso\s+sanitario\s+[èe]\s+stata\s+(respinta|rifiutata)/iu
+
+# ===== Portuguese =====
+/(seus|os\s+seus)\s+(resultados\s+de\s+exames|exames)\s+(est[ãa]o\s+)?dispon[íi]veis\s+(online|aqui|no\s+link)/iu
+/(acesse|entre\s+no)\s+(o\s+)?portal\s+do\s+paciente/iu
+/(seu|o\s+seu)\s+pedido\s+de\s+reembolso\s+(do\s+plano\s+de\s+sa[úu]de\s+)?foi\s+(negado|recusado)/iu
+
+# ===== Dutch =====
+/uw\s+(lab|test)uitslagen\s+(zijn\s+)?beschikbaar\s+(online|hier|via\s+de\s+link)/iu
+/log\s+in\s+op\s+(het\s+|uw\s+)?pati[ëe]ntenportaal/iu
+/uw\s+zorgdeclaratie\s+is\s+(afgewezen|geweigerd)/iu
+
+# ===== Polish =====
+/twoje\s+wyniki\s+(bada[ńn]|laboratoryjne)\s+s[ąa]\s+dost[ęe]pne\s+(online|tutaj|pod\s+linkiem)/iu
+/zaloguj\s+si[ęe]\s+do\s+portalu\s+pacjenta/iu
+/(nfz|narodowy\s+fundusz\s+zdrowia)\s+(wezwanie|powiadomienie|zwrot)/iu
+
+# ===== Turkish =====
+/(tahlil|test|laboratuvar)\s+sonu[çc]lar[ıi]n[ıi]z\s+(haz[ıi]r|eri(ş|s)ime\s+a[çc][ıi]k)/iu
+/(e-?nab[ıi]z|hasta\s+portal[ıi])\s+(hesab[ıi]n[ıi]z|giri(ş|s))/iu
+/(sa[ğg]l[ıi]k\s+sigortas[ıi]|sgk)\s+(talebiniz|bildirimi)\s+(reddedildi|onayland[ıi]|beklemede)/iu
+/sa[ğg]l[ıi]k\s+bakanl[ıi][ğg][ıi]\s+(bildirimi|uyar[ıi]s[ıi]|tebligat[ıi])/iu
+
+# ===== Azerbaijani =====
+/(analiz|test|laboratoriya)\s+n[əe]tic[əe]l[əe]riniz\s+(haz[ıi]rd[ıi]r|[əe]l[çc]atand[ıi]r)/iu
+/(pasiyent|x[əe]st[əe])\s+portal[ıi]na\s+daxil\s+olun/iu
+/(tibbi\s+s[ıi][ğg]orta|icbari\s+tibbi\s+s[ıi][ğg]orta)\s+(m[üu]raci[əe]tiniz|t[əe]l[əe]biniz)\s+(r[əe]dd\s+edildi|g[öo]zl[əe]m[əe]d[əe]dir)/iu
+/s[əe]hiyy[əe]\s+nazirliyi\s+(bildiri(ş|s)i|x[əe]b[əe]rdarl[ıi][ğg][ıi])/iu
+
+# ===== Russian =====
+/ваши\s+(результаты\s+анализов|анализы)\s+(готовы|доступны)\s+(онлайн|по\s+ссылке|в\s+личном\s+кабинете)/iu
+/войдите\s+в\s+(личный\s+кабинет\s+пациента|портал\s+пациента)/iu
+/(ваша\s+)?заявка\s+(по\s+)?(омс|дмс|медицинской\s+страховке)\s+(отклонена|приостановлена)/iu
+/(минздрав|министерство\s+здравоохранения|росздравнадзор)\s+(уведомление|предписание|проверка)/iu
+/(лицензия|аккредитация)\s+(клиники|медицинская)\s+(будет\s+)?(приостановлена|отозвана)/iu
+
+# ===== Ukrainian =====
+/ваші\s+(результати\s+аналізів|аналізи)\s+(готові|доступні)\s+(онлайн|за\s+посиланням)/iu
+/увійдіть\s+до\s+(кабінету|порталу)\s+пацієнта/iu
+/(моз|міністерство\s+охорони\s+здоров['’]я)\s+(повідомлення|припис)/iu
+
+# ===== Arabic =====
+/نتائج\s+(التحاليل|الفحوصات|المختبر)\s+(جاهزة|متاحة)/u
+/(سجل|قم\s+بتسجيل)\s+الدخول\s+إلى\s+بوابة\s+المريض/u
+/(تم\s+رفض|رُفضت)\s+مطالبة\s+التأمين\s+الصحي/u
+/(وزارة\s+الصحة)\s+(إشعار|تنبيه|غرامة)/u
+
+# ===== Hindi =====
+/आपकी\s+(लैब|जांच|टेस्ट)\s+(रिपोर्ट|परिणाम)\s+(तैयार|उपलब्ध)/u
+/(पेशेंट|रोगी)\s+पोर्टल\s+में\s+लॉगिन\s+करें/u
+/(स्वास्थ्य\s+बीमा|हेल्थ\s+इंश्योरेंस)\s+क्लेम\s+(अस्वीकार|रद्द|लंबित)/u
+/(ayushman|abha|cghs)\s+(card\s+)?(kyc|update|verify|blocked)/i
+
+# ===== Chinese =====
+/(您的)?(检验|檢驗|化验|化驗|检查|檢查)(结果|結果|报告|報告)(已出|已可查看|可以查看)/u
+/(登录|登錄|登入)(患者|病人)(门户|門戶|平台)/u
+/(医保|醫保|医疗保险|醫療保險)(理赔|理賠|报销|報銷)(被拒|已拒绝|已拒絕|待处理|待處理)/u
+/(卫生健康委员会|衛生福利部|卫健委)(通知|处罚|處罰)/u
+
+# ===== Thai =====
+/ผลตรวจ(แล็บ|เลือด)?ของคุณ(พร้อมแล้ว|ออกแล้ว)/u
+/เข้าสู่ระบบพอร์ทัลผู้ป่วย/u
+/การเคลมประกันสุขภาพ(ถูกปฏิเสธ|รอดำเนินการ)/u
+/กระทรวงสาธารณสุข(แจ้ง|เตือน)/u

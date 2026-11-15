@@ -1,0 +1,86 @@
+#!/bin/bash
+# =====================================================================
+#  phywall - main command (router)
+#  Part of: phywall by Develust Technology
+#
+#  Sends each command to the right script in lib/.
+# =====================================================================
+ROOT=$(dirname "$(readlink -f "$0")")      # /opt/phywall (follows the /usr/local/bin link)
+LIB=$ROOT/lib
+[ -f "$LIB/common.sh" ] || { echo "phywall: $LIB/common.sh not found - reinstall with install.sh"; exit 1; }
+source "$LIB/common.sh"
+
+usage() {
+  banner
+  cat <<EOF_HELP
+Usage: phywall <command> [options]
+
+Setup
+  phywall configure --sector hotel,finance            dry run: shows what would change
+  phywall configure --sector hotel,finance --apply    installs maps + Rspamd rules
+  phywall configure --rollback                        removes everything configure added
+  phywall configure --sectors                         lists available sectors
+
+Scanning
+  phywall scan user@domain                            dry run: Inbox + Sent report
+  phywall scan user@domain --move                     moves Inbox phishing to Junk (Sent: report only)
+
+Bayes training (Sent = ham, Junk = spam)
+  phywall learn domain                                dry run: all accounts of the domain
+  phywall learn user@domain                           dry run: one account
+  phywall learn domain --learn                        trains Bayes
+           options: --days N   --exclude tech,webmaster
+
+Tool
+  phywall update                                      download the newest version and maps
+  phywall uninstall                                   rollback + remove phywall
+  phywall version                                     show version
+  phywall help                                        show this help
+
+EOF_HELP
+}
+
+run() {   # run a lib script, passing all remaining options
+  local s=$LIB/$1.sh; shift
+  [ -f "$s" ] || { echo "phywall: $(basename "$s") is not installed yet"; exit 1; }
+  exec bash "$s" "$@"
+}
+
+uninstall() {
+  [ "$(id -u)" -eq 0 ] || { echo "phywall: run as root"; exit 1; }
+  banner
+  echo "This will:"
+  echo "  1. remove the phywall rules and maps from Rspamd (configure --rollback)"
+  echo "  2. save the logs to /root/phywall-logs-<date>.tar.gz"
+  echo "  3. delete $ROOT and the phywall command"
+  if [ "$1" != "--yes" ]; then
+    read -r -p "Type 'yes' to continue: " a
+    [ "$a" = yes ] || { echo "Cancelled."; exit 0; }
+  fi
+  echo
+  bash "$LIB/configure.sh" --rollback || { echo "phywall: rollback failed - nothing deleted"; exit 1; }
+  if [ -d "$ROOT/logs" ] && [ -n "$(ls -A "$ROOT/logs" 2>/dev/null)" ]; then
+    A=/root/phywall-logs-$(date +%F_%H%M).tar.gz
+    tar czf "$A" -C "$ROOT" logs && echo "  [✓] Logs saved: $A"
+  fi
+  for l in /usr/local/bin/phywall /usr/bin/phywall; do
+    [ -L "$l" ] && [ "$(readlink -f "$l")" = "$ROOT/phywall" ] && rm -f "$l" && echo "  [✓] Removed command $l"
+  done
+  case "$ROOT" in
+    /|/usr|/usr/*|/etc|/root|/home) echo "phywall: refusing to delete $ROOT"; exit 1 ;;
+  esac
+  rm -rf "$ROOT" && echo "  [✓] Removed $ROOT"
+  echo
+  echo "phywall is uninstalled."
+}
+
+case "$1" in
+  configure)        shift; run configure "$@" ;;
+  scan)             shift; run scan "$@" ;;
+  learn)            shift; run learn "$@" ;;
+  update)           shift; run update "$@" ;;
+  uninstall)        shift; uninstall "$@" ;;
+  version|-v|--version) echo "phywall v$PHYWALL_VERSION  (Develust Technology)" ;;
+  help|-h|--help|"") usage ;;
+  *)                echo "phywall: unknown command '$1'"; echo "Run 'phywall help' for the list of commands."; exit 1 ;;
+esac
