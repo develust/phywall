@@ -322,13 +322,24 @@ systemctl reload rspamd
 wait_rspamd || { restore; systemctl reload rspamd; die "Rspamd did not come back - restored backup"; }
 ok "Rspamd reloaded"
 
-# verify: our symbols present, none of the old symbols lost
-AFTER=$(symbols)
-MISSING=""
-for s in PHISH_URL PHISH_TEXT PHISH_SUBJECT PHISH_LINK_AND_TEXT PHISH_DEFAULT_PLUS_CUSTOM; do
-  echo "$AFTER" | grep -qx "$s" || MISSING+=" $s"
+# verify: our symbols present, none of the old symbols lost.
+# After a reload Rspamd starts new workers in the background; for a few seconds
+# 'rspamc counters' can still answer from the old process -> ask again until ready.
+for i in $(seq 1 20); do
+  AFTER=$(symbols)
+  MISSING=""
+  for s in PHISH_URL PHISH_TEXT PHISH_SUBJECT PHISH_LINK_AND_TEXT PHISH_DEFAULT_PLUS_CUSTOM; do
+    echo "$AFTER" | grep -qx "$s" || MISSING+=" $s"
+  done
+  [ -z "$MISSING" ] && break
+  sleep 1
 done
-LOST=$(comm -23 <(echo "$BEFORE") <(echo "$AFTER") | tr '\n' ' ')
+if [ -z "$BEFORE" ] || [ -z "$AFTER" ]; then
+  warn "Could not read the Rspamd rule list (rspamc counters) - rule check skipped"
+  LOST=""
+else
+  LOST=$(comm -23 <(echo "$BEFORE") <(echo "$AFTER") | tr '\n' ' ')
+fi
 if [ -n "$LOST" ]; then
   restore; systemctl reload rspamd; wait_rspamd
   die "Existing symbols disappeared ($LOST) - restored backup"
@@ -356,4 +367,4 @@ echo
 echo "Done."
 echo "  Sectors : $(echo $ALL | tr ' ' ',')"
 echo "  Backup  : $BK"
-echo "  Undo    : $0 --rollback"
+echo "  Undo    : phywall configure --rollback"
