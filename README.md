@@ -25,6 +25,8 @@
   <a href="#-commands">Commands</a> •
   <a href="#-sectors">Sectors</a> •
   <a href="#-faq">FAQ</a> •
+  <a href="#-contributing">Contributing</a> •
+  <a href="#-security">Security</a> •
   <a href="#-azərbaycanca">Azərbaycanca</a>
 </p>
 
@@ -40,6 +42,7 @@ It was built on a real hotel mail server that received fake *Booking.com* compla
 - 🧹 **Mailbox cleanup:** scans an Inbox and moves phishing to Junk, with a dry run first
 - 🕵️ **Forwarded-lure report:** finds phishing your staff forwarded to colleagues (who may have clicked)
 - 🧠 **Bayes training:** learns ham from *Sent*, spam from *Junk*, and refuses to learn forwarded phishing as ham
+- 🤝 **Shared defense:** one command shares what phywall found, so the next release protects every server
 - ↩️ **Safe by design:** dry run by default, backups, automatic restore, one-command rollback
 
 ---
@@ -172,6 +175,13 @@ phywall learn example.com --learn --exclude tech,webmaster
 | `--days N` | Only mails from the last N days (fast repeat runs) |
 | `--exclude a,b,c` | Skip accounts, e.g. `tech,webmaster,services` |
 
+### Contribute
+| Command | What it does |
+|---|---|
+| `phywall contribute` | Shows exactly what phywall would share (nothing is sent) |
+| `phywall contribute --apply` | Sends it to Develust to improve the maps for everyone |
+| `phywall contribute --clear` | Deletes all contribution data stored on this server |
+
 ### Tool
 | Command | What it does |
 |---|---|
@@ -266,7 +276,7 @@ Bayes after:  ham 5633  spam 1207
 **What phywall changes on your server, and nothing else:**
 
 ```
-/opt/phywall/                            the tool, logs, backups
+/opt/phywall/                            the tool, logs, backups, contribution queue
 /usr/local/bin/phywall                   the command (a link)
 /etc/rspamd/maps/phishing/               urls.map + text/<sector>.map
 /etc/rspamd/local.d/multimap.conf        marked block at the end
@@ -329,6 +339,12 @@ Bayes needs at least 11 words. Attachment-only mails ("see attached") are skippe
 </details>
 
 <details>
+<summary><b>Does phywall send anything without asking?</b></summary>
+
+No. Data only leaves your server when you run `phywall contribute --apply` yourself, after seeing the preview. See [Contributing](#-contributing).
+</details>
+
+<details>
 <summary><b>Is running <code>learn</code> twice a problem?</b></summary>
 
 No. Rspamd remembers every learned mail by fingerprint and skips it the second time.
@@ -338,23 +354,105 @@ No. Rspamd remembers every learned mail by fingerprint and skips it the second t
 
 ## 🤝 Contributing
 
-New phishing templates appear every week. **The best contribution is a new phrase or URL from a real phishing mail you received.**
+Phishing changes every week. A new template shows up, a few hundred servers receive it, and every one of them fights it alone. phywall gets better when we fight it **together**: what one server catches today can protect all the others in the next release.
 
-**Map format:** one regex per line, in `maps/text/<sector>.map` or `maps/urls.map`:
+There are two ways to help. Pick whichever fits you.
+
+### 1. Share what phywall found (one command)
+
+Every time you run `phywall scan`, phywall quietly remembers the phishing it found. When you're ready, send it to us:
+
+```bash
+phywall contribute            # look first: shows everything that would be sent
+phywall contribute --apply    # send it
+```
+
+That's all. No mail files to download, no attachments, no forms. We look at what comes in, turn new tricks into new phrases and rules, and ship them in the next release, so `phywall update` brings them to everyone.
+
+**What gets shared, and why**
+
+| Shared | Why we need it |
+|---|---|
+| The phishing sender (name, address, envelope sender) | To check it against reputation services and spot repeat campaigns |
+| The subject | New phrases for the sector maps |
+| Score and the rules that fired | To see which rules work and which need tuning |
+| Link hosts (only the host, never the path) | New entries for `urls.map`, and to check with URL scanners |
+| The full text, **only for mails scoring 10 or more** | Real lures are how we write good new rules |
+| A copy count | "This reached 4 mailboxes" tells us how big a campaign is, without saying which ones |
+
+**What never leaves your server**
+
+- ❌ Your users' addresses. They become `[recipient]`
+- ❌ Your own domains. They become `[own-domain]`
+- ❌ Phone numbers, booking numbers and other long numbers. They become `#`
+- ❌ Link paths and tokens (`https://evil.com/x7k2?id=…` becomes `evil.com`)
+- ❌ Attachments, images, HTML
+- ❌ Anything about the server itself: no hostname, no IP, no mailbox names, no version of your OS or Rspamd
+
+> [!IMPORTANT]
+> **You always see it before we do.** `phywall contribute` without `--apply` prints the whole report, and the exact JSON is saved to `/opt/phywall/contribute/preview.json`. Nothing is sent until you add `--apply`.
+
+> [!NOTE]
+> Cleaning is automatic but not magic: a company *name* written as plain text (for example "Alba Hotel") can't be recognized as yours. That's exactly why the preview exists. If something looks too personal, don't send it.
+
+**A few more things you might want to know**
+
+- **Nothing is automatic.** phywall never sends anything on its own. No cron, no background job, no "phone home".
+- **Each phishing is sent once.** The same campaign in five mailboxes becomes one entry with `copies: 5`, and nothing is sent twice.
+- **Anonymous by design.** The first `--apply` gets a random token from our API (stored in `/opt/phywall/contribute/.token`). It isn't linked to your server, name or domain; it only lets us block abuse. Our API doesn't store your IP address or hostname. (Like any site behind Cloudflare, Cloudflare's own security logs briefly record the IP of requests they block.)
+- **We only use it to fight phishing.** Reports are reviewed by Develust, and only what we confirm makes it into the maps. Nothing is sold or shared with third parties.
+- **Your data, your choice.** Everything phywall collected stays on your server until you send it, and you can delete all of it at any time:
+
+  ```bash
+  phywall contribute --clear
+  ```
+
+  This removes the collected mails and the list of what was already sent. phywall asks for confirmation first (`--yes` skips the question, useful in scripts). The anonymous token stays, so your server keeps the same random ID and doesn't register again. It contains nothing about you or your server. To drop it too, delete `/opt/phywall/contribute/.token`; the next `--apply` gets a fresh one.
+
+### 2. Improve the maps or the code
+
+Found a lure phywall misses? Open a pull request with a new phrase or URL, one regex per line, in `maps/text/<sector>.map` or `maps/urls.map`:
 
 ```
 /guest\s+complaint\s+regarding\s+(a\s+)?recent\s+stay/i
 /(^|\.)workers\.dev$/i
 ```
 
-**Rules:**
-1. Use `\s+` between words, `/i` for case-insensitive, `/iu` for non-Latin text
-2. **No trailing spaces** (Rspamd 4.x silently ignores such lines)
-3. Match what the lure **asks you to do**, not normal business words ("invoice attached" is too common)
-4. Test your phrase against a few normal mails before opening a pull request
-5. Put the phrase in the right language section of the right sector
+A few rules keep the maps healthy:
 
-Bug reports and ideas are welcome in [Issues](../../issues).
+1. Use `\s+` between words, `/i` for case-insensitive, `/iu` for non-Latin text
+2. **No trailing spaces.** Rspamd 4.x silently ignores those lines
+3. Match what the lure **asks you to do**, not normal business words ("invoice attached" is far too common)
+4. Test your phrase against a few normal mails before opening the pull request
+5. Put it in the right language section of the right sector
+
+Bugs, ideas, or a false positive that annoyed you? Tell us in [Issues](../../issues). Every report helps.
+
+---
+
+## 🔐 Security
+
+Found a vulnerability in phywall or in our API? Please **don't open a public issue**. Write to **tech@develust.com** instead, encrypted with our OpenPGP key if you can.
+
+| | |
+|---|---|
+| **Email** | `tech@develust.com` |
+| **Fingerprint** | `8641 BC59 A857 FF1C DF96  EDD1 9C24 CAA3 2329 DA3D` |
+| **Key** | [keys.openpgp.org](https://keys.openpgp.org/search?q=tech%40develust.com) |
+
+Import it:
+
+```bash
+gpg --keyserver hkps://keys.openpgp.org --recv-keys 8641BC59A857FF1CDF96EDD19C24CAA32329DA3D
+```
+
+or download it directly:
+
+```bash
+curl -s https://keys.openpgp.org/vks/v1/by-fingerprint/8641BC59A857FF1CDF96EDD19C24CAA32329DA3D | gpg --import
+```
+
+Always compare the fingerprint with the one above before trusting the key. We'll answer as quickly as we can and credit you in the release notes if you'd like.
 
 ---
 
@@ -375,10 +473,15 @@ cd phywall && sudo ./install.sh
 | `phywall scan info@domain.az --move` | Inbox-dakı fişinqi Junk-a köçürür |
 | `phywall learn domain.az --learn` | Bayes-i öyrədir (Sent → ham, Junk → spam) |
 | `phywall configure --rollback` | Əlavə olunan hər şeyi geri qaytarır |
+| `phywall contribute --apply` | Tapılan fişinqi Develust ilə paylaşır (əvvəlcə `phywall contribute` ilə nəyin göndəriləcəyinə baxın) |
+| `phywall contribute --clear` | Serverdə toplanmış bütün töhfə məlumatlarını silir |
 
 Bütün əmrlər əvvəlcə **sınaq rejimində** işləyir və heç nəyi dəyişmir. Dəyişiklik üçün `--apply`, `--move` və ya `--learn` əlavə edin.
 
+**Töhfə vermək:** `phywall contribute` yalnız phywall-un tapdığı fişinqi göstərir, `--apply` ilə göndərir. İstifadəçi ünvanları, öz domenləriniz, nömrələr və server haqqında heç bir məlumat göndərilmir. Heç nə avtomatik göndərilmir.
+
 Sual və təkliflər üçün: **support@develust.com**
+Təhlükəsizlik problemləri üçün: **tech@develust.com** (OpenPGP açarı yuxarıda)
 
 ---
 
@@ -386,7 +489,7 @@ Sual və təkliflər üçün: **support@develust.com**
 
 Released under the **[MIT License](LICENSE)**.
 
-Built and maintained by **[Develust Technology](https://develust.com)**, 
-Support: **support@develust.com**
+Built and maintained by **[Develust Technology](https://develust.com)**, Baku 🇦🇿
+Support: **support@develust.com** · Security: **tech@develust.com**
 
 <p align="center"><sub>If phywall caught a phishing mail for you, consider giving the repo a ⭐</sub></p>

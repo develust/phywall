@@ -5,6 +5,7 @@
 #
 #  Usage: phywall contribute            -> dry run: shows exactly what would be sent
 #         phywall contribute --apply    -> sends it
+#         phywall contribute --clear    -> deletes all local contribution data
 #
 #  Only what 'phywall scan' found is sent (collected in <phywall>/contribute).
 #  Cleaned before saving: recipients, own domains, long numbers, link paths.
@@ -25,16 +26,36 @@ ok()   { echo "  [✓] $*"; }
 warn() { echo "  [!] $*"; }
 die()  { echo "  [✗] $*"; exit 1; }
 
-MODE=dry
+MODE=dry; YES=0
 for a in "$@"; do
   case "$a" in
     --apply) MODE=apply ;;
-    -h|--help) grep -A1 '^#  Usage:' "$0" | sed 's/^#  //'; exit 0 ;;
+    --clear) MODE=clear ;;
+    --yes)   YES=1 ;;
+    -h|--help) grep -A2 '^#  Usage:' "$0" | sed 's/^#  //'; exit 0 ;;
     *) echo "Unknown option: $a"; exit 1 ;;
   esac
 done
 
 [ "$(id -u)" -eq 0 ] || die "Run as root"
+
+# ---------- --clear: delete all local contribution data ----------
+if [ "$MODE" = clear ]; then
+  if [ ! -d "$QDIR" ]; then echo "No contribution data on this server."; exit 0; fi
+  nq=$(grep -c . "$Q_QUEUE" 2>/dev/null); nq=${nq:-0}
+  ns=$(grep -c . "$Q_SENT" 2>/dev/null); ns=${ns:-0}
+  echo "This deletes all contribution data on this server ($QDIR):"
+  echo "  - $nq collected phishing mails waiting to be sent"
+  echo "  - the list of $ns mails already sent (so they would be collected again by future scans)"
+  echo "  The anonymous token is kept, so this server stays the same contributor."
+  if [ "$YES" -ne 1 ]; then
+    read -r -p "Type 'yes' to delete: " ans
+    [ "$ans" = yes ] || { echo "Cancelled."; exit 0; }
+  fi
+  find "$QDIR" -mindepth 1 -maxdepth 1 ! -name .token -exec rm -rf {} + && ok "Contribution data deleted (token kept)"
+  exit 0
+fi
+
 q_init
 N=$(grep -c . "$Q_QUEUE")
 if [ "$N" -eq 0 ]; then
@@ -43,23 +64,30 @@ if [ "$N" -eq 0 ]; then
   exit 0
 fi
 
-# ---------- show the report ----------
+# ---------- show the report: one line per phishing mail ----------
 echo "Contribution report  (sent to: ${API%/v1/*})"
 echo
+printf '  %-4s %-11s %6s %6s  %-13s %-34s %s\n' "#" "Type" "Score" "Copies" "Sends" "From" "Subject"
 i=0; CAUGHT=0; SUS=0; CONT=0
 while read -r fp; do
   [ -f "$QITEMS/$fp.txt" ] || continue
   i=$((i+1)); c=$(q_copies "$fp")
-  head -1 "$QITEMS/$fp.txt" | sed "s/^/[$i] /; s/\$/   copies $c/"
-  tail -n +2 "$QITEMS/$fp.txt" | awk -v max=15 '
-    /^  Content:/ {inc=1; print; next}
-    inc && /^    \| / {n++; if (n<=max) print; next}
-    {print}
-    END { if (n>max) printf "    | ... (%d more lines - full text in preview.json)\n", n-max }'
-  echo
-  case "$(head -1 "$QITEMS/$fp.txt")" in CAUGHT*) CAUGHT=$((CAUGHT+1)) ;; *) SUS=$((SUS+1)) ;; esac
-  grep -q '"content":' "$QITEMS/$fp.json" && CONT=$((CONT+1))
+  head1=$(head -1 "$QITEMS/$fp.txt")
+  type=$(echo "$head1" | awk '{print tolower($1)}')
+  score=$(echo "$head1" | awk '{print $3}')
+  from=$(sed -n 's/^  Sender:   //p' "$QITEMS/$fp.txt")
+  addr=$(echo "$from" | grep -oiE '[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+' | head -1); [ -n "$addr" ] || addr=$from
+  subj=$(sed -n 's/^  Subject:  //p' "$QITEMS/$fp.txt")
+  if grep -q '"content":' "$QITEMS/$fp.json"; then sends="info + text"; CONT=$((CONT+1)); else sends="info"; fi
+  [ "$type" = caught ] && CAUGHT=$((CAUGHT+1)) || SUS=$((SUS+1))
+  [ ${#addr} -gt 34 ] && addr="${addr:0:33}…"
+  [ ${#subj} -gt 60 ] && subj="${subj:0:59}…"
+  printf '  %-4s %-11s %6s %6s  %-13s %-34s %s\n' "$i" "$type" "$score" "$c" "$sends" "$addr" "$subj"
 done < "$Q_QUEUE"
+echo
+echo "  info = sender, subject, score, rules and link hosts (cleaned)"
+echo "  text = the full mail text too (only for mails scoring $CONTENT_MIN_SCORE or more, cleaned)"
+echo
 
 # full report exactly as it will be sent (one file, for inspection)
 PREVIEW=$QDIR/preview.json
@@ -75,8 +103,8 @@ PREVIEW=$QDIR/preview.json
 } > "$PREVIEW"; chmod 600 "$PREVIEW"
 
 echo "-----"
-echo "Phishing mails: $i   caught: $CAUGHT   suspicious: $SUS   with full content: $CONT"
-echo "Full report as sent: $PREVIEW"
+echo "Phishing mails: $i   caught: $CAUGHT   suspicious: $SUS   with text: $CONT"
+echo "Every detail, exactly as it will be sent: $PREVIEW"
 
 if [ "$MODE" = dry ]; then
   echo

@@ -50,8 +50,9 @@ json_arr() {
 sedesc() { printf '%s' "$1" | sed 's/[][\.*^$/&|]/\\&/g'; }
 
 # build the cleaning rules for one mail: recipients + own domains
+# q_clean_rules <mailfile> [hosts]   "hosts" = no number masking (it breaks host names)
 q_clean_rules() {
-  local f=$1 rules="" a d mb=${MAILBASE:-/var/mail/vhosts}
+  local f=$1 mode=${2:-} rules="" a d mb=${MAILBASE:-/var/mail/vhosts}
   # recipients: the scanned mailbox + addresses in To/Cc/Delivered-To/X-Original-To
   for a in $( { echo "$U"; for h in To Cc Delivered-To X-Original-To; do get_hdr "$f" "$h"; done; } \
               | grep -oiE '[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}' | sort -u ); do
@@ -62,6 +63,7 @@ q_clean_rules() {
     d=$(sedesc "$d")
     rules+="s/[A-Za-z0-9._%+-]+@$d/[recipient]/gI;s/$d/[own-domain]/gI;"
   done
+  [ "$mode" = hosts ] && { printf '%s' "$rules"; return; }
   # links -> host only, phone numbers and long numbers -> #
   rules+='s#https?://([^/[:space:]"'"'"'<>)]+)[^[:space:]"'"'"'<>)]*#\1#gI;'
   rules+='s/\+?[0-9][0-9 ().-]{7,}[0-9]/#/g;s/[0-9]{5,}/#/g;'
@@ -70,9 +72,9 @@ q_clean_rules() {
 
 # queue_add <mailfile> <rspamc output> <caught|suspicious>
 queue_add() {
-  local f=$1 out=$2 group=$3 R score sender env subj rules details hosts content fp fh item txt
+  local f=$1 out=$2 group=$3 R RH score sender env subj rules details hosts content fp fh item txt
   [ "$group" = move ] && group=caught                 # scan says "move", the API says "caught"
-  R=$(q_clean_rules "$f")
+  R=$(q_clean_rules "$f"); RH=$(q_clean_rules "$f" hosts)
   score=$(echo "$out" | awk '/^Score:/{print $2; exit}')
   [[ $score =~ ^-?[0-9]+(\.[0-9]+)?$ ]] || score=0
 
@@ -83,14 +85,22 @@ queue_add() {
   details=$(echo "$out" | grep -E "$SHOW" | sed -E 's/^Symbol: ([A-Z0-9_]+) \([^)]*\)/\1/' | grep '\[' | sed -E "$R" | cut -c1-300)
 
   # link hosts (Rspamd's own parser), without our own domains
-  hosts=$(rspamadm mime urls -H -u "$f" 2>/dev/null | tr 'A-Z' 'a-z' | sed 's/[[:space:]]//g' \
-          | grep -E '^(\*\.)?([a-z0-9-]{1,63}\.)+[a-z0-9-]{2,63}$' | sed -E "$R" | grep -v 'own-domain' \
-          | sort -u | head -200)
+  # (validated last, so only clean host names ever reach the API)
+  hosts=$(rspamadm mime urls -H -u "$f" 2>/dev/null | grep -v '^File: ' | tr 'A-Z' 'a-z' | sed 's/[[:space:]]//g' \
+          | sed -E "$RH" | grep -v 'own-domain' \
+          | grep -E '^(\*\.)?([a-z0-9-]{1,63}\.)+[a-z0-9-]{2,63}$' | sort -u | head -200)
 
   # full content only for high scores
   content=""
   if awk -v s="$score" -v m="$CONTENT_MIN_SCORE" 'BEGIN{exit !(s+0>=m+0)}'; then
-    content=$(rspamadm mime extract -t -o decoded_utf "$f" 2>/dev/null | sed -E "$R" | head -c "$CONTENT_MAX_BYTES")
+    # drop rspamadm's "File: <path>" header line (it contains the mailbox path and server name),
+    # then leading blank lines
+    content=$(rspamadm mime extract -t -o decoded_utf "$f" 2>/dev/null | grep -v '^File: ' | sed '/./,$!d')
+    # HTML-only mails (common for lures): no plain text part -> take the HTML part, strip tags
+    if ! printf '%s' "$content" | grep -q '[^[:space:]]'; then
+      content=$(rspamadm mime extract -H -o decoded_utf "$f" 2>/dev/null | grep -v '^File: ' | html_to_text)
+    fi
+    content=$(printf '%s\n' "$content" | sed -E "$R" | head -c "$CONTENT_MAX_BYTES")
   fi
 
   # fingerprint of the cleaned phishing (same campaign in many mailboxes = same fp)
@@ -127,6 +137,17 @@ queue_add() {
   } > "$QITEMS/$fp.txt"
   chmod 600 "$QITEMS/$fp.json" "$QITEMS/$fp.txt"
   echo "$fp" >> "$Q_QUEUE"
+}
+
+# HTML on stdin -> readable text (no tags, styles, scripts; common entities decoded)
+html_to_text() {
+  tr '\n\r' '  ' \
+  | sed -E -e 's/<style[^>]*>[^<]*<\/style>/ /Ig; s/<script[^>]*>[^<]*<\/script>/ /Ig; s/<!--[^>]*-->/ /g' \
+           -e 's/<br[^>]*>|<\/(p|div|tr|li|h[1-6]|table)>/\n/Ig' \
+           -e 's/<[^>]*>/ /g' \
+           -e 's/&nbsp;/ /g; s/&amp;/\&/g; s/&lt;/</g; s/&gt;/>/g; s/&quot;/"/g; s/&#39;/'"'"'/g' \
+           -e 's/[ \t]+/ /g' \
+  | sed -E 's/^ +//; s/ +$//' | sed '/./,$!d' | cat -s
 }
 
 q_copies() { grep -c "^$1 " "$Q_SEEN"; }
