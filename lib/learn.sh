@@ -3,10 +3,10 @@
 #  lib/learn.sh - trains Rspamd Bayes from mail folders
 #  Part of: phywall by Develust Technology
 #
-#  Usage: phywall learn albahotel.az                   -> dry run, all accounts of the domain
-#         phywall learn info@albahotel.az              -> dry run, one account
-#         phywall learn albahotel.az --learn           -> really trains Bayes
-#         phywall learn info@albahotel.az --learn      -> really trains, one account
+#  Usage: phywall learn domain.com                     -> dry run, all accounts of the domain
+#         phywall learn info@domain.com                -> dry run, one account
+#         phywall learn domain.com --learn             -> really trains Bayes
+#         phywall learn info@domain.com --learn        -> really trains, one account
 #  Options: --days N            only mails from the last N days (faster repeat runs)
 #           --exclude a,b,c     skip these accounts (e.g. tech,webmaster,services)
 #
