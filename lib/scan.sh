@@ -10,6 +10,7 @@
 LIB=$(dirname "$(readlink -f "$0")")     # .../phywall/lib
 ROOT=$(dirname "$LIB")                   # .../phywall
 source "$LIB/common.sh"
+source "$LIB/queue.sh"     # findings are collected for 'phywall contribute'
 banner
 
 U="$1"; MODE="$2"
@@ -100,6 +101,7 @@ classify() {
 }
 
 SENT=$BASE/.Sent/cur
+q_init
 T=$(find "$SRC" -maxdepth 1 -type f | wc -l)
 TS=$( [ -d "$SENT" ] && find "$SENT" -maxdepth 1 -type f | wc -l || echo 0)
 say "===== $(date '+%F %T')  Mailbox: $U  Mode: $M  Inbox: $T  Sent: $TS ====="
@@ -123,6 +125,7 @@ for f in "$SRC"/*; do
   [ "$verdict" = none ] && continue                         # no phishing rule -> skip
   rules=$(echo "$out" | grep -E "$SHOW" | sed 's/^Symbol: //')
   n=$((n+1))
+  queue_add "$f" "$out" "$verdict" 2>/dev/null || true    # collect for 'phywall contribute' (before moving)
   score=$(echo "$out" | grep -m1 '^Score:' | cut -d' ' -f2-)
   from=$(decode "$(get_hdr "$f" From)")
   subj=$(decode "$(get_hdr "$f" Subject)")

@@ -31,6 +31,10 @@ Bayes training (Sent = ham, Junk = spam)
   phywall learn domain --learn                        trains Bayes
            options: --days N   --exclude tech,webmaster
 
+Contribute (share what phywall found, to improve the maps for everyone)
+  phywall contribute                                  dry run: shows exactly what would be sent
+  phywall contribute --apply                          sends it
+
 Tool
   phywall update                                      download the newest version and maps
   phywall uninstall                                   rollback + remove phywall
@@ -78,6 +82,7 @@ case "$1" in
   configure)        shift; run configure "$@" ;;
   scan)             shift; run scan "$@" ;;
   learn)            shift; run learn "$@" ;;
+  contribute)       shift; run contribute "$@" ;;
   update)           shift; run update "$@" ;;
   uninstall)        shift; uninstall "$@" ;;
   version|-v|--version) echo "phywall v$PHYWALL_VERSION  (Develust Technology)" ;;
