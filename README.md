@@ -27,7 +27,7 @@
   <a href="#-faq">FAQ</a> •
   <a href="#-contributing">Contributing</a> •
   <a href="#-security">Security</a> •
-  <a href="#-azərbaycanca">Azərbaycanca</a>
+  <a href="#-license--credits">License & Credits</a>
 </p>
 
 ---
