@@ -1,0 +1,139 @@
+# =====================================================================
+#  restaurant.map - phishing phrases for restaurants, cafes, bars,
+#  bakeries and catering companies
+#  Part of: phywall by Develust Technology
+#
+#  Format : one regex per line, /pattern/flags (i = case-insensitive,
+#           u = UTF-8). No trailing spaces.
+#  Note   : PHISH_TEXT scores 0 alone; it only adds points together
+#           with a phishing link (PHISH_URL / PHISHING).
+#
+#  Themes : fake "food poisoning" / foreign object complaints with
+#           photo, video or medical report "evidence", fake health
+#           inspection and hygiene notices, food delivery partner
+#           account suspension (Wolt, Glovo, Uber Eats, Bolt Food,
+#           Deliveroo, DoorDash, Just Eat, Yemeksepeti), review
+#           platform threats (TripAdvisor, Google reviews), fake large
+#           group / catering bookings with "menu requirements" files,
+#           POS / payment terminal and supplier bank changes
+#
+#  Avoided: normal guest mails ("table for 4 on Friday", "do you have
+#           vegan options", "menu attached"), because restaurants
+#           receive them every day.
+# =====================================================================
+
+# ===== English =====
+# Food poisoning / foreign object complaints
+/(we|i|my\s+(family|wife|husband|son|daughter|kids?|children|guests?))\s+(got|became|were|was)\s+(sick|ill|hospitali[sz]ed)\s+(after|from)\s+(eating|dining|the\s+(food|meal|dinner|lunch))\s+(at|in|from)\s+your\s+(restaurant|cafe|place|establishment)/i
+/food\s+poisoning\s+(complaint|case|incident|report|claim)\s+(regarding|against|about)\s+your\s+(restaurant|cafe|business|establishment)/i
+/(found|there\s+was)\s+(a|an)\s+(hair|insect|cockroach|bug|worm|glass|plastic|metal|foreign\s+object)\s+in\s+(my|our|the)\s+(food|meal|dish|order|plate|soup|salad)[^.]{0,60}(photo|picture|video|attached|link|see)/i
+/(see|view|check|download)\s+(the\s+)?(photos?|pictures?|videos?|medical\s+(report|certificate)|hospital\s+(report|bill)|lab\s+results?)\s+(of|from|about)\s+(the\s+)?(food|meal|dish|incident|poisoning)/i
+/(i|we)\s+will\s+(report|sue|post\s+about|expose)\s+(you|your\s+(restaurant|cafe|business))[^.]{0,40}(health\s+(department|inspector|authority)|food\s+safety|social\s+media|unless)/i
+# Health inspection / hygiene
+/(health|hygiene|sanitary|food\s+safety)\s+inspection\s+(report|result|notice|findings)\s+(for\s+your\s+(restaurant|establishment|premises)\s+)?(is\s+)?(available|attached|ready|pending)/i
+/(your\s+)?(food\s+(business|hygiene)|restaurant|establishment)\s+(license|licence|permit|rating|certificate)\s+(has\s+been\s+|will\s+be\s+|is\s+)?(suspended|revoked|expired|downgraded|under\s+review)/i
+/(unannounced|surprise|scheduled)\s+(health|hygiene|sanitary)\s+inspection\s+[^.]{0,40}(confirm|download|review|checklist|documents)/i
+# Delivery platforms
+/(wolt|glovo|uber\s*eats|bolt\s+food|deliveroo|doordash|grubhub|just\s+eat|foodpanda|yemeksepeti|talabat|getir|trendyol\s+yemek)\s+(partner|merchant|restaurant|store|venue)\s+(account|profile|listing|portal)\s+(has\s+been\s+|will\s+be\s+|is\s+)?(suspended|deactivated|restricted|paused|closed|on\s+hold|locked)/i
+/(your\s+)?(restaurant|store|venue|menu)\s+(has\s+been\s+|was\s+)?(removed|delisted|hidden|paused)\s+from\s+(wolt|glovo|uber\s*eats|bolt\s+food|deliveroo|doordash|just\s+eat|foodpanda|yemeksepeti|talabat)/i
+/(update|verify|confirm)\s+your\s+(partner|merchant|restaurant)\s+(bank|payout|payment)\s+(details|information|account)\s+(to\s+(avoid|continue|receive)|before)/i
+/(weekly|monthly|pending)\s+(payout|settlement|payment)\s+(for\s+your\s+(restaurant|store|orders)\s+)?(is\s+)?(on\s+hold|blocked|failed|pending\s+verification)/i
+# Review threats
+/(tripadvisor|google|yelp|zomato)\s+(review|listing|business\s+profile)[^.]{0,30}(suspended|removed|flagged|reported|violation)/i
+/(negative|1-star|one\s+star|bad)\s+reviews?\s+(will\s+be\s+)?(posted|published|removed)[^.]{0,40}(unless|pay|payment|contact\s+us|bitcoin)/i
+/(remove|delete)\s+(negative|bad|fake)\s+reviews?\s+(from\s+your\s+(tripadvisor|google|yelp)\s+(page|profile|listing))/i
+# Fake group / catering bookings
+/(large|corporate|group|private)\s+(booking|reservation|event|party|dinner)\s+for\s+\d{2,3}\s+(guests|people|persons|pax)[^.]{0,80}(menu\s+requirements|details|list)\s+(attached|in\s+the\s+(link|document)|via\s+(the\s+)?link)/i
+/(catering|event)\s+(order|request|inquiry)[^.]{0,40}(view|download|open)\s+(the\s+)?(order|requirements|specifications|purchase\s+order|po)\s+(document|file|here|below)/i
+# POS / supplier
+/(pos|payment\s+terminal|card\s+terminal|card\s+machine)\s+(will\s+be\s+|has\s+been\s+)?(deactivated|blocked|suspended)[^.]{0,30}(update|verify|confirm)/i
+/(food|beverage|meat|produce|wine)\s+supplier\s+[^.]{0,30}(new|changed|updated)\s+(bank|banking|account)\s+(details|information)/i
+
+# ===== Spanish =====
+/(nos|me)\s+(intoxicamos|enfermamos|puse\s+enfermo|pusimos\s+enfermos)\s+(despu[ée]s\s+de\s+comer|tras\s+cenar)\s+en\s+su\s+(restaurante|local|cafeter[íi]a)/iu
+/(queja|denuncia|reclamaci[óo]n)\s+por\s+intoxicaci[óo]n\s+alimentaria/iu
+/(encontr[ée]|hab[íi]a)\s+un\s+(pelo|insecto|cucaracha|vidrio|pl[áa]stico)\s+en\s+(mi|la|nuestra)\s+(comida|plato|pedido)[^.]{0,50}(foto|video|enlace|adjunto)/iu
+/(su\s+)?(cuenta|perfil)\s+de\s+(socio|restaurante)\s+(en\s+)?(glovo|uber\s*eats|just\s+eat|deliveroo|pedidosya|rappi)\s+(ha\s+sido\s+)?(suspendid[ao]|desactivad[ao]|bloquead[ao])/iu
+/informe\s+de\s+(la\s+)?inspecci[óo]n\s+(sanitaria|de\s+sanidad)\s+(disponible|adjunto|pendiente)/iu
+
+# ===== German =====
+/(wir\s+sind|ich\s+bin)\s+nach\s+dem\s+essen\s+(in\s+)?ihre[mr]?\s+(restaurant|lokal|caf[ée])\s+(krank|ins\s+krankenhaus)/iu
+/(beschwerde|anzeige)\s+wegen\s+lebensmittelvergiftung/iu
+/(haar|insekt|kakerlake|glas|plastik)\s+in\s+(meinem|unserem)\s+(essen|gericht)[^.]{0,50}(foto|video|link|anhang)/iu
+/(ihr\s+)?(partner|restaurant)[-\s]?konto\s+(bei\s+)?(lieferando|wolt|uber\s*eats|deliveroo)\s+(wurde\s+)?(gesperrt|deaktiviert|eingeschr[äa]nkt)/iu
+/(lebensmittelkontrolle|hygienekontrolle|kontrollbericht)[^.]{0,30}(verf[üu]gbar|anbei|herunterladen)/iu
+
+# ===== French =====
+/(nous\s+avons|j'ai)\s+[ée]t[ée]\s+(malades?|intoxiqu[ée]s?|hospitalis[ée]s?)\s+apr[èe]s\s+(avoir\s+)?(mang[ée]|d[îi]n[ée])\s+dans\s+votre\s+(restaurant|[ée]tablissement)/iu
+/plainte\s+pour\s+intoxication\s+alimentaire/iu
+/(un\s+cheveu|un\s+insecte|un\s+cafard|du\s+verre|du\s+plastique)\s+dans\s+(mon|notre)\s+(plat|repas|commande)[^.]{0,50}(photo|vid[ée]o|lien|pi[èe]ce\s+jointe)/iu
+/(votre\s+)?compte\s+(partenaire|restaurant)\s+(uber\s*eats|deliveroo|just\s+eat|wolt)\s+(a\s+[ée]t[ée]\s+)?(suspendu|d[ée]sactiv[ée]|bloqu[ée])/iu
+/rapport\s+d'inspection\s+(sanitaire|d'hygi[èe]ne)\s+(disponible|ci-joint|en\s+attente)/iu
+
+# ===== Italian =====
+/(siamo\s+stati|sono\s+stato)\s+(male|intossicat[io]|ricoverat[io])\s+dopo\s+aver\s+mangiato\s+nel\s+vostro\s+(ristorante|locale)/iu
+/(reclamo|denuncia)\s+per\s+intossicazione\s+alimentare/iu
+/(il\s+)?(vostro\s+)?account\s+(partner|ristorante)\s+(su\s+)?(glovo|deliveroo|just\s+eat|uber\s*eats)\s+([èe]\s+stato\s+)?(sospeso|disattivato|bloccato)/iu
+/rapporto\s+(di\s+)?ispezione\s+(sanitaria|igienica|asl)\s+(disponibile|allegato)/iu
+
+# ===== Portuguese =====
+/(ficamos|fiquei)\s+(doentes?|intoxicad[oa]s?|internad[oa]s?)\s+depois\s+de\s+comer\s+no\s+seu\s+(restaurante|estabelecimento)/iu
+/(reclama[çc][ãa]o|den[úu]ncia)\s+(por|de)\s+intoxica[çc][ãa]o\s+alimentar/iu
+/(sua\s+)?conta\s+(de\s+)?(parceiro|restaurante)\s+(no\s+)?(ifood|uber\s*eats|glovo|bolt\s+food)\s+(foi\s+)?(suspensa|desativada|bloqueada)/iu
+/relat[óo]rio\s+de\s+inspe[çc][ãa]o\s+(sanit[áa]ria|da\s+vigil[âa]ncia)\s+(dispon[íi]vel|anexo)/iu
+
+# ===== Dutch =====
+/(wij\s+zijn|ik\s+ben)\s+ziek\s+geworden\s+na\s+het\s+eten\s+in\s+uw\s+(restaurant|zaak)/iu
+/klacht\s+(over|wegens)\s+voedselvergiftiging/iu
+/(uw\s+)?(partner|restaurant)account\s+(bij\s+)?(thuisbezorgd|uber\s*eats|deliveroo)\s+(is\s+)?(opgeschort|gedeactiveerd|geblokkeerd)/iu
+
+# ===== Polish =====
+/(zatruli[śs]my|zatru[łl]em|zatru[łl]am)\s+si[ęe]\s+(po\s+jedzeniu\s+)?w\s+(pa[ńn]stwa|waszej|waszym)\s+(restauracji|lokalu)/iu
+/skarga\s+(na|z\s+powodu)\s+zatrucia\s+pokarmowego/iu
+/(konto\s+partnera|konto\s+restauracji)\s+(w\s+)?(pyszne|glovo|wolt|uber\s*eats|bolt\s+food)\s+(zosta[łl]o\s+)?(zawieszone|zablokowane|dezaktywowane)/iu
+
+# ===== Turkish =====
+/(restoran[ıi]n[ıi]zda|kafenizde|i[şs]letmenizde)\s+yemek\s+yedikten\s+sonra\s+(zehirlendik|zehirlendim|hastaneye\s+kald[ıi]r[ıi]ld[ıi])/iu
+/g[ıi]da\s+zehirlenmesi\s+(ş|s)ikayeti/iu
+/yeme[ğg]imde\s+(sa[çc]|b[öo]cek|hamamb[öo]ce[ğg]i|cam|plastik)\s+[çc][ıi]kt[ıi][^.]{0,50}(foto[ğg]raf|video|link|ekte)/iu
+/(yemeksepeti|getir|trendyol\s+yemek|migros\s+yemek)\s+(i[şs]\s+orta[ğg][ıi]|restoran|sat[ıi]c[ıi])\s+hesab[ıi]n[ıi]z\s+(ask[ıi]ya\s+al[ıi]nd[ıi]|kapat[ıi]ld[ıi]|engellendi)/iu
+/(hijyen|g[ıi]da)\s+denetim\s+raporu\s+(haz[ıi]r|ekte|g[öo]r[üu]nt[üu]leyin)/iu
+
+# ===== Azerbaijani =====
+/(restoran[ıi]n[ıi]zda|kafenizd[əe]|m[əe]kan[ıi]n[ıi]zda)\s+yem[əe]k\s+yedikd[əe]n\s+sonra\s+(z[əe]h[əe]rl[əe]ndik|z[əe]h[əe]rl[əe]ndim|x[əe]st[əe]xanaya\s+d[üu][şs]d[üu]k)/iu
+/qida\s+z[əe]h[əe]rl[əe]nm[əe]si\s+(il[əe]\s+ba[ğg]l[ıi]\s+)?[şs]ikay[əe]t/iu
+/yem[əe]yimd[əe]\s+(sa[çc]|b[öo]c[əe]k|tarakan|[şs][üu]{1,2}[şs][əe]|plastik)\s+(var\s+idi|[çc][ıi]xd[ıi])[^.]{0,50}(foto|[şs][əe]kil|video|link)/iu
+/(wolt|bolt\s+food|yango\s+(deli|eda))\s+(t[əe]r[əe]fda[şs]|restoran|partnyor)\s+hesab[ıi]n[ıi]z\s+(dayand[ıi]r[ıi]l[ıi]b|bloklan[ıi]b|deaktiv\s+edilib)/iu
+/(gigiyena|sanitar|qida\s+t[əe]hl[üu]k[əe]sizliyi)\s+(yoxlama|t[əe]ftiş)\s+(hesabat[ıi]|aktı|akti)\s+(haz[ıi]rd[ıi]r|[əe]lav[əe]\s+olunub)/iu
+
+# ===== Russian =====
+/(мы\s+отравились|я\s+отравил(ся|ась)|нас\s+госпитализировали)\s+после\s+(еды|ужина|обеда)\s+в\s+вашем\s+(ресторане|кафе|заведении)/iu
+/жалоба\s+(на|по\s+факту)\s+пищевого?\s+отравлени[ея]/iu
+/в\s+(моем|моём|нашем)\s+(блюде|заказе|супе|салате)\s+(был[аи]?|оказал(ся|ась|ось))\s+(волос|насекомое|таракан|стекло|пластик)[^.]{0,50}(фото|видео|ссылк)/iu
+/(ваш\s+)?(партнерский|партнёрский)\s+аккаунт\s+(ресторана\s+)?(в\s+)?(wolt|яндекс\s+ед[аеы]|delivery\s+club|glovo|bolt\s+food)\s+(заблокирован|приостановлен|отключ[её]н)/iu
+/акт\s+(санитарной\s+)?проверки\s+(роспотребнадзора\s+)?(готов|во\s+вложении|доступен)/iu
+
+# ===== Ukrainian =====
+/(ми\s+отруїлися|я\s+отруїв(ся)?|я\s+отруїлась)\s+після\s+(їжі|вечері|обіду)\s+у\s+вашому\s+(ресторані|кафе|закладі)/iu
+/скарга\s+(на|щодо)\s+харчового\s+отруєння/iu
+/(ваш\s+)?(партнерський\s+)?(акаунт|обліковий\s+запис)\s+(ресторану\s+)?(в\s+)?(glovo|bolt\s+food|uklon|wolt)\s+(заблоковано|призупинено)/iu
+
+# ===== Arabic =====
+/(أصبنا|أصبت)\s+بتسمم\s+غذائي\s+بعد\s+(تناول\s+الطعام|الأكل)\s+في\s+(مطعمكم|مقهاكم)/u
+/شكوى\s+(بخصوص|بشأن)\s+تسمم\s+غذائي/u
+/(تم\s+)?(إيقاف|تعليق|حظر)\s+حساب\s+(مطعمكم|الشريك)\s+(على|في)\s+(طلبات|هنقرستيشن|كريم|ديليفرو|جاهز)/u
+
+# ===== Hindi =====
+/(आपके\s+)?(रेस्टोरेंट|रेस्तरां|कैफे)\s+में\s+खाना\s+खाने\s+के\s+बाद\s+(फूड\s+पॉइजनिंग|बीमार|अस्पताल)/u
+/(zomato|swiggy)\s+(partner|restaurant)\s+(account|listing)\s+(suspended|deactivated|blocked|delisted)/i
+/(ज़ोमैटो|जोमैटो|स्विगी)\s+(पार्टनर|रेस्टोरेंट)\s+(अकाउंट|खाता)\s+(बंद|निलंबित|ब्लॉक)/u
+
+# ===== Chinese =====
+/(在你们|在贵)(餐厅|餐廳|饭店|飯店|店)(吃饭|吃飯|用餐)后(食物中毒|拉肚子|住院)/u
+/食物中毒(投诉|投訴|举报|舉報)/u
+/(美团|美團|饿了么|餓了麼|大众点评|大眾點評)(商家|店铺|店鋪)(账号|帳號)(已被)?(封禁|冻结|凍結|下线|下線)/u
+
+# ===== Thai =====
+/(อาหารเป็นพิษ|ท้องเสีย|เข้าโรงพยาบาล)หลังจากทาน(อาหาร)?ที่ร้านของคุณ/u
+/บัญชี(ร้านค้า|พาร์ทเนอร์)(grab\s*food|line\s*man|foodpanda|robinhood)\s*(ถูกระงับ|ถูกปิด)/iu
+/รายงานผลการตรวจสุขอนามัย/u

@@ -1,0 +1,125 @@
+# =====================================================================
+#  realestate.map - phishing phrases for real estate agencies,
+#  property managers, developers, title / escrow and rental companies
+#  Part of: phywall by Develust Technology
+#
+#  Format : one regex per line, /pattern/flags (i = case-insensitive,
+#           u = UTF-8). No trailing spaces.
+#  Note   : PHISH_TEXT scores 0 alone; it only adds points together
+#           with a phishing link (PHISH_URL / PHISHING).
+#
+#  Themes : closing / settlement wire fraud (changed escrow or title
+#           bank details), contracts and deeds via fake DocuSign or
+#           "secure document" links, fake buyer proof of funds,
+#           rental deposit scams, tenant / landlord account and
+#           portal lures, listing portal account suspension (Zillow,
+#           Rightmove, Idealista, Sahibinden, Bina.az, Avito, Cian),
+#           property tax and title notices
+#
+#  Avoided: normal client mails ("is the apartment still available",
+#           "can we schedule a viewing", "photos of the flat"),
+#           because agents receive them every day.
+# =====================================================================
+
+# ===== English =====
+# Closing / wire fraud
+/(wiring|wire|payment)\s+instructions\s+(for\s+(the\s+|your\s+)?(closing|settlement|escrow|purchase)\s+)?(have\s+|has\s+)?(changed|been\s+updated|been\s+revised)/i
+/(new|updated|revised|changed)\s+(escrow|title|closing|settlement|trust)\s+(account|bank)\s+(details|information|instructions)/i
+/(please\s+)?(wire|transfer|send)\s+(the\s+)?(earnest\s+money|down\s+payment|closing\s+funds|deposit|balance)\s+to\s+(the\s+)?(new|updated|following)\s+(account|bank)/i
+/(do\s+not|don'?t)\s+(use|send\s+to)\s+the\s+(previous|old|original)\s+(account|wiring\s+instructions)[^.]{0,40}(escrow|closing|settlement|title)/i
+/(closing|settlement)\s+(date|funds)[^.]{0,30}(urgent|today|immediately)[^.]{0,30}(wire|transfer)/i
+# Documents / e-signature
+/(purchase|sale|sales|lease|rental|tenancy)\s+(agreement|contract)\s+(is\s+)?(ready|waiting|pending)\s+(for\s+(your\s+)?(signature|review)|to\s+(be\s+)?signed)[^.]{0,30}(docusign|link|portal|here)/i
+/(review|sign|view)\s+(the\s+)?(closing\s+(documents?|disclosure)|settlement\s+statement|title\s+(deed|documents?)|deed\s+of\s+(sale|trust))\s+(here|online|via|below|securely)/i
+/(secure|encrypted)\s+(property|closing|escrow|real\s+estate)\s+(documents?|file|message)\s+(has\s+been\s+)?(shared|sent)\s+(with\s+you)?/i
+/(offer|counter-?offer)\s+(letter\s+)?(on|for)\s+(the\s+|your\s+)?(property|listing|house|apartment)\s+(has\s+been\s+)?(sent|submitted|attached)[^.]{0,30}(view|download|docusign|link)/i
+# Fake buyers / proof of funds
+/(proof\s+of\s+funds|pof|bank\s+(comfort\s+)?letter)\s+(for\s+the\s+(purchase|property|offer)\s+)?(is\s+)?(attached|enclosed|available)[^.]{0,30}(view|download|link|here)/i
+/(cash\s+buyer|overseas\s+(investor|buyer)|foreign\s+investor)[^.]{0,50}(interested\s+in\s+(all|several|multiple)\s+(your\s+)?(properties|listings|units))/i
+# Rental / deposit scams
+/(i\s+am|i'?m)\s+(currently\s+)?(abroad|overseas|out\s+of\s+the\s+country|on\s+a\s+mission)[^.]{0,50}(keys?|apartment|flat|house)[^.]{0,50}(deposit|first\s+month|airbnb|courier)/i
+/(security\s+)?deposit\s+(refund|return)\s+(is\s+)?(ready|approved|pending)[^.]{0,30}(verify|confirm|claim)\s+(your\s+)?(bank|card|details)/i
+/(rent|rental)\s+payment\s+(has\s+)?(failed|was\s+declined|is\s+overdue)[^.]{0,30}(update|verify)\s+(your\s+)?(payment|card|bank)\s+(details|method)/i
+/(tenant|resident|owner|landlord)\s+portal\s+(account\s+)?(will\s+be\s+|has\s+been\s+)?(suspended|locked|deactivated|expired)/i
+# Listing portals
+/(zillow|realtor\.com|rightmove|zoopla|idealista|immobilienscout|seloger|sahibinden|emlakjet|hepsiemlak|bina\.az|yeniemlak|avito|cian|domofond|bayut|property\s*finder)\s+(agent\s+|agency\s+|premium\s+)?(account|profile|listings?|subscription)\s+(has\s+been\s+|will\s+be\s+|is\s+)?(suspended|deactivated|removed|expired|restricted|on\s+hold)/i
+/(your\s+)?(property\s+)?listings?\s+(has\s+|have\s+|will\s+)?(been\s+)?(removed|deactivated|flagged|hidden)[^.]{0,30}(verify|confirm|log\s*in|reactivate)/i
+# Tax / title
+/(property|real\s+estate|land)\s+tax\s+(payment\s+)?(is\s+)?(overdue|unpaid|outstanding|refund)[^.]{0,30}(pay|view|claim|link|portal)/i
+/(title|ownership|deed)\s+(registration|transfer)\s+(has\s+been\s+)?(rejected|suspended|on\s+hold|flagged)/i
+
+# ===== Spanish =====
+/(nuevos?|actualizad[oa]s?)\s+(datos\s+bancarios|instrucciones\s+de\s+(pago|transferencia))\s+(para\s+)?(la\s+)?(firma|escritura|compraventa|arras|se[ñn]al)/iu
+/(contrato\s+de\s+(arras|compraventa|alquiler|arrendamiento))\s+(listo|pendiente)\s+(para|de)\s+firma[^.]{0,30}(enlace|docusign|aqu[íi])/iu
+/(su\s+)?(cuenta|anuncio)\s+(en\s+)?(idealista|fotocasa|habitaclia|inmuebles24)\s+(ha\s+sido\s+)?(suspendid[ao]|desactivad[ao]|eliminad[ao])/iu
+/(fianza|dep[óo]sito)[^.]{0,30}(antes\s+de\s+(ver|visitar)|para\s+enviarle\s+las\s+llaves)/iu
+
+# ===== German =====
+/(neue|ge[äa]nderte)\s+(bankverbindung|kontodaten)\s+(f[üu]r\s+)?(den\s+)?(kaufpreis|notartermin|anderkonto|kaution)/iu
+/(kaufvertrag|mietvertrag)\s+(liegt\s+)?(zur\s+unterschrift\s+bereit|bereit\s+zur\s+unterschrift)[^.]{0,30}(docusign|link|hier)/iu
+/(ihr\s+)?(immobilienscout24|immowelt|immonet|kleinanzeigen)\s+(konto|inserat|anzeige)\s+(wurde\s+)?(gesperrt|deaktiviert|entfernt)/iu
+/kaution\s+[^.]{0,30}(vor\s+der\s+besichtigung|um\s+die\s+schl[üu]ssel\s+zu\s+(senden|erhalten))/iu
+
+# ===== French =====
+/(nouvelles?|modifi[ée]e?s?)\s+(coordonn[ée]es\s+bancaires|rib)\s+(pour\s+)?(le\s+)?(versement|s[ée]questre|compromis|acte\s+de\s+vente|d[ée]p[ôo]t\s+de\s+garantie)/iu
+/(compromis|promesse)\s+de\s+vente\s+(pr[êe]t|en\s+attente)\s+(pour|de)\s+signature[^.]{0,30}(docusign|lien|ici)/iu
+/(votre\s+)?(compte|annonce)\s+(seloger|leboncoin|pap|logic-immo)\s+(a\s+[ée]t[ée]\s+)?(suspendu|d[ée]sactiv[ée]|supprim[ée])/iu
+
+# ===== Italian =====
+/(nuove|aggiornate)\s+coordinate\s+bancarie\s+per\s+(il\s+)?(rogito|compromesso|caparra|deposito\s+cauzionale)/iu
+/(il\s+vostro\s+)?(account|annuncio)\s+(su\s+)?(immobiliare\.it|idealista|casa\.it)\s+([èe]\s+stato\s+)?(sospeso|disattivato|rimosso)/iu
+/(caparra|deposito)[^.]{0,30}(prima\s+della\s+visita|per\s+inviarle\s+le\s+chiavi)/iu
+
+# ===== Portuguese =====
+/(novos|atualizados)\s+dados\s+banc[áa]rios\s+(para\s+)?(a\s+)?(escritura|sinal|cau[çc][ãa]o|compra)/iu
+/(sua\s+)?(conta|an[úu]ncio)\s+(no\s+)?(idealista|imovirtual|zap\s+im[óo]veis|vivareal|olx)\s+(foi\s+)?(suspens[oa]|desativad[oa]|removid[oa])/iu
+/contrato\s+de\s+(compra\s+e\s+venda|promessa|arrendamento|loca[çc][ãa]o)\s+(pronto|pendente)\s+para\s+assinatura[^.]{0,30}(link|docusign|aqui)/iu
+
+# ===== Dutch =====
+/(nieuwe|gewijzigde)\s+(bankgegevens|rekeninggegevens)\s+(voor\s+)?(de\s+)?(koopsom|waarborgsom|notaris|overdracht)/iu
+/(uw\s+)?(funda|pararius)\s+(account|advertentie)\s+(is\s+)?(opgeschort|gedeactiveerd|verwijderd)/iu
+
+# ===== Polish =====
+/(nowe|zmienione)\s+dane\s+(do\s+przelewu|konta)\s+(na\s+)?(zadatek|kaucj[ęe]|akt\s+notarialny)/iu
+/(pa[ńn]stwa\s+)?(konto|og[łl]oszenie)\s+(na\s+)?(otodom|olx|gratka|morizon)\s+(zosta[łl]o\s+)?(zawieszone|usuni[ęe]te|zablokowane)/iu
+
+# ===== Turkish =====
+/(tapu|sat[ıi][şs]|kapora)\s+[^.]{0,20}(i[çc]in\s+)?(yeni|g[üu]ncel|de[ğg]i[şs]en)\s+(iban|banka\s+bilgileri|hesap\s+bilgileri)/iu
+/(sahibinden|emlakjet|hepsiemlak|zingat)\s+(kurumsal\s+)?(hesab[ıi]n[ıi]z|ilan[ıi]n[ıi]z)\s+(ask[ıi]ya\s+al[ıi]nd[ıi]|kald[ıi]r[ıi]ld[ıi]|engellendi|yay[ıi]ndan\s+kald[ıi]r[ıi]ld[ıi])/iu
+/(sat[ıi][şs]|kira)\s+s[öo]zle[şs]mesi\s+imzan[ıi]z[ıi]\s+bekliyor[^.]{0,30}(link|ba[ğg]lant[ıi]|docusign)/iu
+/(kapora|depozito)[^.]{0,30}(g[öo]rmeden\s+[öo]nce|anahtar[ıi]\s+kargoyla)/iu
+
+# ===== Azerbaijani =====
+/(m[üu]qavil[əe]|beh|depozit|alq[ıi]-satq[ıi])\s+[^.]{0,20}(üçün|ucun)\s+(yeni|d[əe]yi[şs]dirilmi[şs])\s+(bank\s+rekvizitl[əe]ri|hesab\s+n[öo]mr[əe]si|iban)/iu
+/(bina\.az|yeniemlak|tap\.az|ev10)\s+(hesab[ıi]n[ıi]z|elan[ıi]n[ıi]z|elanlar[ıi]n[ıi]z)\s+(bloklan[ıi]b|dayand[ıi]r[ıi]l[ıi]b|silinib|deaktiv\s+edilib)/iu
+/(al[ıi][şs]-veri[şs]|kiray[əe])\s+m[üu]qavil[əe]si\s+imzan[ıi]z[ıi]\s+g[öo]zl[əe]yir/iu
+/(beh|depozit)[^.]{0,30}(g[öo]rm[əe]md[əe]n\s+[əe]vv[əe]l|a[çc]arlar[ıi]\s+kuryerl[əe])/iu
+
+# ===== Russian =====
+/(новые|изменились)\s+(банковские\s+)?реквизиты\s+(для\s+)?(оплаты\s+)?(задатка|аванса|сделки|депозита|ячейки)/iu
+/(ваш\s+)?(аккаунт|профиль|объявлени[ея])\s+(на\s+)?(циан|cian|авито|avito|домклик|яндекс\s+недвижимост[ьи])\s+(заблокирован[оы]?|приостановлен[оы]?|снят[оы]?\s+с\s+публикации|удален[оы]?|удалён[оы]?)/iu
+/договор\s+(купли-продажи|аренды|задатка)\s+(готов\s+к|ожидает)\s+подписани[яю][^.]{0,30}(ссылк|docusign)/iu
+/(задаток|предоплат[ау]|залог)[^.]{0,30}(до\s+просмотра|чтобы\s+(отправить|выслать)\s+ключи)/iu
+
+# ===== Ukrainian =====
+/(нові|змінені)\s+(банківські\s+)?реквізити\s+(для\s+)?(оплати\s+)?(завдатку|авансу|угоди)/iu
+/(ваш\s+)?(акаунт|профіль|оголошення)\s+(на\s+)?(dom\.ria|olx|lun)\s+(заблоковано|призупинено|видалено)/iu
+
+# ===== Arabic =====
+/(تفاصيل|بيانات)\s+(الحساب\s+)?(البنكي|المصرفي)ة?\s+(الجديدة|المحدثة)\s+(لدفع|لسداد)\s+(العربون|الدفعة\s+المقدمة|التأمين|ثمن\s+العقار)/u
+/(تم\s+)?(إيقاف|تعليق|حذف)\s+(حسابك|إعلانك)\s+(على|في)\s+(بيوت|بروبرتي\s+فايندر|عقار|دوبيزل)/u
+/عقد\s+(البيع|الإيجار)\s+(جاهز|بانتظار)\s+(للتوقيع|توقيعك)/u
+
+# ===== Hindi =====
+/(टोकन\s+मनी|बयाना|एडवांस|सिक्योरिटी\s+डिपॉजिट)\s+के\s+लिए\s+(नया|अपडेटेड)\s+(बैंक\s+खाता|अकाउंट)/u
+/(magicbricks|99acres|housing\.com|nobroker)\s+(account|listing|profile)\s+(suspended|deactivated|removed|blocked)/i
+
+# ===== Chinese =====
+/(定金|订金|訂金|首付|房款|押金)(的)?(收款)?(账户|帳戶|银行账号|銀行帳號)(已)?(变更|變更|更改)/u
+/(链家|鏈家|贝壳|貝殼|安居客|591)(经纪人|經紀人)?(账号|帳號|房源)(已被)?(封禁|冻结|凍結|下架)/u
+/(购房|購房|租赁|租賃)合同(待|等待)(签署|簽署)/u
+
+# ===== Thai =====
+/(เปลี่ยน|อัปเดต)(เลขที่)?บัญชีธนาคาร(สำหรับ)?(เงินมัดจำ|เงินดาวน์|ค่าโอน)/u
+/(บัญชี|ประกาศ)(ของคุณ)?(บน)?\s*(ddproperty|livinginsider|hipflat)\s*(ถูกระงับ|ถูกลบ)/iu
+/สัญญา(ซื้อขาย|เช่า)รอการลงนาม/u

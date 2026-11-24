@@ -1,0 +1,115 @@
+# =====================================================================
+#  beauty.map - phishing phrases for beauty salons, spas, barbers,
+#  nail and lash studios, cosmetic and aesthetic clinics
+#  Part of: phywall by Develust Technology
+#
+#  Format : one regex per line, /pattern/flags (i = case-insensitive,
+#           u = UTF-8). No trailing spaces.
+#  Note   : PHISH_TEXT scores 0 alone; it only adds points together
+#           with a phishing link (PHISH_URL / PHISHING).
+#
+#  Themes : fake client complaints (burns, allergic reaction, infection,
+#           hair damage, botched treatment) with photo / video or
+#           medical report "evidence", booking platform account
+#           suspension (Fresha, Treatwell, Booksy, Vagaro, Mindbody,
+#           StyleSeat, Planity), Instagram / Facebook business page
+#           violations and copyright claims, fake influencer
+#           collaborations, product supplier and payout lures
+#
+#  Avoided: normal client mails ("can I book a manicure on Friday",
+#           "price for balayage", "see my nails from last time"),
+#           because salons receive them every day.
+# =====================================================================
+
+# ===== English =====
+# Fake complaints with "evidence"
+/(i|my\s+(skin|face|scalp|hair|eyes?|lips?|nails?))\s+(got|was|were|have\s+been|has\s+been|am)\s+(burned|burnt|damaged|infected|scarred|swollen|ruined|injured)\s+(after|during|from|by)\s+(my\s+|the\s+)?(treatment|procedure|appointment|session|visit|facial|peel|laser|wax(ing)?|color(ing)?|colour(ing)?|bleach(ing)?|filler|botox|lash|manicure|pedicure)/i
+/(severe\s+)?(allergic\s+reaction|chemical\s+burn|skin\s+infection|nail\s+infection|eye\s+infection)\s+(after|from|caused\s+by)\s+(the\s+|my\s+)?(treatment|products?|procedure|service|appointment|visit)\s+(at|in)\s+your\s+(salon|spa|clinic|studio)/i
+/(see|view|check|download)\s+(the\s+)?(photos?|pictures?|videos?|medical\s+(report|certificate)|doctor'?s\s+(report|note)|dermatologist\s+report)\s+(of|about|showing)\s+(my\s+)?(burns?|injur(y|ies)|reaction|damage|infection|skin|scars?)/i
+/(i\s+will|we\s+will)\s+(report|sue|take\s+legal\s+action\s+against|expose)\s+(you|your\s+(salon|spa|clinic|studio))[^.]{0,40}(unless|health\s+(department|inspector)|ministry|lawyer|social\s+media|compensation)/i
+/(complaint|claim)\s+(regarding|about|for)\s+(the\s+)?(damage|injury|burns?|reaction|botched\s+(treatment|procedure))\s+(caused\s+)?(at|by|in)\s+your\s+(salon|spa|clinic|studio)/i
+# Booking platforms
+/(fresha|treatwell|booksy|vagaro|mindbody|styleseat|planity|phorest|timely|square\s+appointments|setmore|gloss\s*genius)\s+(partner\s+|business\s+|salon\s+)?(account|profile|listing|payouts?|subscription)\s+(has\s+been\s+|will\s+be\s+|is\s+)?(suspended|deactivated|restricted|locked|on\s+hold|closed|disabled)/i
+/(your\s+)?(salon|spa|studio|business)\s+(profile|listing)\s+(has\s+been\s+|was\s+)?(removed|hidden|delisted|flagged)\s+from\s+(fresha|treatwell|booksy|vagaro|mindbody|styleseat|planity|google\s+maps)/i
+/(update|verify|confirm)\s+your\s+(business|salon|partner|payout)\s+(bank|payment|payout)\s+(details|information|account)\s+(to\s+(avoid|continue|receive)|before)/i
+/(pending|weekly|client)\s+(payouts?|deposits?|prepayments?)\s+(for\s+your\s+(salon|bookings|appointments)\s+)?(is\s+|are\s+)?(on\s+hold|blocked|frozen|pending\s+verification)/i
+# Social media / business page
+/(your\s+)?(instagram|facebook|meta|tiktok)\s+(business\s+)?(page|account|profile)[^.]{0,40}(will\s+be|has\s+been)\s+(disabled|deleted|suspended|restricted|removed)[^.]{0,40}(appeal|verify|confirm|review)/i
+/(copyright|trademark|intellectual\s+property)\s+(complaint|claim|violation|infringement)[^.]{0,30}(your\s+)?(salon|before-?and-?after|post|photos?|reel)/i
+/(we\s+(have\s+)?received(\s+an?)?|there\s+(is|was)\s+an?)\s+(report|complaint)[^.]{0,30}(before-?and-?after\s+(photos?|images?|posts?)|treatment\s+(photos?|videos?))/i
+# Fake influencer / collaboration
+/(influencer|blogger|content\s+creator)[^.]{0,30}(\d[\d.,]*\s*[km]?\s+followers)[^.]{0,60}(free\s+(treatment|service|session)|collab(oration)?|barter)/i
+/(collaboration|partnership|sponsorship)\s+(proposal|offer|brief|contract)\s+(for\s+your\s+(salon|spa|clinic|brand)\s+)?[^.]{0,30}(view|download|open|sign)\s+(here|below|via|the)/i
+# Products / suppliers
+/(cosmetic|beauty|salon|hair|nail|skincare)\s+(products?|supplies)\s+(order|shipment|invoice)[^.]{0,40}(on\s+hold|failed|new\s+(bank|account)|verify|confirm)/i
+/(product|batch)\s+recall\s+(notice\s+)?[^.]{0,40}(filler|botox|serum|hair\s+dye|gel\s+polish|lash\s+glue)[^.]{0,30}(view|download|check|details)/i
+
+# ===== Spanish =====
+/(me\s+qued[óo]|tengo)\s+(la\s+piel|la\s+cara|el\s+cuero\s+cabelludo|el\s+pelo)\s+(quemad[ao]|da[ñn]ad[ao]|infectad[ao])\s+(despu[ée]s\s+del|despu[ée]s\s+de\s+(la|mi)|tras\s+(el|la|mi))\s+(tratamiento|procedimiento|cita|depilaci[óo]n|tinte)/iu
+/reacci[óo]n\s+al[ée]rgica\s+(despu[ée]s\s+del|tras\s+el|por\s+el)\s+(tratamiento|producto)\s+(en\s+)?su\s+(sal[óo]n|spa|cl[íi]nica|centro)/iu
+/(su\s+)?(cuenta|perfil)\s+(de\s+)?(fresha|treatwell|booksy)\s+(ha\s+sido\s+)?(suspendid[ao]|desactivad[ao]|bloquead[ao])/iu
+
+# ===== German =====
+/(meine\s+)?(haut|kopfhaut|haare)\s+(wurde|wurden|ist|sind)\s+(nach|bei)\s+(der|dem|meiner|meinem)\s+(behandlung|termin|f[äa]rbung|waxing|laser)\s+(verbrannt|gesch[äa]digt|entz[üu]ndet|ruiniert)/iu
+/allergische\s+reaktion\s+nach\s+(der\s+)?(behandlung|anwendung)\s+in\s+ihre[mr]\s+(salon|studio|praxis|kosmetikstudio)/iu
+/(ihr\s+)?(treatwell|booksy|fresha|planity)[-\s]?(konto|profil)\s+(wurde\s+)?(gesperrt|deaktiviert|eingeschr[äa]nkt)/iu
+
+# ===== French =====
+/(j'ai\s+eu\s+)?(la\s+peau|le\s+visage|le\s+cuir\s+chevelu|les\s+cheveux)\s+(br[ûu]l[ée]e?s?|ab[îi]m[ée]e?s?|infect[ée]e?s?)\s+apr[èe]s\s+(le|la|mon|ma)\s+(soin|traitement|rendez-vous|[ée]pilation|coloration)/iu
+/r[ée]action\s+allergique\s+apr[èe]s\s+(le\s+)?(soin|traitement)\s+dans\s+votre\s+(salon|institut|spa|clinique)/iu
+/(votre\s+)?compte\s+(planity|treatwell|fresha|booksy)\s+(a\s+[ée]t[ée]\s+)?(suspendu|d[ée]sactiv[ée]|bloqu[ée])/iu
+
+# ===== Italian =====
+/(la\s+mia\s+)?(pelle|cute|viso)\s+([èe]\s+stata\s+)?(bruciata|danneggiata|infettata)\s+dopo\s+(il\s+)?(trattamento|appuntamento|ceretta|laser)/iu
+/reazione\s+allergica\s+dopo\s+il\s+trattamento\s+nel\s+vostro\s+(salone|centro\s+estetico|spa)/iu
+/(il\s+vostro\s+)?account\s+(treatwell|fresha|booksy|uala)\s+([èe]\s+stato\s+)?(sospeso|disattivato|bloccato)/iu
+
+# ===== Portuguese =====
+/(minha\s+)?(pele|couro\s+cabeludo|rosto)\s+(ficou|foi)\s+(queimad[ao]|danificad[ao]|infeccionad[ao])\s+(depois\s+do|ap[óo]s\s+o)\s+(tratamento|procedimento|atendimento)/iu
+/rea[çc][ãa]o\s+al[ée]rgica\s+(depois\s+do|ap[óo]s\s+o)\s+(tratamento|procedimento)\s+no\s+seu\s+(sal[ãa]o|spa|cl[íi]nica|est[úu]dio)/iu
+/(sua\s+)?conta\s+(no\s+)?(fresha|booksy|treatwell|trinks|avec)\s+(foi\s+)?(suspensa|desativada|bloqueada)/iu
+
+# ===== Dutch =====
+/(mijn\s+)?(huid|hoofdhuid|haar)\s+(is\s+)?(verbrand|beschadigd|ontstoken)\s+na\s+(de|mijn)\s+(behandeling|afspraak)/iu
+/(uw\s+)?(treatwell|fresha|salonized)[-\s]?(account|profiel)\s+(is\s+)?(opgeschort|gedeactiveerd|geblokkeerd)/iu
+
+# ===== Polish =====
+/(moja\s+)?(sk[óo]ra|twarz|sk[óo]ra\s+g[łl]owy)\s+(zosta[łl]a\s+)?(poparzona|uszkodzona|zaka[żz]ona)\s+po\s+(zabiegu|wizycie)/iu
+/(pa[ńn]stwa\s+)?konto\s+(w\s+)?(booksy|versum|fresha)\s+(zosta[łl]o\s+)?(zawieszone|zablokowane|dezaktywowane)/iu
+
+# ===== Turkish =====
+/(cildim|y[üu]z[üu]m|sa[çc][ıi]m|sa[çc]\s+derim)\s+(i[şs]lemden|bak[ıi]mdan|lazerden|boyadan|a[ğg]da(dan)?)\s+sonra\s+(yand[ıi]|zarar\s+g[öo]rd[üu]|enfekte\s+oldu|mahvoldu)/iu
+/(salonunuzda|kliniğinizde|klini[ğg]inizde|merkezinizde)[^.]{0,30}(alerjik\s+reaksiyon|yan[ıi]k|enfeksiyon)/iu
+/(booksy|fresha|treatwell)\s+(i[şs]letme\s+)?hesab[ıi]n[ıi]z\s+(ask[ıi]ya\s+al[ıi]nd[ıi]|kapat[ıi]ld[ıi]|engellendi)/iu
+/(instagram|facebook)\s+(i[şs]letme\s+)?(hesab[ıi]n[ıi]z|sayfan[ıi]z)[^.]{0,30}(kapat[ıi]lacak|silinecek|ask[ıi]ya\s+al[ıi]nacak)/iu
+
+# ===== Azerbaijani =====
+/(d[əe]rim|[üu]z[üu]m|sa[çc][ıi]m|ba[şs]\s+d[əe]risi)\s+(prosedurdan|m[üu]alic[əe]d[əe]n|lazerd[əe]n|boyadan|epilyasiyadan)\s+sonra\s+(yan[ıi]b|z[əe]d[əe]l[əe]nib|infeksiya\s+olub|x[əe]rab\s+olub)/iu
+/(salonunuzda|klinikan[ıi]zda|m[əe]rk[əe]zinizd[əe])[^.]{0,30}(allergik\s+reaksiya|yan[ıi]q|infeksiya)/iu
+/(instagram|facebook)\s+(biznes\s+)?(hesab[ıi]n[ıi]z|s[əe]hif[əe]niz)[^.]{0,30}(ba[ğg]lanacaq|silin[əe]c[əe]k|bloklanacaq|dayand[ıi]r[ıi]lacaq)/iu
+
+# ===== Russian =====
+/(у\s+меня\s+)?(ожог|аллергическая\s+реакция|воспаление|инфекция|рубцы|шрамы)\s+(после|из-за)\s+(процедуры|окрашивания|пилинга|лазера|эпиляции|депиляции)\s+(в\s+вашем\s+)?(салоне|клинике|студии)?/iu
+/(посмотрите|скачайте)\s+(фото|видео|медицинское\s+заключение|справку)\s+(моего\s+)?(ожога|повреждения|реакции|последствий)/iu
+/(ваш\s+)?(аккаунт|профиль)\s+(в\s+)?(yclients|dikidi|booksy|fresha)\s+(заблокирован|приостановлен|отключ[её]н)/iu
+/(ваш\s+)?(бизнес-)?(аккаунт|страница)\s+(в\s+)?(instagram|инстаграм|facebook)[^.]{0,30}(будет\s+)?(заблокирован[а]?|удал[её]н[а]?|отключ[её]н[а]?)/iu
+
+# ===== Ukrainian =====
+/(опік|алергічна\s+реакція|запалення|інфекція)\s+(після|через)\s+(процедури|фарбування|пілінгу|лазера|епіляції)/iu
+/(ваш\s+)?(акаунт|профіль)\s+(у\s+)?(booksy|dikidi|altegio|fresha)\s+(заблоковано|призупинено)/iu
+
+# ===== Arabic =====
+/(حروق|حساسية|التهاب|عدوى)\s+(بعد|بسبب)\s+(الجلسة|العلاج|الإجراء|الليزر|الصبغة)\s+(في\s+)?(صالونكم|مركزكم|عيادتكم)/u
+/(تم\s+)?(إيقاف|تعليق|حظر)\s+حساب\s+(صالونكم|المركز)\s+(على|في)\s+(فريشا|بوكسي|تريتويل)/u
+
+# ===== Hindi =====
+/(ट्रीटमेंट|फेशियल|वैक्सिंग|हेयर\s+कलर|लेजर)\s+के\s+बाद\s+(मेरी\s+)?(त्वचा|स्किन|चेहरा)\s+(जल\s+गई|खराब\s+हो\s+गई|संक्रमित)/u
+/(fresha|booksy|urban\s+company)\s+(partner\s+)?(account|profile)\s+(suspended|blocked|deactivated)/i
+
+# ===== Chinese =====
+/(在你们|在贵)(美容院|沙龙|診所|诊所|工作室)(做完|做了)[^。]{0,10}(之后|後|后)(过敏|過敏|烧伤|燒傷|感染|毁容|毀容)/u
+/(美团|美團|大众点评|大眾點評|小红书|小紅書)(商家|店铺|店鋪)?(账号|帳號)(已被)?(封禁|冻结|凍結|限流)/u
+
+# ===== Thai =====
+/(ผิวไหม้|แพ้|ติดเชื้อ|ผิวเสียหาย)หลัง(ทำ)?(ทรีตเมนต์|เลเซอร์|ทำสีผม|แว็กซ์)ที่(ร้าน|คลินิก)ของคุณ/u
+/บัญชี(ร้าน|ธุรกิจ)ของคุณ(บน)?\s*(fresha|booksy|instagram|facebook)\s*(ถูกระงับ|จะถูกปิด)/iu

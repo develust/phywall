@@ -8,9 +8,9 @@
   <img src="https://img.shields.io/badge/tested%20on-AlmaLinux%209-0f4c81?style=for-the-badge&logo=almalinux&logoColor=white" alt="AlmaLinux 9">
   <img src="https://img.shields.io/badge/Bash-only-4eaa25?style=for-the-badge&logo=gnubash&logoColor=white" alt="Bash">
   <br>
-  <img src="https://img.shields.io/badge/sectors-12-8b5cf6?style=flat-square" alt="12 sectors">
+  <img src="https://img.shields.io/badge/sectors-18-8b5cf6?style=flat-square" alt="18 sectors">
   <img src="https://img.shields.io/badge/languages-16-f59e0b?style=flat-square" alt="16 languages">
-  <img src="https://img.shields.io/badge/phrases-1%2C100%2B-06b6d4?style=flat-square" alt="1,100+ phrases">
+  <img src="https://img.shields.io/badge/phrases-1%2C500%2B-06b6d4?style=flat-square" alt="1,500+ phrases">
   <img src="https://img.shields.io/badge/license-MIT-3b82f6?style=flat-square" alt="MIT license">
 </p>
 
@@ -38,7 +38,7 @@
 
 It was built on a real hotel mail server that received fake *Booking.com* complaints, "bed bug" lures, fake sign-in alerts and CEO-fraud mails every day.
 
-- 🎣 **Phrase + link detection:** 1,100+ phishing phrases in **16 languages**, split into **12 business sectors**
+- 🎣 **Phrase + link detection:** 1,500+ phishing phrases in **16 languages**, split into **18 business sectors**
 - 🧹 **Mailbox cleanup:** scans an Inbox and moves phishing to Junk, with a dry run first
 - 🕵️ **Forwarded-lure report:** finds phishing your staff forwarded to colleagues (who may have clicked)
 - 🧠 **Bayes training:** learns ham from *Sent*, spam from *Junk*, and refuses to learn forwarded phishing as ham
@@ -210,6 +210,12 @@ phywall learn example.com --learn --exclude tech,webmaster
 | 🏛️ `government` | 76 | Court summons, fines, e-government accounts |
 | ⚖️ `legal` | 69 | Case files, escrow changes, inheritance scams |
 | 💻 `it` | 74 | Domain expiry scams, SSL, hosting suspension, M365 alerts |
+| 🐾 `petcare` | 81 | Training, grooming, boarding, breeders, vets: "my dog was injured" complaints, pet shipping fees, microchip renewal, Rover/Wag suspension |
+| 🍽️ `restaurant` | 78 | Food poisoning complaints, health inspections, Wolt/Glovo/Uber Eats partner suspension, review threats |
+| 🏠 `realestate` | 65 | Changed escrow/closing bank details, DocuSign contracts, deposit scams, listing portal suspension |
+| 🏗️ `construction` | 67 | Fake tenders and RFQs, drawings/BOQ links, subcontractor bank changes, permit and inspection notices |
+| 🎪 `events` | 66 | Attendee list sales, hosted buyer programs, housing bureaus, booth payment and directory scams |
+| 💇 `beauty` | 56 | Burn/allergy complaints, Fresha/Treatwell/Booksy suspension, Instagram page threats, fake collabs |
 
 **Languages in every sector:** English, Spanish, German, French, Italian, Portuguese, Dutch, Polish, Turkish, Azerbaijani, Russian, Ukrainian, Arabic, Hindi, Chinese, Thai.
 
@@ -458,7 +464,7 @@ Always compare the fingerprint with the one above before trusting the key. We'll
 
 ## 🇦🇿 Azərbaycanca
 
-**phywall** Rspamd + Dovecot istifadə edən poçt serverləri üçün fişinq əleyhinə alətdir. 12 sahə üzrə, 16 dildə 1100-dən çox fişinq ifadəsi ilə Rspamd-ə qaydalar əlavə edir, mövcud poçt qutularında fişinq məktublarını tapıb *Junk* qovluğuna köçürür, əməkdaşların başqalarına yönləndirdiyi fişinq məktublarını hesabat şəklində göstərir və Bayes filtrini öyrədir.
+**phywall** Rspamd + Dovecot istifadə edən poçt serverləri üçün fişinq əleyhinə alətdir. 18 sahə üzrə, 16 dildə 1500-dən çox fişinq ifadəsi ilə Rspamd-ə qaydalar əlavə edir, mövcud poçt qutularında fişinq məktublarını tapıb *Junk* qovluğuna köçürür, əməkdaşların başqalarına yönləndirdiyi fişinq məktublarını hesabat şəklində göstərir və Bayes filtrini öyrədir.
 
 **Quraşdırma:**
 ```bash

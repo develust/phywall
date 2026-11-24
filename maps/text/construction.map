@@ -1,0 +1,125 @@
+# =====================================================================
+#  construction.map - phishing phrases for construction companies,
+#  contractors, engineering, architecture and building suppliers
+#  Part of: phywall by Develust Technology
+#
+#  Format : one regex per line, /pattern/flags (i = case-insensitive,
+#           u = UTF-8). No trailing spaces.
+#  Note   : PHISH_TEXT scores 0 alone; it only adds points together
+#           with a phishing link (PHISH_URL / PHISHING).
+#
+#  Themes : fake tenders / RFQs / invitations to bid with documents
+#           behind a link, drawings / BOQ / specifications to
+#           download, subcontractor and supplier bank changes,
+#           retention and progress payment lures, fake permits and
+#           site inspection notices, bid portal and procurement
+#           account lures, fake performance bond / guarantee requests
+#
+#  Avoided: normal project mails ("drawings attached", "site meeting
+#           at 10", "updated schedule"), because builders send and
+#           receive them every day.
+# =====================================================================
+
+# ===== English =====
+# Tenders / RFQs
+/(invitation\s+to\s+(bid|tender)|request\s+for\s+(quotation|proposal|tender)|rfq|rfp|itb)[^.]{0,60}(view|download|access|open)\s+(the\s+)?(tender|bid|project)?\s*(documents?|package|files?|specifications?)\s+(here|below|via\s+(the\s+)?link|on\s+(our|the)\s+portal)/i
+/(you\s+have\s+been|your\s+company\s+has\s+been)\s+(shortlisted|selected|invited|pre-?qualified)\s+(to|for)\s+(bid|tender|submit\s+a\s+(bid|quotation|proposal))/i
+/(tender|bid)\s+(documents?|package)\s+(are|is)\s+(available|ready)(\s+for\s+download)?[^.]{0,30}(log\s*in|sign\s*in|register|portal|link)/i
+/(submit|upload)\s+your\s+(bid|tender|quotation|proposal)\s+(before|by|via)[^.]{0,40}(portal|link|secure\s+(platform|site))/i
+/(e-?procurement|bid\s+submission|bidding|tender|supplier\s+registration)\s+(portal\s+)?(account|profile|registration)\s+(will\s+be\s+|has\s+been\s+)?(suspended|expired|locked|deactivated)/i
+# Drawings / BOQ
+/(view|download|review)\s+(the\s+)?(project\s+)?(drawings|blueprints|plans|boq|bill\s+of\s+quantities|specifications|cad\s+files)\s+(via|through|on|using)\s+(the\s+)?(secure\s+)?(link|portal|sharepoint|dropbox|wetransfer|onedrive)/i
+/(revised|updated|final)\s+(drawings|boq|bill\s+of\s+quantities|specifications)\s+(have\s+been\s+|has\s+been\s+)?(shared|uploaded)[^.]{0,30}(sign\s*in|log\s*in|verify|password)/i
+# Bank changes / payments
+/(subcontractor|supplier|vendor|contractor)[^.]{0,40}(changed|new|updated)\s+(bank|banking|account|remittance)\s+(details|information|instructions)/i
+/(progress|interim|retention|final)\s+payment\s+(certificate|application|release)[^.]{0,40}(view|download|approve|confirm|sign)\b[^.]{0,12}(here|online|via|below)/i
+/(retention|retainage)\s+(money|payment|release)\s+(is\s+)?(ready|approved|pending)[^.]{0,30}(verify|confirm|update)\s+(your\s+)?(bank|account|details)/i
+/(invoice|payment)\s+for\s+(the\s+)?(materials?|concrete|steel|rebar|cement|equipment\s+rental|scaffolding)[^.]{0,30}(overdue|outstanding|new\s+account)/i
+# Permits / inspections
+/(building|construction|site|work)\s+permit\s+(has\s+been\s+|is\s+|was\s+)?(suspended|revoked|rejected|expired|on\s+hold|under\s+review)/i
+/(site|safety|building|fire)\s+inspection\s+(report|notice|findings|violation)[^.]{0,30}(view|download|respond|pay)\s+(here|online|via|within)/i
+/(stop[-\s]work|work\s+stoppage)\s+order\s+(has\s+been\s+)?(issued|served)/i
+# Bonds / guarantees
+/(performance|bid|advance\s+payment)\s+(bond|guarantee)\s+(is\s+)?(required|pending|expired)[^.]{0,30}(submit|upload|confirm|pay)/i
+/(contract\s+award|letter\s+of\s+award|notice\s+of\s+award|letter\s+of\s+intent)[^.]{0,40}(view|download|sign|accept)\s+(here|online|via|below)/i
+
+# ===== Spanish =====
+/(invitaci[óo]n\s+a\s+(licitar|ofertar)|solicitud\s+de\s+(cotizaci[óo]n|oferta))[^.]{0,50}(descargue|vea|acceda)\s+(los\s+)?(pliegos|documentos)/iu
+/(su\s+empresa\s+ha\s+sido)\s+(preseleccionada|invitada)\s+(a|para)\s+(licitar|presentar\s+oferta)/iu
+/(subcontratista|proveedor)[^.]{0,30}(nuevos?|cambio\s+de)\s+(datos\s+bancarios|cuenta\s+bancaria)/iu
+/(licencia\s+de\s+obra|permiso\s+de\s+construcci[óo]n)\s+(ha\s+sido\s+)?(suspendid[ao]|revocad[ao]|denegad[ao])/iu
+
+# ===== German =====
+/(ausschreibung|angebotsanfrage|aufforderung\s+zur\s+angebotsabgabe)[^.]{0,50}(unterlagen|leistungsverzeichnis|lv)\s+(herunterladen|abrufen|einsehen)/iu
+/(ihr\s+unternehmen\s+wurde)\s+(zur\s+angebotsabgabe\s+)?(eingeladen|ausgew[äa]hlt|vorqualifiziert)/iu
+/(subunternehmer|lieferant|nachunternehmer)[^.]{0,30}(neue|ge[äa]nderte)\s+(bankverbindung|kontodaten)/iu
+/(baugenehmigung)\s+(wurde\s+)?(ausgesetzt|widerrufen|abgelehnt)/iu
+
+# ===== French =====
+/(appel\s+d'offres|demande\s+de\s+(devis|prix)|consultation)[^.]{0,50}(t[ée]l[ée]charger|consulter|acc[ée]der)\s+(au\s+|le\s+)?(dce|dossier\s+de\s+consultation|cahier\s+des\s+charges)/iu
+/(votre\s+entreprise\s+a\s+[ée]t[ée])\s+(retenue|pr[ée]s[ée]lectionn[ée]e|invit[ée]e)\s+(pour|[àa])\s+(soumissionner|r[ée]pondre)/iu
+/(sous-traitant|fournisseur)[^.]{0,30}(nouvelles?|changement\s+de)\s+(coordonn[ée]es\s+bancaires|rib)/iu
+/permis\s+de\s+construire\s+(a\s+[ée]t[ée]\s+)?(suspendu|retir[ée]|refus[ée])/iu
+
+# ===== Italian =====
+/(invito\s+a\s+(gara|presentare\s+offerta)|richiesta\s+di\s+(preventivo|offerta))[^.]{0,50}(scarica|visualizza|accedi)\s+(la\s+|i\s+)?(documentazione|capitolato|computo)/iu
+/(subappaltatore|fornitore)[^.]{0,30}(nuove|variazione)\s+(coordinate\s+bancarie|iban)/iu
+/permesso\s+di\s+costruire\s+([èe]\s+stato\s+)?(sospeso|revocato|respinto)/iu
+
+# ===== Portuguese =====
+/(convite\s+para\s+(licita[çc][ãa]o|cota[çc][ãa]o)|pedido\s+de\s+(or[çc]amento|cota[çc][ãa]o))[^.]{0,50}(baixe|acesse|visualize)\s+(o\s+|os\s+)?(edital|caderno\s+de\s+encargos|documentos)/iu
+/(subempreiteiro|fornecedor)[^.]{0,30}(novos|altera[çc][ãa]o\s+de)\s+dados\s+banc[áa]rios/iu
+/(alvar[áa]|licen[çc]a)\s+de\s+(obra|constru[çc][ãa]o)\s+(foi\s+)?(suspens[oa]|cassad[oa]|indeferid[oa])/iu
+
+# ===== Dutch =====
+/(aanbesteding|offerteaanvraag|uitnodiging\s+tot\s+inschrijving)[^.]{0,50}(download|bekijk)\s+(de\s+)?(bestekstukken|documenten|tekeningen)/iu
+/(onderaannemer|leverancier)[^.]{0,30}(nieuwe|gewijzigde)\s+(bankgegevens|rekeninggegevens)/iu
+
+# ===== Polish =====
+/(zaproszenie\s+do\s+(przetargu|z[łl]o[żz]enia\s+oferty)|zapytanie\s+ofertowe)[^.]{0,50}(pobierz|zobacz)\s+(dokumentacj[ęe]|przedmiar|siwz|swz)/iu
+/(podwykonawca|dostawca)[^.]{0,30}(nowe|zmiana)\s+(danych\s+do\s+przelewu|numeru\s+konta)/iu
+/pozwolenie\s+na\s+budow[ęe]\s+(zosta[łl]o\s+)?(wstrzymane|cofni[ęe]te|odrzucone)/iu
+
+# ===== Turkish =====
+/(ihale|teklif\s+(talebi|daveti)|fiyat\s+teklifi\s+talebi)[^.]{0,50}(dok[üu]manlar[ıi]n[ıi]|[şs]artnameyi|metraj[ıi]|projeyi)\s+(indirin|g[öo]r[üu]nt[üu]leyin|inceleyin)/iu
+/(firman[ıi]z|[şs]irketiniz)\s+(ihaleye|teklif\s+vermeye)\s+(davet\s+edildi|se[çc]ildi)/iu
+/(ta[şs]eron|tedarik[çc]i)[^.]{0,30}(yeni|de[ğg]i[şs]en|g[üu]ncel)\s+(iban|banka\s+bilgileri|hesap\s+bilgileri)/iu
+/(yap[ıi]\s+ruhsat[ıi]|in[şs]aat\s+ruhsat[ıi])[^.]{0,20}(iptal\s+edildi|ask[ıi]ya\s+al[ıi]nd[ıi]|reddedildi)/iu
+/(hakedi[şs]|teminat)[^.]{0,30}(onay[ıi]n[ıi]z\s+bekleniyor|g[öo]r[üu]nt[üu]lemek\s+i[çc]in|ba[ğg]lant[ıi])/iu
+
+# ===== Azerbaijani =====
+/(tender|t[əe]klif\s+sor[ğg]usu|qiym[əe]t\s+t[əe]klifi)[^.]{0,50}(s[əe]n[əe]dl[əe]ri|layih[əe]ni|smetan[ıi])\s+(y[üu]kl[əe]yin|g[öo]r[üu]n|bax[ıi]n)/iu
+/([şs]irk[əe]tiniz|firman[ıi]z)\s+(tender[əe]|t[əe]klif\s+verm[əe]y[əe])\s+(d[əe]v[əe]t\s+olunub|se[çc]ilib)/iu
+/(podrat[çc][ıi]|subpodrat[çc][ıi]|t[əe]chizat[çc][ıi])[^.]{0,30}(yeni|d[əe]yi[şs]dirilmi[şs])\s+(bank\s+rekvizitl[əe]ri|hesab|iban)/iu
+/(tikinti\s+icaz[əe]si|in[şs]aat\s+icaz[əe]si)\s+(l[əe][ğg]v\s+edilib|dayand[ıi]r[ıi]l[ıi]b|r[əe]dd\s+edilib)/iu
+
+# ===== Russian =====
+/(приглашение\s+(к\s+участию\s+)?в\s+тендере|запрос\s+(коммерческого\s+предложения|котировок|цен))[^.]{0,50}(скачайте|загрузите|откройте|ознакомьтесь)\s+(с\s+)?(документаци[ейю]|сметой|чертежами|тз)/iu
+/ваша\s+компания\s+(приглашена|выбрана|прошла\s+предквалификацию)\s+(к\s+участию|для\s+участия)\s+в\s+(тендере|закупке)/iu
+/(субподрядчик|поставщик)[^.]{0,30}(новые|изменил[иа]?)\s+(банковские\s+)?реквизиты/iu
+/разрешение\s+на\s+строительство\s+(приостановлено|отозвано|аннулировано)/iu
+/(акт\s+(кс-2|кс-3|выполненных\s+работ)|справка\s+кс-3)[^.]{0,30}(подпишите|ознакомьтесь|по\s+ссылке)/iu
+
+# ===== Ukrainian =====
+/(запрошення\s+до\s+(участі\s+в\s+)?тендеру|запит\s+(комерційної\s+пропозиції|цін))[^.]{0,50}(завантажте|відкрийте|ознайомтеся)/iu
+/(субпідрядник|постачальник)[^.]{0,30}(нові|змінив|змінила)\s+(банківські\s+)?реквізити/iu
+
+# ===== Arabic =====
+/(دعوة\s+(للمشاركة\s+في\s+)?مناقصة|طلب\s+(عرض\s+سعر|تسعير))[^.]{0,50}(حمل|تحميل|اطلع\s+على)\s+(وثائق|مستندات|كراسة)/u
+/(المقاول\s+من\s+الباطن|المورد)[^.]{0,30}(تغيير|تحديث)\s+(البيانات|التفاصيل)\s+(البنكية|المصرفية)/u
+/(تم\s+)?(إيقاف|إلغاء|رفض)\s+(رخصة|تصريح)\s+البناء/u
+
+# ===== Hindi =====
+/(टेंडर|निविदा|कोटेशन)[^.]{0,50}(दस्तावेज़|दस्तावेज)\s+(डाउनलोड|देखें)/u
+/(ठेकेदार|सप्लायर|आपूर्तिकर्ता)[^.]{0,30}(नया|बदला\s+हुआ)\s+(बैंक\s+खाता|अकाउंट)/u
+/(tender|boq|work\s+order)\s+(documents?|copy)\s+(download|dekhein|check)\s+(karein|kare)/i
+
+# ===== Chinese =====
+/(招标|招標|询价|詢價|投标邀请|投標邀請)[^。]{0,40}(下载|下載|查看)(招标文件|招標文件|图纸|圖紙|工程量清单|工程量清單)/u
+/(分包商|供应商|供應商)[^。]{0,20}(银行账户|銀行帳戶|收款账户|收款帳戶)(变更|變更|已更改)/u
+/(施工许可证|施工許可證|建设工程规划许可证)(已被)?(暂停|暫停|吊销|吊銷|撤销|撤銷)/u
+
+# ===== Thai =====
+/(ประกวดราคา|ขอใบเสนอราคา)[^.]{0,40}(ดาวน์โหลด|ดู)(เอกสาร|แบบ|BOQ)/iu
+/(ผู้รับเหมาช่วง|ซัพพลายเออร์)[^.]{0,30}เปลี่ยน(เลขที่)?บัญชีธนาคาร/u
+/ใบอนุญาตก่อสร้าง(ถูกระงับ|ถูกเพิกถอน)/u

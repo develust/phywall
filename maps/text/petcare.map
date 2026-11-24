@@ -1,0 +1,143 @@
+# =====================================================================
+#  petcare.map - phishing phrases for pet businesses: dog and cat
+#  training, grooming, boarding, pet sitting, breeders, shelters,
+#  pet shops and veterinary clinics
+#  Part of: phywall by Develust Technology
+#
+#  Format : one regex per line, /pattern/flags (i = case-insensitive,
+#           u = UTF-8). No trailing spaces.
+#  Note   : PHISH_TEXT scores 0 alone; it only adds points together
+#           with a phishing link (PHISH_URL / PHISHING).
+#
+#  Themes : fake client complaints (dog injured / bitten / lost during
+#           training or boarding) with photo or video "evidence",
+#           fake vaccination / vet records to download, fake pet
+#           shipping and transport fees (crate, insurance, quarantine),
+#           puppy / kitten sale scams, microchip registration renewal,
+#           pet insurance claims, booking platform account suspension
+#           (Rover, Wag, PetBacker), business page violation notices
+#
+#  Avoided: normal client questions ("how much is puppy training",
+#           "my dog pulls on the leash", "can I book a session"),
+#           because real owners write them every day.
+# =====================================================================
+
+# ===== English =====
+# Fake complaints with "evidence"
+/(my|our)\s+(dog|puppy|cat|kitten|pet)\s+(was|got|has\s+been)\s+(injured|hurt|bitten|attacked|abused|lost)\s+(during|at|in)\s+(the\s+|your\s+)?(training|class|session|grooming|boarding|daycare|stay|facility)/i
+/(complaint|report)\s+(regarding|about)\s+(the\s+)?(treatment|injury|abuse|neglect)\s+of\s+(my|a|our)\s+(dog|puppy|cat|kitten|pet)/i
+/(see|view|check|review)\s+(the\s+)?(photos?|pictures?|videos?|footage|vet\s+report)\s+of\s+(my|the)\s+(dog|puppy|cat|kitten|pet)('s)?\s*(injur|wound|condition)?/i
+/(animal\s+cruelty|animal\s+abuse|animal\s+neglect)\s+(report|complaint|case)\s+(has\s+been\s+)?(filed|submitted|opened)\s+against\s+(your|the)\s+(business|facility|company)/i
+/(i\s+will|we\s+will)\s+(report|sue|take\s+legal\s+action\s+against)\s+(you|your\s+(business|facility))\s+(for|because\s+of)\s+(what\s+happened\s+to\s+)?(my|our)\s+(dog|cat|pet)/i
+# Vet / vaccination records
+/(download|view|open|access)\s+(the\s+|your\s+)?(pet'?s?\s+)?(vaccination|vaccine|rabies|medical|vet(erinary)?)\s+(records?|certificates?|history|report)\s+(here|below|via\s+(the\s+)?link|online)/i
+/(vaccination|rabies|health)\s+certificate\s+(for\s+(your|the)\s+(dog|puppy|cat|kitten|pet)\s+)?(is\s+)?(expired|invalid|pending|on\s+hold|required\s+to\s+(release|ship))/i
+# Pet shipping / transport scams
+/(pet|animal|puppy|kitten|dog|cat)\s+(delivery|shipping|transport|relocation)\s+(agency|company|service)\b[^.]{0,60}(fee|payment|charge|insurance|crate)/i
+/(refundable|temporary|mandatory)\s+(insurance|crate|cage|quarantine|vaccination)\s+(fee|deposit|payment)[^.]{0,40}(puppy|kitten|pet|dog|cat|animal)/i
+/(puppy|kitten|pet|dog|cat|animal)[^.]{0,40}(is\s+)?(held|stuck|detained|on\s+hold)\s+(at|in)\s+(the\s+)?(airport|customs|quarantine|cargo|transit)/i
+/(pay|send)\s+(the\s+)?(quarantine|customs|clearance|air\s+ticket|crate)\s+(fee|charge|payment)\s+(to\s+release|before\s+delivery|for\s+(your|the))\s+(puppy|kitten|pet|dog|cat)/i
+/(track|tracking)\s+(your\s+)?(puppy|kitten|pet|dog|cat)('s)?\s+(delivery|shipment|transport|flight)\s+(here|online|via)/i
+# Puppy / kitten sale scams
+/(adorable|healthy|vaccinated|akc\s+registered|purebred)\s+(puppies|kittens|puppy|kitten)\s+(available\s+)?(for\s+(free\s+)?adoption|for\s+re-?homing)[^.]{0,40}(shipping|delivery|transport)\s+fee/i
+/(adoption|rehoming|reservation)\s+(fee|deposit)\s+(via|by|through)\s+(zelle|cash\s*app|paypal\s+friends|western\s+union|moneygram|gift\s+cards?|bitcoin|crypto)/i
+# Microchip registration
+/(your\s+)?(pet'?s?\s+)?microchip\s+(registration|record|database\s+entry|subscription)\s+(has\s+|will\s+)?(expired?|expire|lapsed|be\s+deactivated|be\s+removed)/i
+/(renew|update|verify|confirm)\s+(your\s+)?(pet'?s?\s+)?microchip\s+(registration|details|record|subscription)\s+(now|today|online|to\s+(avoid|keep|ensure))/i
+/(lost|found)\s+(pet|dog|cat)\s+[^.]{0,30}microchip\s+(scan|lookup)[^.]{0,30}(confirm|verify|pay|claim)/i
+# Pet insurance
+/(your\s+)?pet\s+insurance\s+(claim|policy|premium|payment)\s+(has\s+been\s+|was\s+)?(rejected|declined|denied|suspended|cancelled|failed)/i
+/(pet\s+insurance\s+)?(claim|reimbursement)\s+(for\s+(your|the)\s+(dog|cat|pet)\s+)?(is\s+)?(ready|approved|pending)[^.]{0,30}(verify|confirm|update)\s+(your\s+)?(bank|payment|card)/i
+# Booking platforms / business accounts
+/(rover|wag|petbacker|pawshake|care\.com|time\s+to\s+pet|gingr|petexec|moego)\s+(account|profile|listing|payouts?)\s+(has\s+been\s+|will\s+be\s+|is\s+)?(suspended|deactivated|restricted|on\s+hold|locked|closed)/i
+/(sitter|walker|trainer|groomer|provider)\s+(account|profile)\s+(verification|review)\s+(required|failed|pending)[^.]{0,40}(log\s*in|sign\s*in|verify|confirm)/i
+/(your\s+)?(payout|earnings|booking\s+payment)\s+(for\s+(your\s+)?(dog|cat|pet)\s+(sitting|walking|training|boarding)\s+)?(is\s+)?(on\s+hold|pending\s+verification|blocked)/i
+/(your\s+)?(business\s+)?(page|profile|account)[^.]{0,30}(violat(es|ed|ion)|reported\s+for)[^.]{0,30}(animal\s+(welfare|cruelty)|selling\s+(live\s+)?animals|pet\s+sales)/i
+
+# ===== Spanish =====
+/(mi|nuestro)\s+(perro|cachorro|gato|gatito|mascota)\s+(result[óo]|fue|ha\s+sido)\s+(herido|lastimado|mordido|maltratado)\s+(durante|en)\s+(el|la|su)\s+(entrenamiento|adiestramiento|clase|peluquer[íi]a|guarder[íi]a|hotel)/iu
+/(vea|mire|descargue)\s+(las\s+)?(fotos|im[áa]genes|videos?)\s+de\s+(mi|la)\s+(perro|gato|mascota)\s+(herid[oa]|lastimad[oa])/iu
+/(tarifa|pago|cuota)\s+de\s+(env[íi]o|transporte|seguro|jaula|cuarentena)\s+(del|de\s+su)\s+(cachorro|gatito|mascota|perro|gato)/iu
+/(registro|inscripci[óo]n)\s+del\s+microchip\s+(ha\s+)?(caducado|vencido|expira)/iu
+/reclamaci[óo]n\s+del\s+seguro\s+(de\s+)?(su\s+)?mascota\s+(rechazada|denegada|pendiente)/iu
+
+# ===== German =====
+/(mein|unser)\s+(hund|welpe|katze|k[äa]tzchen|haustier)\s+(wurde|ist)\s+(beim|im|w[äa]hrend\s+des)\s+(training|kurs|hundeschule|hundesalon|pension|tagesst[äa]tte)\s+(verletzt|gebissen|misshandelt)/iu
+/(fotos|bilder|videos?)\s+(meines|unseres)\s+(verletzten\s+)?(hundes|welpen|haustiers)\s+(ansehen|herunterladen)/iu
+/(transport|versand|versicherungs|quarant[äa]ne|boxen)geb[üu]hr\s+f[üu]r\s+(ihren|den)\s+(welpen|hund|katze|haustier)/iu
+/(ihre\s+)?(mikrochip|chip|transponder)[-\s]?(registrierung|eintrag)\s+(ist\s+)?(abgelaufen|l[äa]uft\s+ab|wird\s+gel[öo]scht)/iu
+/(tierkrankenversicherung|tierversicherung)[^.]{0,20}(abgelehnt|ausgesetzt|zahlung\s+fehlgeschlagen)/iu
+
+# ===== French =====
+/(mon|notre)\s+(chien|chiot|chat|chaton|animal)\s+(a\s+[ée]t[ée]|s'est\s+fait)\s+(bless[ée]|mordu|maltrait[ée])\s+(pendant|lors\s+de|au)\s+(l'|la\s+|le\s+)?(dressage|[ée]ducation|cours|toilettage|pension|garderie)/iu
+/(voir|t[ée]l[ée]charger)\s+(les\s+)?(photos|vid[ée]os?)\s+de\s+(mon|notre)\s+(chien|chat|animal)\s+bless[ée]/iu
+/frais\s+de\s+(transport|livraison|cage|quarantaine|assurance)\s+(pour\s+)?(votre|le)\s+(chiot|chaton|chien|chat|animal)/iu
+/(enregistrement|inscription)\s+(de\s+la\s+)?puce\s+([ée]lectronique\s+)?(a\s+)?expir[ée]/iu
+/(demande\s+de\s+remboursement|r[ée]clamation)\s+(de\s+l'?)?assurance\s+(animale|pour\s+animaux)\s+(refus[ée]e|rejet[ée]e|en\s+attente)/iu
+
+# ===== Italian =====
+/(il\s+mio|il\s+nostro)\s+(cane|cucciolo|gatto|gattino|animale)\s+[èe]\s+stato\s+(ferito|morso|maltrattato)\s+(durante|alla|al)\s+(l'|la\s+)?(addestramento|educazione|lezione|toelettatura|pensione)/iu
+/(costo|spese|tassa)\s+di\s+(spedizione|trasporto|gabbia|quarantena|assicurazione)\s+(per\s+)?(il\s+)?(cucciolo|gattino|cane|gatto|animale)/iu
+/registrazione\s+del\s+microchip\s+([èe]\s+)?scadut[ao]/iu
+/(rimborso|sinistro)\s+(dell'?)?assicurazione\s+(per\s+)?(animali|cane|gatto)\s+(rifiutat[oa]|respint[oa])/iu
+
+# ===== Portuguese =====
+/(meu|nosso)\s+(c[ãa]o|cachorro|filhote|gato|gatinho|pet)\s+(foi|ficou)\s+(ferido|machucado|mordido|maltratado)\s+(durante|no|na)\s+(o\s+|a\s+)?(adestramento|treinamento|aula|banho\s+e\s+tosa|hotel|creche)/iu
+/taxa\s+de\s+(envio|transporte|seguro|caixa|quarentena)\s+(do|para\s+o\s+seu)\s+(filhote|gatinho|c[ãa]o|cachorro|gato|pet)/iu
+/registro\s+do\s+microchip\s+(expirou|vencido|vai\s+expirar)/iu
+/(sinistro|reembolso)\s+do\s+seguro\s+(pet|do\s+seu\s+animal)\s+(recusado|negado)/iu
+
+# ===== Dutch =====
+/(mijn|onze)\s+(hond|puppy|kat|kitten|huisdier)\s+(is|werd)\s+(tijdens|bij)\s+(de\s+|het\s+)?(training|cursus|trimsalon|pension|opvang)\s+(gewond|gebeten|mishandeld)/iu
+/(verzend|transport|kooi|quarantaine|verzekering)kosten\s+voor\s+(uw|de)\s+(puppy|kitten|hond|kat|huisdier)/iu
+/(chipregistratie|registratie\s+van\s+de\s+chip)\s+(is\s+)?(verlopen|verloopt)/iu
+
+# ===== Polish =====
+/(m[óo]j|nasz)\s+(pies|szczeniak|kot|kotek|pupil)\s+(zosta[łl]|by[łl])\s+(ranny|pogryziony|skrzywdzony)\s+(podczas|na)\s+(szkolenia|treningu|zaj[ęe][ćc]|strzy[żz]enia|pobytu)/iu
+/op[łl]ata\s+za\s+(transport|wysy[łl]k[ęe]|klatk[ęe]|kwarantann[ęe]|ubezpieczenie)\s+(szczeniaka|kotka|psa|kota|zwierz[ęe]cia)/iu
+/rejestracja\s+(mikro)?chipa\s+(wygas[łl]a|wygasa)/iu
+
+# ===== Turkish =====
+/(k[öo]pe[ğg]im|kedim|yavrum|evcil\s+hayvan[ıi]m)\s+(e[ğg]itim|kurs|pansiyon|kuaf[öo]r|bak[ıi]m)\s+(s[ıi]ras[ıi]nda|esnas[ıi]nda)\s+(yaraland[ıi]|[ıi]s[ıi]r[ıi]ld[ıi]|k[öo]t[üu]\s+muamele\s+g[öo]rd[üu])/iu
+/(yaral[ıi]|yaralanan)\s+(k[öo]pe[ğg]imin|kedimin)\s+(foto[ğg]raflar[ıi]n[ıi]|videosunu)\s+(g[öo]r[üu]n|indirin|inceleyin)/iu
+/(yavru|k[öo]pek|kedi|evcil\s+hayvan)[^.]{0,20}(nakliye|kargo|ta[şs][ıi]ma|kafes|karantina|sigorta)\s+([üu]creti|bedeli)/iu
+/(mikro[çc]ip|[çc]ip)\s+kayd[ıi]n[ıi]z[ıi]n?\s+(s[üu]resi\s+doldu|s[üu]resi\s+dolmak\s+[üu]zere|yenilenmesi\s+gerekiyor)/iu
+/(pet|evcil\s+hayvan)\s+sigortas[ıi]\s+(talebiniz|[öo]demeniz)\s+(reddedildi|ba[şs]ar[ıi]s[ıi]z)/iu
+
+# ===== Azerbaijani =====
+/([iİ]t[ie]m|k[üu]?[çc]uy[üu]m|pi[şs]iyim|ev\s+heyvan[ıi]m)\s+(t[əe]lim|kurs|otel|baxım|qrumi(nq|ng))\s+(zaman[ıi]|vaxt[ıi])\s+(yaralan[ıi]b|d[ıi]rmaland[ıi]|tutulub|pis\s+davran[ıi]l[ıi]b)/iu
+/yaral[ıi]\s+(itimin|pi[şs]iyimin|heyvan[ıi]m[ıi]n)\s+(fotolar[ıi]na|şəkillərinə|sekillerine|videosuna)\s+bax[ıi]n/iu
+/(bala|it|pi[şs]ik|heyvan)\S*\s+[^.]{0,20}(da[şs][ıi]nma|g[öo]nd[əe]rilm[əe]|karantin|qəfəs|qefes|s[ıi]ğorta|sigorta)\s+haqq[ıi]/iu
+/mikro[çc]ip\s+qeydiyyat[ıi]n[ıi]z[ıi]n\s+m[üu]dd[əe]ti\s+(bitib|bitir)/iu
+
+# ===== Russian =====
+/(мою|мой|нашу|наш)\s+(собак[уа]|щенка|щенок|кошк[уа]|кот[а]?|котенка|котёнка|питомца)\s+(травмировали|покусали|ранили|обижали|избили)\s+(на|во\s+время)\s+(дрессировк[еи]|занятия|занятий|груминга|передержк[еи])/iu
+/(посмотрите|скачайте)\s+(фото|видео)\s+(моей|моего)\s+(травмированной\s+|раненой\s+|раненого\s+)?(собаки|щенка|кошки|кота|питомца)/iu
+/(оплат(ите|а)|сбор|плата)\s+за\s+(доставку|перевозку|клетку|переноску|карантин|страховку)\s+(вашего\s+)?(щенка|котенка|котёнка|питомца|собаки|кошки)/iu
+/регистрация\s+(микро)?чипа\s+(истекла|истекает|будет\s+аннулирована)/iu
+/(страховое\s+возмещение|заявка\s+на\s+выплату)\s+по\s+страховке\s+(питомца|животного)\s+(отклонен[ао]|отказано)/iu
+
+# ===== Ukrainian =====
+/(мою|мого|нашу|нашого)\s+(собаку|цуценя|кішку|кота|кошеня|улюбленця)\s+(травмували|покусали|поранили)\s+(на|під\s+час)\s+(дресирування|заняття|грумінгу|перетримки)/iu
+/(оплата|збір|плата)\s+за\s+(доставку|перевезення|клітку|карантин|страховку)\s+(вашого\s+)?(цуценяти|кошеняти|улюбленця|собаки|кота)/iu
+/реєстрація\s+(мікро)?чіпа\s+(закінчилася|закінчується)/iu
+
+# ===== Arabic =====
+/(كلبي|قطتي|جروي|حيواني\s+الأليف)\s+(تعرض|أصيب)\s+(لإصابة|للعض|بجروح)\s+(أثناء|خلال)\s+(التدريب|الحصة|الإقامة|التجميل)/u
+/(رسوم|تكلفة)\s+(الشحن|النقل|القفص|الحجر\s+الصحي|التأمين)\s+(لـ|ل)?(الجرو|القطة|الكلب|الحيوان\s+الأليف)/u
+/(انتهت\s+صلاحية|سينتهي)\s+تسجيل\s+الشريحة\s+الإلكترونية/u
+
+# ===== Hindi =====
+/(मेरे|हमारे)\s+(कुत्ते|पिल्ले|बिल्ली|पालतू)\s+(को\s+)?(ट्रेनिंग|प्रशिक्षण|ग्रूमिंग|बोर्डिंग)\s+(के\s+दौरान|में)\s+(चोट|काट\s+लिया|घायल)/u
+/(पिल्ले|बिल्ली|पालतू|कुत्ते)\s+(की\s+)?(डिलीवरी|शिपिंग|परिवहन|पिंजरा|क्वारंटाइन|बीमा)\s+(फीस|शुल्क)/u
+/(puppy|pet|dog)\s+(delivery|shipping)\s+(charges?|fees?)\s+(pay|bhejo|kare|karein)/i
+
+# ===== Chinese =====
+/(我的|我们的)(狗|小狗|猫|小猫|宠物|寵物)(在)?(训练|訓練|课程|課程|美容|寄养|寄養)(期间|期間|时|時)(受伤|受傷|被咬|被虐待)/u
+/(宠物|寵物|小狗|幼犬|小猫|幼貓)(运输|運輸|托运|託運|笼子|籠子|检疫|檢疫|保险|保險)(费|費)/u
+/(芯片|晶片)(登记|登記|注册|註冊)(已过期|已過期|即将过期|即將過期)/u
+
+# ===== Thai =====
+/(สุนัข|ลูกสุนัข|แมว|ลูกแมว|สัตว์เลี้ยง)ของ(ฉัน|เรา)(ได้รับบาดเจ็บ|ถูกกัด|ถูกทำร้าย)(ระหว่าง|ขณะ)(การฝึก|คลาส|อาบน้ำตัดขน|รับฝาก)/u
+/ค่า(ขนส่ง|จัดส่ง|กรง|กักกัน|ประกัน)(ลูกสุนัข|ลูกแมว|สัตว์เลี้ยง|สุนัข|แมว)/u
+/การลงทะเบียนไมโครชิป(หมดอายุ|จะหมดอายุ)/u

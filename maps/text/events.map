@@ -1,0 +1,126 @@
+# =====================================================================
+#  events.map - phishing phrases for exhibitions, trade fairs,
+#  conferences, event agencies and exhibitors
+#  Part of: phywall by Develust Technology
+#
+#  Format : one regex per line, /pattern/flags (i = case-insensitive,
+#           u = UTF-8). No trailing spaces.
+#  Note   : PHISH_TEXT scores 0 alone; it only adds points together
+#           with a phishing link (PHISH_URL / PHISHING).
+#
+#  Themes : attendee / visitor / exhibitor list sale scams, fake
+#           hosted buyer programs, fake housing bureaus and hotel
+#           block "official" bookings, booth / stand / sponsorship
+#           invoices with changed bank details, exhibitor directory
+#           and catalogue listing scams, fake visa invitation letters,
+#           fake speaker invitations, event platform account lures
+#
+#  Avoided: normal event mails ("your badge is ready", "agenda for
+#           day 2", "thank you for visiting our stand"), because
+#           event people send and receive them every day.
+# =====================================================================
+
+# ===== English =====
+# Attendee list sales
+/(attendee|attendees|visitor|visitors|delegate|participant|exhibitor|buyer)\s+(e-?mail\s+|contact\s+|data\s+|mailing\s+)?(list|database|data)\s+(of|for|from)[^.]{0,60}(is\s+)?(available|for\s+sale|ready)/i
+/(would\s+you\s+be|are\s+you)\s+interested\s+in\s+(acquiring|purchasing|buying|getting)\s+(the\s+)?(attendee|attendees|visitor|visitors|exhibitor|delegate|participant|buyer)s?\s+(e-?mail\s+|contact\s+)?(list|database|data)/i
+/(verified|updated|opt-?in)\s+(attendee|visitor|exhibitor|delegate|buyer)\s+(contacts?|list|database)[^.]{0,80}(counts?|pricing|cost|sample)/i
+/(\d[\d,.]*)\s+(verified\s+)?(attendees|visitors|delegates|exhibitors|contacts)\s+(with\s+)?(complete\s+)?(contact\s+)?(details|information|info)[^.]{0,30}(available|interested|pricing)/i
+# Hosted buyer programs
+/(join|apply\s+for|register\s+for)\s+(the\s+)?[^.]{0,30}hosted\s+buyers?\s+(program|programme)/i
+/(you\s+have\s+been|you\s+are)\s+(selected|invited|nominated|approved)\s+(as|for|to\s+join)\s+(a\s+|the\s+)?[^.]{0,30}(hosted\s+buyer|vip\s+buyer|top\s+buyer)/i
+/(complimentary|free|fully\s+paid)\s+(flights?|accommodation|hotel|travel)[^.]{0,40}(hosted\s+buyer|buyer\s+program|qualified\s+buyers?)/i
+/hosted\s+buyers?\s+(opportunity|invitation|application|nomination)/i
+# Housing / hotel blocks
+/(official\s+)?(housing\s+(bureau|provider|company)|accommodation\s+(provider|partner)|hotel\s+(block|booking)\s+(agent|partner))\s+(for|of)[^.]{0,50}(expo|exhibition|fair|conference|congress|summit|show|event)/i
+/(secure|reserve|book|confirm)\s+(your\s+)?(hotel\s+)?(rooms?|accommodation)\s+(at\s+)?(the\s+)?(discounted|special|exhibitor|group|event)(\s+(exhibitor|group|event))?\s+rates?\s+(before|now|today)[^.]{0,30}(sold\s+out|limited|deadline)/i
+/(rooms?|hotels?)\s+(near|close\s+to)\s+(the\s+)?(venue|exhibition\s+(center|centre)|fairground)\s+(are\s+)?(selling\s+out|almost\s+sold\s+out|limited)/i
+# Booth / stand / sponsorship payments
+/(booth|stand|space|sponsorship|exhibitor)\s+(fee|payment|invoice|balance)[^.]{0,40}(new|updated|changed)\s+(bank|banking|account)\s+(details|information)/i
+/(your\s+)?(booth|stand|space)\s+(reservation|booking|allocation)\s+(will\s+be|has\s+been)\s+(cancelled|released|reassigned)\s+(unless|if\s+payment)/i
+/(final|last)\s+(reminder|notice)[^.]{0,30}(booth|stand|exhibitor|sponsorship)\s+(payment|invoice|balance)/i
+# Directory / catalogue scams
+/(update|confirm|correct|verify)\s+your\s+(company\s+)?(listing|entry|details|profile)\s+(in|for)\s+(the\s+)?(official\s+)?(exhibitor|expo|fair|trade\s+show|official)\s+(directory|catalogue|catalog|guide|database)/i
+/(exhibitor|expo|fair)\s+(directory|catalogue|catalog)[^.]{0,40}(free\s+of\s+charge|basic\s+entry|update\s+form)[^.]{0,40}(sign|return|complete)/i
+# Visa / invitation letters
+/(visa\s+)?invitation\s+letter\s+(for\s+(the\s+)?[^.]{0,40}(expo|exhibition|fair|conference|congress|summit|event)\s+)?(is\s+)?(ready|available|attached)[^.]{0,30}(download|view|pay|fee)/i
+/(you\s+have\s+been|we\s+are\s+pleased\s+to)\s+(invited?|invite\s+you)\s+(as\s+a\s+|to\s+be\s+a\s+)?(speaker|panelist|keynote)[^.]{0,80}(registration|participation|speaker)\s+fee/i
+# Event platforms
+/(eventbrite|cvent|swapcard|hopin|bizzabo|whova|map\s*your\s*show|a2z|expocad)\s+(exhibitor\s+)?(portal\s+)?(account|profile|payouts?)\s+(has\s+been\s+|will\s+be\s+|is\s+)?(suspended|locked|restricted|on\s+hold|deactivated)/i
+/(exhibitor|organizer|organiser)\s+(portal|account|manual)[^.]{0,30}(log\s*in|sign\s*in|verify|activate)\s+(now|today|before|within|to\s+(avoid|keep|access))/i
+
+# ===== Spanish =====
+/(lista|base\s+de\s+datos)\s+de\s+(asistentes|visitantes|expositores|compradores)\s+(de|del|para)[^.]{0,50}(disponible|a\s+la\s+venta)/iu
+/(le\s+interesar[íi]a|est[áa]\s+interesad[oa]\s+en)\s+(adquirir|comprar|obtener)\s+(la\s+)?(lista|base\s+de\s+datos)\s+de\s+(asistentes|visitantes|expositores)/iu
+/programa\s+(de\s+)?(compradores\s+invitados|hosted\s+buyers?)/iu
+/(pago|factura)\s+del\s+(stand|espacio|patrocinio)[^.]{0,30}(nuevos?|cambio\s+de)\s+(datos\s+bancarios|cuenta)/iu
+
+# ===== German =====
+/(teilnehmer|besucher|aussteller|einkäufer|einkaeufer)[-\s]?(liste|datenbank|adressen)\s+(der|des|f[üu]r)[^.]{0,50}(verf[üu]gbar|zu\s+verkaufen|erh[äa]ltlich)/iu
+/(h[äa]tten\s+sie|sind\s+sie)\s+interesse\s+(an\s+)?(der\s+)?(teilnehmer|besucher|aussteller)[-\s]?(liste|datenbank)/iu
+/(standmiete|standgeb[üu]hr|ausstellergeb[üu]hr|sponsoring)[^.]{0,30}(neue|ge[äa]nderte)\s+(bankverbindung|kontodaten)/iu
+/(ausstellerverzeichnis|messekatalog)[^.]{0,30}(eintrag|daten)\s+(aktualisieren|best[äa]tigen|pr[üu]fen)/iu
+
+# ===== French =====
+/(liste|base\s+de\s+donn[ée]es|fichier)\s+des\s+(participants|visiteurs|exposants|acheteurs)\s+(de|du|pour)[^.]{0,50}(disponible|en\s+vente)/iu
+/(seriez-vous|[êe]tes-vous)\s+int[ée]ress[ée]\s+par\s+(l'acquisition\s+de\s+)?(la\s+)?(liste|base)\s+des\s+(participants|visiteurs|exposants)/iu
+/(paiement|facture)\s+(du\s+)?(stand|espace|sponsoring)[^.]{0,30}(nouvelles?|changement\s+de)\s+(coordonn[ée]es\s+bancaires|rib)/iu
+/(catalogue|annuaire)\s+des\s+exposants\s+[^.]{0,30}(mettre\s+[àa]\s+jour|confirmer|v[ée]rifier)/iu
+
+# ===== Italian =====
+/(lista|elenco|database)\s+(dei\s+)?(partecipanti|visitatori|espositori|buyer)\s+(di|del|della|per)[^.]{0,50}(disponibile|in\s+vendita)/iu
+/(sarebbe|siete)\s+interessat[oi]\s+(ad\s+)?(acquistare|ricevere)\s+(la\s+)?(lista|database)\s+(dei\s+)?(partecipanti|visitatori|espositori)/iu
+/(pagamento|fattura)\s+(dello\s+)?(stand|spazio\s+espositivo|sponsorizzazione)[^.]{0,30}(nuove|variazione)\s+(coordinate\s+bancarie|iban)/iu
+
+# ===== Portuguese =====
+/(lista|base\s+de\s+dados|banco\s+de\s+dados)\s+de\s+(participantes|visitantes|expositores|compradores)\s+(da|do|de|para)[^.]{0,50}(dispon[íi]vel|[àa]\s+venda)/iu
+/(estaria|est[áa])\s+interessad[oa]\s+em\s+(adquirir|comprar)\s+(a\s+)?(lista|base)\s+de\s+(participantes|visitantes|expositores)/iu
+/(pagamento|fatura)\s+do\s+(estande|stand|espa[çc]o|patroc[íi]nio)[^.]{0,30}(novos|altera[çc][ãa]o\s+de)\s+dados\s+banc[áa]rios/iu
+
+# ===== Dutch =====
+/(deelnemers|bezoekers|exposanten)(lijst|database)\s+(van|voor)[^.]{0,50}(beschikbaar|te\s+koop)/iu
+/(standhuur|standplaats|sponsoring)[^.]{0,30}(nieuwe|gewijzigde)\s+(bankgegevens|rekeninggegevens)/iu
+
+# ===== Polish =====
+/(lista|baza)\s+(uczestnik[óo]w|odwiedzaj[ąa]cych|wystawc[óo]w)[^.]{0,50}(dost[ęe]pna|na\s+sprzeda[żz])/iu
+/(op[łl]ata|faktura)\s+za\s+(stoisko|powierzchni[ęe]|sponsoring)[^.]{0,30}(nowe|zmiana)\s+(danych|numeru\s+konta)/iu
+
+# ===== Turkish =====
+/(kat[ıi]l[ıi]mc[ıi]|ziyaret[çc]i|kat[ıi]l[ıi]mc[ıi]lar|ziyaret[çc]iler|kat[ıi]l[ıi]mc[ıi]\s+firma|fuar\s+ziyaret[çc]i)\s+(listesi|veritaban[ıi]|data(s[ıi])?)[^.]{0,50}(mevcut|sat[ıi][şs]ta|ilginizi\s+[çc]eker)/iu
+/(al[ıi]m\s+heyeti|hosted\s+buyer)\s+(program[ıi]na|program[ıi])\s+(kat[ıi]l[ıi]n|davet|se[çc]ildiniz)/iu
+/(stand|alan|sponsorluk)\s+(bedeli|[öo]demesi|faturas[ıi])[^.]{0,30}(yeni|de[ğg]i[şs]en|g[üu]ncel)\s+(iban|banka\s+bilgileri|hesap)/iu
+/(fuar|kat[ıi]l[ıi]mc[ıi])\s+katalo[ğg]u\s+[^.]{0,30}(bilgilerinizi\s+)?(g[üu]ncelleyin|onaylay[ıi]n)/iu
+
+# ===== Azerbaijani =====
+/(i[şs]tirak[çc][ıi]|ziyar[əe]t[çc]i|s[əe]rgi\s+i[şs]tirak[çc][ıi]s[ıi])\s*(lar[ıi]n[ıi]n)?\s+(siyah[ıi]s[ıi]|bazas[ıi]|m[əe]lumat\s+bazas[ıi])[^.]{0,50}(m[öo]vcuddur|sat[ıi][şs]dad[ıi]r|maraql[ıi]d[ıi]r)/iu
+/(stend|sah[əe]|sponsorluq)\s+(haqq[ıi]|[öo]d[əe]ni[şs]i|hesab-faktura)[^.]{0,30}(yeni|d[əe]yi[şs]dirilmi[şs])\s+(bank\s+rekvizitl[əe]ri|hesab|iban)/iu
+/(d[əe]v[əe]t\s+olunmu[şs]\s+al[ıi]c[ıi]|hosted\s+buyer)\s+proqram[ıi]na\s+(qo[şs]ulun|d[əe]v[əe]t|se[çc]ildiniz)/iu
+
+# ===== Russian =====
+/(база|список)\s+(участников|посетителей|экспонентов|байеров|делегатов)\s+(выставки|форума|конференции|ярмарки)[^.]{0,50}(доступн[аы]|в\s+продаже|предлагаем)/iu
+/(вас\s+)?(заинтересует|интересует)\s+(приобретение\s+)?(база|список)\s+(участников|посетителей|экспонентов)/iu
+/программ[аеуы]\s+(приглаш[её]нных\s+покупателей|hosted\s+buyers?)/iu
+/(оплата|сч[её]т)\s+(за\s+)?(стенд|площадь|спонсорство|участие)[^.]{0,30}(новые|изменились)\s+(банковские\s+)?реквизиты/iu
+/(каталог|справочник)\s+(участников|экспонентов)[^.]{0,30}(обновите|подтвердите|проверьте)\s+(ваши\s+)?данные/iu
+
+# ===== Ukrainian =====
+/(база|список)\s+(учасників|відвідувачів|експонентів)[^.]{0,50}(доступн[аий]|у\s+продажу)/iu
+/(оплата|рахунок)\s+(за\s+)?(стенд|площу|спонсорство)[^.]{0,30}(нові|змінилися)\s+(банківські\s+)?реквізити/iu
+
+# ===== Arabic =====
+/(قائمة|قاعدة\s+بيانات)\s+(الحضور|الزوار|العارضين|المشترين)\s+(لمعرض|لمؤتمر|ل)[^.]{0,50}(متاحة|للبيع)/u
+/(هل\s+أنت\s+مهتم|هل\s+تهتم)\s+(بشراء|بالحصول\s+على)\s+(قائمة|قاعدة\s+بيانات)\s+(الحضور|الزوار|العارضين)/u
+/(رسوم|فاتورة)\s+(الجناح|المساحة|الرعاية)[^.]{0,30}(تفاصيل|بيانات)\s+(بنكية|مصرفية)\s+(جديدة|محدثة)/u
+
+# ===== Hindi =====
+/(अटेंडी|विज़िटर|विजिटर|प्रदर्शक|एग्ज़िबिटर)\s+(लिस्ट|सूची|डेटाबेस)[^.]{0,50}(उपलब्ध|बिक्री)/u
+/(attendee|visitor|exhibitor)\s+(list|data)\s+(chahiye|available\s+hai|lena\s+hai)/i
+
+# ===== Chinese =====
+/(参展商|參展商|观众|觀眾|与会者|與會者|买家|買家)(名单|名單|数据库|數據庫|联系方式|聯繫方式)[^。]{0,30}(出售|可提供|有兴趣|有興趣)/u
+/(展位|展台|赞助|贊助)(费|費)[^。]{0,20}(银行账户|銀行帳戶|收款账户|收款帳戶)(变更|變更|已更改)/u
+/(展商名录|展商名錄|展会目录|展會目錄)[^。]{0,20}(更新|确认|確認)(您的)?(信息|資料)/u
+
+# ===== Thai =====
+/(รายชื่อ|ฐานข้อมูล)(ผู้เข้าร่วมงาน|ผู้เข้าชมงาน|ผู้แสดงสินค้า)[^.]{0,40}(พร้อมจำหน่าย|สนใจ)/u
+/ค่า(บูธ|พื้นที่|สปอนเซอร์)[^.]{0,30}เปลี่ยน(เลขที่)?บัญชีธนาคาร/u
