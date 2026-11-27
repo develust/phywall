@@ -74,6 +74,9 @@ q_clean_rules() {
 queue_add() {
   local f=$1 out=$2 group=$3 R RH score sender env subj rules details hosts content fp fh item txt
   [ "$group" = move ] && group=caught                 # scan says "move", the API says "caught"
+  # already collected in an earlier scan? stop here, before the slow rspamadm calls
+  fh=$(basename "$f" | cut -d: -f1 | sha256sum | cut -c1-16)
+  grep -q " $fh\$" "$Q_SEEN" && return 0
   R=$(q_clean_rules "$f"); RH=$(q_clean_rules "$f" hosts)
   score=$(echo "$out" | awk '/^Score:/{print $2; exit}')
   [[ $score =~ ^-?[0-9]+(\.[0-9]+)?$ ]] || score=0
@@ -105,7 +108,6 @@ queue_add() {
 
   # fingerprint of the cleaned phishing (same campaign in many mailboxes = same fp)
   fp=$(printf '%s\n%s\n%s\n%s' "$sender" "$subj" "$hosts" "$content" | sha256sum | cut -c1-32)
-  fh=$(basename "$f" | cut -d: -f1 | sha256sum | cut -c1-16)
 
   grep -qx "$fp" "$Q_SENT" && return 0                 # already sent earlier
   grep -qx "$fp $fh" "$Q_SEEN" && return 0             # this mail file already counted

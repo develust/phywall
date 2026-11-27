@@ -28,3 +28,9 @@
 /(^|\.)skydetailingservices\.com$/i
 /(^|\.)annekahl\.com$/i
 /(^|\.)mignonspecial\.com$/i
+/(^|\.)[a-z0-9-]*(mgnmt|mgmnt)[a-z0-9-]*\.[a-z]{2,}$/i
+/(^|\.)[a-z0-9-]*complal?nt[a-z0-9-]*\.[a-z]{2,}$/i
+/(^|\.)[a-z0-9-]*(prtnercentr|partnrcentr|centrail)[a-z0-9-]*\.[a-z]{2,}$/i
+/(^|\.)[a-z0-9-]*(expedla|exped1a|bookng|b00king|booklng|bo0king)[a-z0-9-]*\.[a-z]{2,}$/i
+/(^|\.)scanned\.page$/i
+/(^|\.)xn--[a-z0-9-]+\.[a-z]{2,}$/i

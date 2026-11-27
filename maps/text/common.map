@@ -253,3 +253,29 @@
 /การชำระเงิน(ของคุณ)?(ถูกปฏิเสธ|ล้มเหลว)/u
 /พัสดุ(ของคุณ)?ไม่สามารถจัดส่ง/u
 /คืนภาษี/u
+
+# --- added from real reports ---
+# cPanel "FINAL REMINDER / SIGN-IN ALERT: 2FA Validation required for ..." (morletas.com, datazx.com)
+/(2fa|two-?factor|mfa)\s+(validation|verification)\s+(is\s+)?required\s+for/i
+/(final\s+reminder|sign-?in\s+alert)\s*:?\s+(2fa|two-?factor|mfa)\s+(validation|verification)/i
+# "SECURE MESSAGE - [Your email is outdated]" (workers.dev)
+/your\s+e-?mail\s+(account\s+)?is\s+outdated/i
+# "IMAP/POP3 Mαil Delivery Delayed" (sabeng.it) - written with Greek α instead of a
+/(imap|pop3)(\s*\/\s*pop3)?\s+m[aα]il\s+deliv[eε]ry\s+(del[aα]yed|incomplete|f[aα]iled)/iu
+# Greek α or ο hidden inside an English word: "Mαil", "Wαrning", "emαils"
+/[a-z][αο][a-z]/u
+/\d+\s+e-?m[aα]ils?\s+(h[aα]ve\s+)?(alre[aα]dy\s+)?been\s+deleted/iu
+/(receive|release|deliver)\s+(all\s+)?\d+\s+(pending\s+|held\s+)?e-?m[aα]ils?/iu
+# "Your ChatGPT subscription has expired ... renew your subscription" (scanned.page)
+/your\s+[a-z0-9 .-]{0,30}subscription\s+has\s+expired[\s\S]{0,300}?renew\s+(your\s+)?subscription/i
+# Fake Meta "Policy Violation ... Account Access Disabled" (mail-meta.com)
+/unverified\s+accounts?\s+risk\s+permanent\s+deletion/i
+/you\s+have\s+\d+\s+hours\s+to\s+(file|submit)\s+(an\s+)?appeal/i
+/(page|account)\s+[^.]{0,40}will\s+be\s+permanently\s+(suspended|deleted|disabled)/i
+# Fake "Interactive Brokers - Login Verification Alert" (srkq.cn)
+/we\s+(detected|noticed)\s+a\s+(new\s+)?login\s+to\s+your\s+account\s+from\s+a\s+new\s+(device|location)/i
+# "R: Turkiye Orders ... ready to place orders ... ZOOM meeting today?" (was only in manufacturing.map)
+/we\s+are\s+ready\s+to\s+place\s+(an\s+|our\s+)?(orders?|bulk\s+orders?)\s+with\s+your\s+company/i
+/(can\s+we\s+have|let['’]s\s+schedule)\s+a\s+(zoom|teams|video)\s+(meeting|call)\s+today/i
+# "Sunucuda bekleyen mesajlar var" (a3-post.asia)
+/sunucuda\s+bekleyen\s+(\d+\s+)?(mesaj|e-?posta)(lar[ıi]?)?\s+var/iu

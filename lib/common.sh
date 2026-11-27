@@ -4,7 +4,7 @@
 #  Part of: phywall by Develust Technology
 # =====================================================================
 
-PHYWALL_VERSION="1.3.0"
+PHYWALL_VERSION="1.4.0"
 
 # ---------- banner (screen only, never in logs) ----------
 # Colors and solid blocks only on a real terminal; plain '#' text otherwise

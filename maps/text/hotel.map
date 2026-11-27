@@ -80,6 +80,9 @@
 /received\s+a\s+voucher\s+from\s+your\s+guest\s+indicating/i
 /we\s+refer\s+to\s+our\s+booking\s+on\s+agoda/i
 /see\s+screenshot\s+of\s+the\s+agoda\s+booking\s+information/i
+# Kingstur via kingstur.sendmailx.net: "July Rate Update & Extranet Registration Invitation"
+/(invite|ask)\s+you\s+to\s+register\s+on\s+our\s+extranet(\s+platform)?/i
+/extranet\s+registration\s+(link|invitation)/i
 
 # ===== Spanish =====
 /se\s+ha\s+recibido\s+una\s+reclamaci[óo]n\s+sobre\s+su/iu

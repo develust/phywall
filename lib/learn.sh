@@ -3,10 +3,10 @@
 #  lib/learn.sh - trains Rspamd Bayes from mail folders
 #  Part of: phywall by Develust Technology
 #
-#  Usage: phywall learn domain.com                     -> dry run, all accounts of the domain
-#         phywall learn info@domain.com                -> dry run, one account
-#         phywall learn domain.com --learn             -> really trains Bayes
-#         phywall learn info@domain.com --learn        -> really trains, one account
+#  Usage: phywall learn albahotel.az                   -> dry run, all accounts of the domain
+#         phywall learn info@albahotel.az              -> dry run, one account
+#         phywall learn albahotel.az --learn           -> really trains Bayes
+#         phywall learn info@albahotel.az --learn      -> really trains, one account
 #  Options: --days N            only mails from the last N days (faster repeat runs)
 #           --exclude a,b,c     skip these accounts (e.g. tech,webmaster,services)
 #
@@ -14,6 +14,9 @@
 #  (Inbox is never used: it is full of marketing mail people did not ask for.)
 #  Sent mails are scanned first: if a phishing rule fires (e.g. staff forwarded
 #  a phishing mail), the mail is NOT learned and is listed as suspicious.
+#
+#  Speed: PHYWALL_JOBS mails are processed at once (default 6); results are
+#  counted and logged in the original order afterwards.
 # =====================================================================
 LIB=$(dirname "$(readlink -f "$0")")     # .../phywall/lib
 ROOT=$(dirname "$LIB")                   # .../phywall
@@ -125,6 +128,32 @@ files_in() {   # list mail files in a folder (respects --days)
   if [ -n "$DAYS" ]; then find "$1" -maxdepth 1 -type f -mtime -"$DAYS"; else find "$1" -maxdepth 1 -type f; fi
 }
 count_in() { files_in "$1" | wc -l; }
+# ---------- parallel processing ----------
+JOBS=${PHYWALL_JOBS:-6}; [[ $JOBS =~ ^[1-9][0-9]?$ ]] || JOBS=6
+TMPD=$(mktemp -d); trap 'rm -rf "$TMPD"' EXIT
+# one mail: Sent (ham) is checked for phishing first, then learned.
+# Output line 1 = SUS (phishing rule fired, not learned) or LEARN, then rspamc output.
+learn_one() {
+  local f=$1 cls=$2 chk
+  if [ "$cls" = ham ]; then
+    chk=$(rspamc "$f" 2>/dev/null)
+    if echo "$chk" | grep -qE "$SUSPECT"; then echo SUS; echo "$chk"; return; fi
+  fi
+  echo LEARN; rspamc "learn_$cls" "$f" 2>&1
+}
+# plearn <list> <outdir> <cls> <progress label>: result of line N -> <outdir>/N
+plearn() {
+  local list=$1 dir=$2 cls=$3 label=$4 tot k=0 f
+  mkdir -p "$dir"; tot=$(grep -c . "$list")
+  printf '\r\033[K  %s ... starting %d mails (%d at a time)' "$label" "$tot" "$JOBS" >&2
+  while IFS= read -r f <&3; do
+    k=$((k+1))
+    learn_one "$f" "$cls" > "$dir/$k" < /dev/null &
+    while [ "$(jobs -rp | wc -l)" -ge "$JOBS" ]; do wait -n; done
+    [ $((k % 10)) -eq 0 ] && printf '\r\033[K  %s ... %d/%d (%d%%)' "$label" "$k" "$tot" $((k*100/tot)) >&2
+  done 3< "$list"
+  wait
+}
 bayes() { rspamc stat 2>/dev/null | awk -v c="$1" '$0 ~ "Statfile: "c" " {for(i=1;i<=NF;i++) if($i=="learned:") {gsub(/;/,"",$(i+1)); print $(i+1)}}' | head -1; }
 
 # ---------- Bayes before ----------
@@ -165,14 +194,16 @@ GL=0; GS=0; GE=0; GX=0; GT=0; GXN=0; n=0; FIRSTERR=""; SUSLIST=""
 for a in $ACCOUNTS; do
   n=$((n+1))
   while IFS='|' read -r label cls path; do
-    tot=$(count_in "$path"); [ "$tot" -eq 0 ] && continue
+    files_in "$path" > "$TMPD/list"
+    tot=$(grep -c . "$TMPD/list"); [ "$tot" -eq 0 ] && continue
+    rm -rf "$TMPD/res"
+    plearn "$TMPD/list" "$TMPD/res" "$cls" "[$n/$NACC] $a  $label($cls)"
     l=0; s=0; e=0; x=0; t=0; k=0
-    while read -r f; do
+    while IFS= read -r f <&3; do
       k=$((k+1))
-      [ $((k % 10)) -eq 0 ] && printf '\r\033[K  [%d/%d] %s  %s(%s) ... %d/%d (%d%%)' "$n" "$NACC" "$a" "$label" "$cls" "$k" "$tot" $((k*100/tot)) >&2
-      if [ "$cls" = ham ]; then
-        chk=$(rspamc "$f" 2>/dev/null)
-        if echo "$chk" | grep -qE "$SUSPECT"; then
+      kind=$(head -1 "$TMPD/res/$k" 2>/dev/null)
+      if [ "$kind" = SUS ]; then
+          chk=$(tail -n +2 "$TMPD/res/$k")
           x=$((x+1))
           GXN=$((GXN+1))
           to=$(decode "$(get_hdr "$f" To)"); cc=$(decode "$(get_hdr "$f" Cc)")
@@ -183,16 +214,15 @@ for a in $ACCOUNTS; do
           SUSLIST+="       Date:    $date"$'\n'
           SUSLIST+="       Rules:   $rules"$'\n\n'
           continue
-        fi
       fi
-      r=$(rspamc "learn_$cls" "$f" 2>&1)
+      r=$(tail -n +2 "$TMPD/res/$k" 2>/dev/null)
       if echo "$r" | grep -qi 'already'; then s=$((s+1))
       elif echo "$r" | grep -qiE 'less tokens than required|too (short|few tokens)'; then t=$((t+1))
       elif echo "$r" | grep -qiE 'success[^a-z]*(=|:)[[:space:]]*true|"success"[[:space:]]*:[[:space:]]*true'; then l=$((l+1))
       else e=$((e+1)); [ -z "$FIRSTERR" ] && FIRSTERR=$(echo "$r" | grep -v '^Results for' | head -2 | tr '\n' ' ')
         if echo "$r" | grep -qiE 'unauthori[sz]ed|password|forbidden'; then clr; say "Controller refused learning (password required): $r"; exit 1; fi
       fi
-    done < <(files_in "$path")
+    done 3< "$TMPD/list"
     clr
     if [ "$cls" = ham ]; then
       say "  [$n/$NACC] $(printf '%-20s %-6s %-5s' "$a" "$label" "$cls")  learned $l   skipped $s   too short $t   suspicious $x   errors $e"
